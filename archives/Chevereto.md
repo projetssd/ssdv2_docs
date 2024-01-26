@@ -1,9 +1,0 @@
----
-layout: page
-title: applications.chevreto
-permalink: /chevreto/
----
-# {% t applications.db_settings %}
-
-<img width="822" alt="db-chevereto" src="https://user-images.githubusercontent.com/64525827/131685393-9872a055-6815-431b-be73-d408d5d2a4a3.png">
-
