@@ -1,41 +1,34 @@
-# Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to
-# deal in the Software without restriction, including without limitation the
-# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-# sell copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-# IN THE SOFTWARE.
-
-# Project information
 site_name: SSDv2
-site_url: https://projetssd.github.io/ssdv2_docs/
+site_url: https://laster13.github.io/ssdv2_docs/
 site_author: ProjetSSD
 site_description: >-
   Simple Seedbox Docker
 
 # Repository
 repo_name: projetssd/ssdv2
-repo_url: hhttps://github.com/projetssd/ssdv2
+repo_url: https://github.com/projetssd/ssdv2
 
-# Copyright
-copyright: Copyright &copy; 2016 - 2024 Martin Donath
+docs_dir: docs/
+exclude_docs: overrides/
 
 # Configuration
 theme:
   name: material
-  custom_dir: material/overrides
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: indigo
+      scheme: default
+      toggle:
+        icon: material/weather-sunny 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: blue grey
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
   features:
     - announce.dismiss
     - content.action.edit
@@ -63,207 +56,188 @@ theme:
     - search.suggest
     - toc.follow
     # - toc.integrate
-  palette:
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: material/link
-        name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: black
-      accent: indigo
-      toggle:
-        icon: material/toggle-switch-off
-        name: Switch to system preference
   font:
     text: Roboto
     code: Roboto Mono
-  favicon: assets/favicon.png
-  icon:
-    logo: logo
 
-# Plugins
 plugins:
-  - blog
-  - search:
-      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - search
+  - include-markdown:
+      opening_tag: "{!"
+      closing_tag: "!}"
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+      auto_caption: false
+      caption_position: bottom
+  - roamlinks
+  - mermaid2
+  - callouts
+  - i18n:
+      docs_structure: folder
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: fr
+          default: true
+          name: Français
+          build: true
+        - locale: en
+          name: English
+          build: true
+          theme:
+            palette:
+              # Palette toggle for light mode
+              - media: "(prefers-color-scheme: light)"
+                primary: red
+                scheme: default
+              # Palette toggle for dark mode
+              - media: "(prefers-color-scheme: dark)"
+                primary: pink
+                scheme: slate
+          nav_translations:
+            Accueil: Home
+            Installation: Install
+  - git-revision-date-localized:
 
-
-# Hooks
-hooks:
-  - material/overrides/hooks/shortcodes.py
-  - material/overrides/hooks/translations.py
-
-# Additional configuration
-extra:
-  status:
-    new: Recently added
-    deprecated: Deprecated
-  analytics:
-    provider: google
-    property: !ENV GOOGLE_ANALYTICS_KEY
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/squidfunk
-    - icon: fontawesome/brands/docker
-      link: https://hub.docker.com/r/squidfunk/mkdocs-material/
-    - icon: fontawesome/brands/python
-      link: https://pypi.org/project/mkdocs-material/
-    - icon: fontawesome/brands/mastodon
-      link: https://fosstodon.org/@squidfunk
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/squidfunk
 
 # Extensions
-markdown_extensions:
-  - abbr
-  - admonition
-  - attr_list
-  - def_list
-  - footnotes
-  - md_in_html
-  - toc:
-      permalink: true
-  - pymdownx.arithmatex:
-      generic: true
-  - pymdownx.betterem:
-      smart_enable: all
-  - pymdownx.caret
-  - pymdownx.details
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.keys
-  - pymdownx.magiclink:
-      normalize_issue_symbols: true
-      repo_url_shorthand: true
-      user: squidfunk
-      repo: mkdocs-material
-  - pymdownx.mark
-  - pymdownx.smartsymbols
-  - pymdownx.snippets:
-      auto_append:
-        - includes/mkdocs.md
-  - pymdownx.superfences:
+### Configuration des extensions MarkDown :   
+markdown_extensions: # https://squidfunk.github.io/mkdocs-material/reference/abbreviations/
+  # extensions de la bibliothèque markdown standard
+  - meta                          # Métadonnées
+  - def_list                      # Listes de définition.
+  - attr_list                     # Sélecteurs CSS et attributs HTML personnalisés
+  - footnotes                     # Notes[^1] de bas de page.  [^1]: ma note.
+  - admonition                    # Pour permettre les admonitions de MkDocs # Boite d'avertissements  !!! info "ma remarque"
+  - toc:                          # Configuration de la table des matières générée automatiquement à partir des titres du niveau 2
+        permalink: "&lozf;"          # Ajoute un symbole lien hypertexte vers l'ancre du titre #le-titre 
+        toc_depth: 4                # Limite de la profondeur d'inclusion des titres dans la table des matières
+  - nl2br                         # Ajoute un retour à la ligne <br> après un saut de ligne simple # A activer pour admonition et si l'option "Sauts de ligne stricts" n'est pas activée dans les réglages de l'éditeur d'Obsidian
+  - mdx_breakless_lists           # Permet de commencer une liste sans faire de saut de ligne en amont en ajoutant systématiquement un saut de ligne
+  - sane_lists                    # Produit le même affichage de liste qu'Obsidian démarage au nombre indiqué au début d'une liste ordonné : https://python-markdown.github.io/extensions/sane_lists/ 
+  - smarty                        # The SmartyPants extension converts ASCII dashes, quotes and ellipses to their HTML entity equivalents https://python-markdown.github.io/extensions/smarty/
+  - tables                        # Pour les tableaux https://squidfunk.github.io/mkdocs-material/reference/data-tables/
+  # extensions de python-markdown https://facelessuser.github.io/pymdown-extensions/
+  - pymdownx.details              # plier/déplier les avertissements - admonition collapsable
+  - pymdownx.extra
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.caret                # texte ^^souligné^^ ou en ^exposant^.
+  - pymdownx.mark                 # texte ==surligné==.
+  - pymdownx.tilde                # texte ~~barré~~ ou en ~indice~.
+  - pymdownx.critic               # Pour du marquage et commentaires de révision de texte
+  - pymdownx.magiclink            # Reconnait automatiquement un lien, une adresse à partir de son URL et bien plus : https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
+  - pymdownx.highlight            # Coloration syntaxique du code
+  - pymdownx.inlinehilite         # pour  `#!python  <python en ligne>`
+  - pymdownx.tasklist:            # Cases à cocher  - [ ]  et - [x]
+        custom_checkbox:    true    #   avec cases d'origine
+        # clickable_checkbox: true    #   et cliquables.
+  - pymdownx.superfences:    # Imbrication de blocs. # pour admonitions MkDocs
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-      combine_header_slug: true
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.tilde
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.keys:                # Touches du clavier.  ++ctrl+d++
+        separator: "\uff0b"
+  - pymdownx.emoji:               # Émojis  :boom:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.arithmatex:          # Formules en LaTeX 
+        generic: true
+        smart_dollar: false 
 
 # Page tree
 nav:
-  - Home: index.md
-  - Getting started:
-    - Installation: getting-started.md
-    - Creating your site: creating-your-site.md
-    - Publishing your site: publishing-your-site.md
-    - Customization: customization.md
-    - Conventions: conventions.md
-    - Browser support: browser-support.md
-    - Enterprise feedback: enterprise-support.md
-    - Philosophy: philosophy.md
-    - Alternatives: alternatives.md
-    - License: license.md
-    - Changelog:
-      - changelog/index.md
-      - How to upgrade: upgrade.md
-    - Contributing:
-      - contributing/index.md
-      - Reporting a bug: contributing/reporting-a-bug.md
-      - Reporting a docs issue: contributing/reporting-a-docs-issue.md
-      - Requesting a change: contributing/requesting-a-change.md
-      - Adding translations: contributing/adding-translations.md
-      - Making a pull request: contributing/making-a-pull-request.md
-      - Asking a question: https://github.com/squidfunk/mkdocs-material/discussions
-    - Guides:
-      - Creating a reproduction: guides/creating-a-reproduction.md
-  - Setup:
-    - setup/index.md
-    - Changing the colors: setup/changing-the-colors.md
-    - Changing the fonts: setup/changing-the-fonts.md
-    - Changing the language: setup/changing-the-language.md
-    - Changing the logo and icons: setup/changing-the-logo-and-icons.md
-    - Ensuring data privacy: setup/ensuring-data-privacy.md
-    - Setting up navigation: setup/setting-up-navigation.md
-    - Setting up site search: setup/setting-up-site-search.md
-    - Setting up site analytics: setup/setting-up-site-analytics.md
-    - Setting up social cards: setup/setting-up-social-cards.md
-    - Setting up a blog: setup/setting-up-a-blog.md
-    - Setting up tags: setup/setting-up-tags.md
-    - Setting up versioning: setup/setting-up-versioning.md
-    - Setting up the header: setup/setting-up-the-header.md
-    - Setting up the footer: setup/setting-up-the-footer.md
-    - Adding a git repository: setup/adding-a-git-repository.md
-    - Adding a comment system: setup/adding-a-comment-system.md
-    - Building an optimized site: setup/building-an-optimized-site.md
-    - Building for offline usage: setup/building-for-offline-usage.md
-    - Extensions:
-      - setup/extensions/index.md
-      - Python Markdown: setup/extensions/python-markdown.md
-      - Python Markdown Extensions: setup/extensions/python-markdown-extensions.md
-  - Plugins:
-    - plugins/index.md
-    - Blog: plugins/blog.md
-    - Group: plugins/group.md
-    - Info: plugins/info.md
-    - Meta: plugins/meta.md
-    - Offline: plugins/offline.md
-    - Optimize: plugins/optimize.md
-    - Privacy: plugins/privacy.md
-    - Projects: plugins/projects.md
-    - Search: plugins/search.md
-    - Social: plugins/social.md
-    - Tags: plugins/tags.md
-    - Typeset: plugins/typeset.md
-    - Requirements:
-      - Image processing: plugins/requirements/image-processing.md
-      - Caching: plugins/requirements/caching.md
-  - Reference:
-    - reference/index.md
-    - Admonitions: reference/admonitions.md
-    - Annotations: reference/annotations.md
-    - Buttons: reference/buttons.md
-    - Code blocks: reference/code-blocks.md
-    - Content tabs: reference/content-tabs.md
-    - Data tables: reference/data-tables.md
-    - Diagrams: reference/diagrams.md
-    - Footnotes: reference/footnotes.md
-    - Formatting: reference/formatting.md
-    - Grids: reference/grids.md
-    - Icons, Emojis: reference/icons-emojis.md
-    - Images: reference/images.md
-    - Lists: reference/lists.md
-    - Math: reference/math.md
-    - Tooltips: reference/tooltips.md
-  - Insiders:
-    - insiders/index.md
-    - Getting started: insiders/getting-started.md
-    - FAQ: insiders/faq/sponsoring.md
-    - Changelog:
-      - insiders/changelog/index.md
-      - How to upgrade: insiders/upgrade.md
-    - Community Experts Program:
-      - insiders/community-experts-program/index.md
-  - Blog:
-    - blog/index.md
+  - Accueil: index.md
+  - Installation:
+    - Installation/serveur.md
+    - Installation/cloudflare.md
+    - Installation/domaine.md
+    - Installation/installation.md
+    - Installation/presentation.md
+    - Installation/ajouter-supprimer-reinitialiser.md
+    - Installation/manipulations-manuelles.md
+    - Utilitaires:
+      - Installation/oauth.md
+      - Installation/optimisation-cloudflare.md
+      - Installation/ufw-Installation-configuration.md
+  - RealDebrid:
+    - RealDebrid/configuration-rdtclient.md
+    - RealDebrid/qbitorrent.md
+  - Plex:
+    - Plex/Tips/Plex-media-server.md
+  - Radarr:
+    - Radarr/radarr-setup-quality-profiles-french-fr.md
+    - Radarr/radarr-setup-quality-profiles-anime.md
+    - Radarr/radarr-setup-quality-profiles.md
+    - Radarr/Radarr-remote-path-mapping.md
+    - Radarr/Radarr-recommended-naming-scheme.md
+    - Radarr/Radarr-Quality-Settings-File-Size.md
+    - Radarr/Radarr-import-custom-formats.md
+    - Radarr/Radarr-how-to-update-custom-formats.md
+    - Tips:
+      - Radarr/Tips/Merge-quality.md
+      - Radarr/Tips/Sync-2-radarr-sonarr.md
+      - Radarr/Tips/How-to-setup-language-custom-formats.md
+  - Sonarr:
+    - Sonarr/sonarr-setup-quality-profiles-french-en.md
+    - Sonarr/sonarr-setup-quality-profiles-anime.md
+    - Sonarr/sonarr-setup-quality-profiles.md
+    - Sonarr/Sonarr-remote-path-mapping.md
+    - Sonarr/Sonarr-Release-Profile-RegEx-Anime.md
+    - Sonarr/Sonarr-Release-Profile-RegEx.md
+    - Sonarr/Sonarr-recommended-naming-scheme.md
+    - Sonarr/Sonarr-Quality-Settings-File-Size.md
+    - Sonarr/sonarr-import-custom-formats.md
+    - Sonarr/sonarr-how-to-update-custom-formats.md
+    - Tips:
+      - Sonarr/Tips/Merge-quality.md
+      - Sonarr/Tips/Sync-2-radarr-sonarr.md
+      - Sonarr/Tips/How-to-setup-language-custom-formats.md
+  - Prowlarr:
+    - Prowlarr/prowlarr-setup-flaresolverr.md
+  - Applications:
+    - Applications/Authelia.md
+    - Applications/Chevereto.md
+    - Applications/Cloudflare.md
+    - Applications/Cloudplow.md
+    - Applications/Filebot.md
+    - Applications/Filerun.md
+    - Applications/Grocy.md
+    - Applications/Handbrake.md
+    - Applications/Jackett---Flaresolverr.md
+    - Applications/Medusa.md
+    - Applications/Minecraft.md
+    - Applications/Nextcloud.md
+    - Applications/Ombi.md
+    - Applications/Organizr.md
+    - Applications/Petio.md
+    - Applications/Plex.md
+    - Applications/Plex-Dupefinder.md
+    - Applications/PlexTratkSync.md
+    - Applications/Prestashop.md
+    - Applications/Pureftpd.md
+    - Applications/QbitorrentVPN.md
+    - Applications/Qbittorrent.md
+    - Applications/Qflood.md
+    - Applications/Rflood.md
+    - Applications/Rutorrent.md
+    - Applications/Speedtest.md
+    - Applications/Traefik.md
+    - Applications/Trakt.tv-et-Kitana.md
+    - Applications/Traktarr.md
+    - Applications/Vikunja.md
+    - Applications/watchtower.md
+    - Applications/Wordpress.md
+    - Applications/Yacht.md
+    - Applications/yourls.md
+
