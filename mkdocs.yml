@@ -104,6 +104,7 @@ plugins:
           nav_translations:
             Accueil: Home
             Installation: Install
+            Proposer un Tutoriel: Suggest a Tutorial
   - git-revision-date-localized:
 
 
@@ -240,4 +241,5 @@ nav:
     - Applications/Wordpress.md
     - Applications/Yacht.md
     - Applications/yourls.md
-
+  - Proposer un Tutoriel:
+    -  Applications/Tutoriel.md
