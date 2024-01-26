@@ -47,4 +47,6 @@ Dernière étape, une fois les deux fichiers élaborés (fr et en) vous pouvez p
 
 ![Selection_801](https://github.com/projetssd/ssdv2/assets/7422124/0548afb6-77bc-40a1-83df-8bd17afa0be3)
 
+![Selection_797](https://github.com/projetssd/ssdv2/assets/7422124/b474109f-4b22-475f-8ad0-b8bdeda8c624)
+
 
