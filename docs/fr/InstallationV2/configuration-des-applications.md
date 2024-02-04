@@ -129,22 +129,22 @@ Rendez-vous sur `prowlarr.votre_domaine.fr` et définissez une authentification.
     
     Si vous rencontrez ce message lors de l’ajout d’un indexer, c’est qu’il est nécessaire d’utiliser Flaresolverr pour qu’il fonctionne.
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f38ef6a5-1048-4500-ae56-c1ae91aae0bc/ac700236-6bc0-4401-94a4-588a95acbe7b/Untitled.png)
+    ![Untitled](https://i.imgur.com/WBJcOsw.png)
     
     Il vous suffit de rajouter le tag que vous avez créé au préalable dans la zone correspondante.
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f38ef6a5-1048-4500-ae56-c1ae91aae0bc/17d4ba81-76ee-4255-ac64-a772c7656cd8/Untitled.png)
-    
+    ![Untitled](https://i.imgur.com/OwZBRIN.png)
+
 3. **Configuration des applications** :
     - Allez dans `Settings` puis `Apps`.
     - Ajoutez vos instances Radarr (et Radarr4K) et Sonarr (et Sonarr4K) comme suit :
         - Exemple pour Radarr :
-            - **Prowlarr Server**: [http://prowlarr:9696](http://prowlarr:9696/)
-            - **Radarr Server**: [http://radarr](http://radarr/):7878
+            - **Prowlarr Server**: http://prowlarr:9696/
+            - **Radarr Server**: http://radarr:7878
             - **API Key**: Récupérable ici https://radarr.votre_domaine.fr/settings/general
         - Exemple pour Radarr4K :
-            - **Prowlarr Server**: [http://prowlarr:9696](http://prowlarr:9696/)
-            - **Radarr Server**: [http://radarr](http://radarr/)4k:7878
+            - **Prowlarr Server**: http://prowlarr:9696
+            - **Radarr Server**: http://radarr4k:7878
             - **API Key**: Récupérable ici https://radarr4k.votre_domaine.fr/settings/general
     - Cliquez ensuite sur `Sync App Indexers` pour synchroniser les indexeurs que vous avez ajouté à l’étape 2 sur toutes vos instances.
 
