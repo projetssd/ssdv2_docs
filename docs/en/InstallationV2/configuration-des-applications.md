@@ -12,8 +12,7 @@ Access Plex via `plex.votre_domaine.fr`, name your server and make sure the “A
 2. Select `Movies` or `TV Shows` depending on the type of folder you want to add.
 3. You can rename your library if necessary (for example, for the "4K Movies" and "4K Series" folders).
 4. Click `Add Folders`.
-5. Select `Browse` and choose a media folder to add.
-     - The folders to add are located in `/home/ubuntu/Medias`.
+5. Select `Browse` and choose a media folder to add. The folders to add are located in `/home/ubuntu/Medias`.
 6. Click on the desired folder to open it (for example, "Movies").
 7. Confirm by clicking on the `Add` button.
 8. Click `Advanced` to access additional settings.
@@ -221,6 +220,8 @@ Go to `oversearr.votre_domaine.fr` and log in with your Plex account.
          - For Sonarr4K: https://sonarr4k.votre_domaine.fr/settings/general
 
 By following these steps, you will successfully configure your new Radarr4K/Sonarr4K instances in Overseerr, ensuring that the settings are tailored to each instance, including the specific API key. This will allow you to manage 4K content separately.
+
+### Configuring Overseerr general settings
 
 - **Configuration of general parameters**:
      - Go to `Settings`.
