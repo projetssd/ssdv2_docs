@@ -12,8 +12,7 @@ Accédez à Plex via `plex.votre_domaine.fr`, nommez votre serveur et assurer vo
 2. Sélectionnez `Films` ou `Séries TV` selon le type de dossier que vous souhaitez ajouter.
 3. Vous pouvez renommer votre bibliothèque si nécessaire (par exemple, pour les dossiers "Films 4K" et "Séries 4K").
 4. Cliquez sur `Ajouter des dossiers`.
-5. Sélectionnez `Parcourir` et choisissez un dossier multimédia à ajouter.
-    - Les dossiers à ajouter se trouvent dans `/home/ubuntu/Medias`.
+5. Sélectionnez `Parcourir` et choisissez un dossier multimédia à ajouter. Les dossiers à ajouter se trouvent dans `/home/ubuntu/Medias`.
 6. Cliquez sur le dossier désiré pour l'ouvrir (par exemple, "Films").
 7. Confirmez en cliquant sur le bouton `Ajouter`.
 8. Cliquez sur `Avancé` pour accéder aux paramètres supplémentaires.
@@ -24,7 +23,7 @@ En suivant ces étapes, vous aurez ajouté avec succès une nouvelle bibliothèq
 
 Vous pouvez cliquer sur suivant puis terminé.
 
- Une fois arrivé sur l'accueil, entrer dans les paramètres du serveur puis dans le menu latéral de gauche rendez-vous dans :
+Une fois arrivé sur l'accueil, entrer dans les paramètres du serveur puis dans le menu latéral de gauche rendez-vous dans :
 
 - **Accès à distance** : Cocher “Spécifier un port public manuellement” (32400 par défaut) puis cliquer sur “Réessayer” pour permettre l'accès externe.
 - **Bibliothèque** :
@@ -222,6 +221,8 @@ Rendez-vous sur `overseerr.votre_domaine.fr` et connectez-vous avec votre compte
         - Pour Sonarr4K : https://sonarr4k.votre_domaine.fr/settings/general
 
 En suivant ces étapes, vous configurerez avec succès vos nouvelles instances Radarr4K / Sonarr4K dans Overseerr, en veillant à ce que les paramètres soient adaptés à chaque instance, y compris la clé API spécifique. Cela vous permettra de gérer les contenus en 4K de manière distincte.
+
+### Configuration des paramètres généraux d'Overseerr
 
 - **Configuration des paramètres généraux** :
     - Allez dans `Paramètres`.
