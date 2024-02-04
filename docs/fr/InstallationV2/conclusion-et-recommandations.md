@@ -24,8 +24,8 @@ sudo systemctl restart sshd
 ## Sécurisation supplémentaires
 
 1. **Protocole d'identification** : Si ce n'est pas déjà fait, envisagez de mettre en place un protocole d'identification sécurisé, tel que Google OAuth2 ou Authelia, pour renforcer la sécurité de votre système.
-2. **Optimisation de Cloudflare** : Vous pouvez optimiser votre utilisation de Cloudflare en suivant le guide disponible à cette adresse : [Guide d'optimisation Cloudflare](https://projetssd.github.io/ssdv2_docs/Installation/optimisation-cloudflare/). Cela peut contribuer à améliorer les performances et la sécurité de votre système.
-3. **Installation et configuration de UFW** : Vous pouvez installer et configurer Uncomplicated Firewall (UFW) en suivant le guide disponible ici : [Guide d'installation et de configuration de UFW](https://projetssd.github.io/ssdv2_docs/Installation/ufw-Installation-configuration/). Cela vous aidera à gérer les règles de pare-feu pour renforcer la sécurité.
+2. **Optimisation de Cloudflare** : Vous pouvez optimiser votre utilisation de Cloudflare en suivant le guide disponible à cette adresse : [Guide d'optimisation Cloudflare](https://projetssd.github.io/ssdv2_docs/InstallationV2/optimisation-cloudflare/). Cela peut contribuer à améliorer les performances et la sécurité de votre système.
+3. **Installation et configuration de UFW** : Vous pouvez installer et configurer Uncomplicated Firewall (UFW) en suivant le guide disponible ici : [Guide d'installation et de configuration de UFW](https://projetssd.github.io/ssdv2_docs/InstallationV2/ufw-Installation-configuration/). Cela vous aidera à gérer les règles de pare-feu pour renforcer la sécurité.
 
 ## **Outils et guides recommandés**
 

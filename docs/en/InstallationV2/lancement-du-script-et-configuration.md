@@ -189,7 +189,7 @@ The classic configuration: Films, Series, stop.
 For a setup with 4K: Films, Series, Films4K, Series4K, stop.
 You must enter the name, then press Enter, and so on, until "stop". For this guide, we'll follow the example with 4K.
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f38ef6a5-1048-4500-ae56-c1ae91aae0bc/b68c72dc-0f6c-45f6-b025-c7a8198df7d1/ Untitled.png)
+![creation_dossier_media.png](https://i.imgur.com/CNsarEa.png)
 
 ---
 
