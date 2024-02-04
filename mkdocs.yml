@@ -171,6 +171,22 @@ nav:
       - Installation/oauth.md
       - Installation/optimisation-cloudflare.md
       - Installation/ufw-Installation-configuration.md
+  - InstallationV2:
+    - InstallationV2/introduction.md
+    - InstallationV2/prerequis.md
+    - InstallationV2/configuration-initiale.md
+    - InstallationV2/lancement-du-script-et-configuration.md
+    - InstallationV2/securisation-de-lacces-au-serveur.md
+    - InstallationV2/installation-des-applications.md
+    - InstallationV2/configuration-des-applications.md
+    - InstallationV2/conclusion-et-recommandations.md    
+    - Utilitaires:
+      - InstallationV2/ajouter-supprimer-reinitialiser.md
+      - InstallationV2/manipulations-manuelles.md
+    - Sécurisation:
+      - InstallationV2/oauth.md
+      - InstallationV2/optimisation-cloudflare.md
+      - InstallationV2/ufw-Installation-configuration.md    
   - RealDebrid:
     - RealDebrid/configuration-rdtclient.md
     - RealDebrid/qbitorrent.md
