@@ -160,33 +160,21 @@ markdown_extensions: # https://squidfunk.github.io/mkdocs-material/reference/abb
 nav:
   - Accueil: index.md
   - Installation:
-    - Installation/serveur.md
-    - Installation/cloudflare.md
-    - Installation/domaine.md
-    - Installation/installation.md
-    - Installation/presentation.md
-    - Installation/ajouter-supprimer-reinitialiser.md
-    - Installation/manipulations-manuelles.md
+    - Installation/introduction.md
+    - Installation/prerequis.md
+    - Installation/configuration-initiale.md
+    - Installation/lancement-du-script-et-configuration.md
+    - Installation/securisation-de-lacces-au-serveur.md
+    - Installation/installation-des-applications.md
+    - Installation/configuration-des-applications.md
+    - Installation/conclusion-et-recommandations.md    
     - Utilitaires:
+      - Installation/ajouter-supprimer-reinitialiser.md
+      - Installation/manipulations-manuelles.md
+    - Sécurisation:
       - Installation/oauth.md
       - Installation/optimisation-cloudflare.md
-      - Installation/ufw-Installation-configuration.md
-  - InstallationV2:
-    - InstallationV2/introduction.md
-    - InstallationV2/prerequis.md
-    - InstallationV2/configuration-initiale.md
-    - InstallationV2/lancement-du-script-et-configuration.md
-    - InstallationV2/securisation-de-lacces-au-serveur.md
-    - InstallationV2/installation-des-applications.md
-    - InstallationV2/configuration-des-applications.md
-    - InstallationV2/conclusion-et-recommandations.md    
-    - Utilitaires:
-      - InstallationV2/ajouter-supprimer-reinitialiser.md
-      - InstallationV2/manipulations-manuelles.md
-    - Sécurisation:
-      - InstallationV2/oauth.md
-      - InstallationV2/optimisation-cloudflare.md
-      - InstallationV2/ufw-Installation-configuration.md    
+      - Installation/ufw-Installation-configuration.md    
   - RealDebrid:
     - RealDebrid/configuration-rdtclient.md
     - RealDebrid/qbitorrent.md

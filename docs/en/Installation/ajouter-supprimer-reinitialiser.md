@@ -24,6 +24,6 @@ no deletion of user data or data contained in the account file
 
 It is possible to use quick commands provided you are in the Friday
 
-``suppression_appli app``: delete the container, the information in account and the local yml  
-``suppression_appli app 1``: delete the container, the information in account, the local yml as well as the data under opt  
-``launch_service app``: installation of the application requested  
+``suppression_appli app``: delete the container, the information in account and the local yml
+``suppression_appli app 1``: delete the container, the information in account, the local yml as well as the data under opt
+``launch_service app``: installation of the application requested
