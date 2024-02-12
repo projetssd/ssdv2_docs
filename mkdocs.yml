@@ -159,6 +159,17 @@ markdown_extensions: # https://squidfunk.github.io/mkdocs-material/reference/abb
 # Page tree
 nav:
   - Accueil: index.md
+  - Applications:
+    - Applications/multimedia-et-gestion-de-contenu.md
+    - Applications/telechargement-et-partage.md
+    - Applications/surveillance-et-monitoring.md
+    - Applications/outils-et-gestion-web.md
+    - Applications/securite-et-authentification.md
+    - Applications/developpement-et-integration.md
+    - Applications/productivite-et-organisation.md
+    - Applications/communication.md
+    - Applications/acces-a-distance.md
+    - Applications/loisirs.md 
   - Installation:
     - Installation/introduction.md
     - Installation/prerequis.md
@@ -210,40 +221,40 @@ nav:
       - Sonarr/Tips/How-to-setup-language-custom-formats.md
   - Prowlarr:
     - Prowlarr/prowlarr-setup-flaresolverr.md
-  - Applications:
-    - Applications/Authelia.md
-    - Applications/Chevereto.md
-    - Applications/Cloudflare.md
-    - Applications/Cloudplow.md
-    - Applications/Filebot.md
-    - Applications/Filerun.md
-    - Applications/Grocy.md
-    - Applications/Handbrake.md
-    - Applications/Jackett---Flaresolverr.md
-    - Applications/Medusa.md
-    - Applications/Minecraft.md
-    - Applications/Nextcloud.md
-    - Applications/Ombi.md
-    - Applications/Organizr.md
-    - Applications/Petio.md
-    - Applications/Plex.md
-    - Applications/Plex-Dupefinder.md
-    - Applications/PlexTratkSync.md
-    - Applications/Prestashop.md
-    - Applications/Pureftpd.md
-    - Applications/QbitorrentVPN.md
-    - Applications/Qbittorrent.md
-    - Applications/Qflood.md
-    - Applications/Rflood.md
-    - Applications/Rutorrent.md
-    - Applications/Speedtest.md
-    - Applications/Traefik.md
-    - Applications/Trakt.tv-et-Kitana.md
-    - Applications/Traktarr.md
-    - Applications/Vikunja.md
-    - Applications/watchtower.md
-    - Applications/Wordpress.md
-    - Applications/Yacht.md
-    - Applications/yourls.md
+  - Autres:
+    - Autres/Authelia.md
+    - Autres/Chevereto.md
+    - Autres/Cloudflare.md
+    - Autres/Cloudplow.md
+    - Autres/Filebot.md
+    - Autres/Filerun.md
+    - Autres/Grocy.md
+    - Autres/Handbrake.md
+    - Autres/Jackett---Flaresolverr.md
+    - Autres/Medusa.md
+    - Autres/Minecraft.md
+    - Autres/Nextcloud.md
+    - Autres/Ombi.md
+    - Autres/Organizr.md
+    - Autres/Petio.md
+    - Autres/Plex.md
+    - Autres/Plex-Dupefinder.md
+    - Autres/PlexTratkSync.md
+    - Autres/Prestashop.md
+    - Autres/Pureftpd.md
+    - Autres/QbitorrentVPN.md
+    - Autres/Qbittorrent.md
+    - Autres/Qflood.md
+    - Autres/Rflood.md
+    - Autres/Rutorrent.md
+    - Autres/Speedtest.md
+    - Autres/Traefik.md
+    - Autres/Trakt.tv-et-Kitana.md
+    - Autres/Traktarr.md
+    - Autres/Vikunja.md
+    - Autres/watchtower.md
+    - Autres/Wordpress.md
+    - Autres/Yacht.md
+    - Autres/yourls.md
   - Proposer un Tutoriel:
-    -  Applications/Tutoriel.md
+    -  Autres/Tutoriel.md
