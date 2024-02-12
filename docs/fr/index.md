@@ -34,7 +34,7 @@ Le script SSDV2 donne accès à un univers d'applications couvrant tous les beso
 
 Sans oublier que vous pouvez aussi intégrer vos propres applications et ce facilement car le script s’occupera de tous concernant le déploiement, à minima un simple fichier YML et c’est parti !
 
-[Retrouvez sur cette page la liste complète des applications déjà disponible](https://#/)
+[Retrouvez sur cette page la liste complète des applications déjà disponible](https://projetssd.github.io/ssdv2_docs/Applications/multimedia-et-gestion-de-contenu.md)
 
 ## Démonstration de l'interface
 
