@@ -43,7 +43,7 @@ Without forgetting that you can also integrate your own applications easily beca
 
 ## Installation Guide and Support
 
-To get started with SSDV2, the process is simplified thanks to a detailed installation guide, accessible via [the official SSD project website](https://projetssd.github.io/ssdv2_docs/Installation/introduction/), written by so as to be accessible as much as possible regardless of the level of computer skills. In addition, the SSDV2 community strengthens the ecosystem by offering quality resources and support.
+To get started with SSDV2, the process is simplified thanks to a detailed installation guide, accessible via [the official SSD project website](https://projetssd.github.io/ssdv2_docs/en/Installation/introduction/), written by so as to be accessible as much as possible regardless of the level of computer skills. In addition, the SSDV2 community strengthens the ecosystem by offering quality resources and support.
 
 ## Conclusion and thanks
 
