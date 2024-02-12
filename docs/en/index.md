@@ -2,7 +2,7 @@
 
 <br /><img src="https://user-images.githubusercontent.com/64525827/107496602-ceddbb80-6b91-11eb-9a05-ac311eedf150.png" width="450">
 
-[![Discord chat](https://img.shields.io/discord/533736783414820864?style=for-the-badge&color=4051B5&logo=discord)](https://discord.gg/qbfdKVYB)
+[![Discord chat](https://img.shields.io/discord/533736783414820864?style=for-the-badge&color=4051B5&logo=discord){ .off-glb }](https://discord.gg/qbfdKVYB){:target="_blank" rel="noopener noreferrer"}
 
 ## Introduction
 
