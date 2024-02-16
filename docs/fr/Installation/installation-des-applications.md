@@ -4,10 +4,10 @@ Après avoir configuré votre type d'authentification, il est temps d'installer 
 
 ## Démarrage du script d'installation
 
-Lancez le script d'installation pour accéder au menu des applications :
+Normalement vous êtes toujours dans le script, sinon vous pouvez taper :
 
 ```bash
-cd /home/${USER}/seedbox-compose && ./seedbox.sh
+seedbox
 ```
 
 ### Sélection des applications à installer
