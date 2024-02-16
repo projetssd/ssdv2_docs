@@ -8,6 +8,8 @@ Pensez à remplacer "VOTRE_USER" par votre nom d'utilisateur créé au préalabl
 Accédez à Plex via `plex.votre_domaine.fr`, nommez votre serveur et assurer vous que la case “M'autoriser à accéder à mes médias en dehors de ma maison” est bien cochée.
 
 - **Médiathèque** : Ajoutez vos dossiers de médias (Films, Séries, Films4K, Séries4K). Pour chaque type de média, sélectionnez le dossier approprié sous `/home/VOTRE_USER/Medias/`. Penser à désactivez la création de miniatures vidéo pour économiser de l'espace, cela se trouve dans les options avancés lorsque vous ajouter un dossier.
+
+Etape par étape :
 1. Dans l'interface utilisateur de Plex, cliquez sur `Ajouter une bibliothèque` pour commencer.
 2. Sélectionnez `Films` ou `Séries TV` selon le type de dossier que vous souhaitez ajouter.
 3. Vous pouvez renommer votre bibliothèque si nécessaire (par exemple, pour les dossiers "Films 4K" et "Séries 4K").

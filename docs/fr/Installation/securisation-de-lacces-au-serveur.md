@@ -14,14 +14,10 @@ En intégrant Google Auth, vous simplifiez non seulement le processus de connexi
 ## Configuration de Google Auth
 
 1. **Préparation** : Commencez par consulter le [guide d'installation et de configuration pour Google Auth](https://projetssd.github.io/ssdv2_docs/Installation/oauth/). Ce guide vous fournira les étapes détaillées pour obtenir vos informations d'identification Google OAuth.
-2. **Lancement du script** : Accédez au répertoire du script seedbox et lancez-le :
+2. **Lancement du script** : Désormais vous pouvez utiliser un alias pour lancer le script, tapez simplement :
     
     ```bash
-    cd /home/${USER}/seedbox-compose && ./seedbox.sh
-    ```
-    
-    ```bash
-    cd /home/${USER}/seedbox-compose && ./seedbox.sh
+    seedbox
     ```
     
 3. **Sélection dans le menu** : Choisissez l'option de gestion (2) suivie par la sécurisation du système (1), puis sécurisez Traefik avec Google OAuth2 (1).

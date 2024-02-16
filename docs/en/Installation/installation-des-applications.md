@@ -4,10 +4,10 @@ After configuring your authentication type, it's time to install the key applica
 
 ## Starting the installation script
 
-Run the installation script to access the applications menu:
+Normally you are still in the script, otherwise you can type:
 
 ```bash
-cd /home/${USER}/seedbox-compose && ./seedbox.sh
+seedbox
 ```
 
 ### Selecting applications to install

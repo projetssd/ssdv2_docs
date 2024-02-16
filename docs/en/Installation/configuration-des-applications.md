@@ -8,6 +8,8 @@ Remember to replace “YOUR_USER” with your previously created username!
 Access Plex via `plex.votre_domaine.fr`, name your server and make sure the “Allow me to access my media outside my home” box is checked.
 
 - **Media Library**: Add your media folders (Films, Series, 4K Films, 4K Series). For each media type, select the appropriate folder under `/home/YOUR_USER/Medias/`. Consider disabling the creation of video thumbnails to save space, this can be found in the advanced options when you add a folder.
+
+Step by step :
 1. In Plex UI, click `Add Library` to get started.
 2. Select `Movies` or `TV Shows` depending on the type of folder you want to add.
 3. You can rename your library if necessary (for example, for the "4K Movies" and "4K Series" folders).

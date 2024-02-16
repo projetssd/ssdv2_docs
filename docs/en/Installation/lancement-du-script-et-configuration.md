@@ -63,7 +63,13 @@ For the modification to take effect, it is imperative to disconnect/reconnect, i
 - Open Putty again.
 - When logging in, remember to use your non-root user's login information.
 
-### Information message
+### Restart the script
+
+Rerun the command to launch the script:
+
+```bash
+cd /home/${USER}/seedbox-compose && ./seedbox.sh
+```
 
 You will get this message:
 
@@ -161,7 +167,7 @@ Type "1" and confirm to select "1) Installation zurg - rclone - RDTclient".
 API token for Zurg (https://real-debrid.com/apitoken) | Press [Enter]:
 ```
 
-Provide your API key, available at http://real-debrid.com/api.
+Provide your API key, available at http://real-debrid.com/apitoken.
 
 ---
 
