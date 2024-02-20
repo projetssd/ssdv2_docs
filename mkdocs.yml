@@ -189,6 +189,7 @@ nav:
   - RealDebrid:
     - RealDebrid/configuration-rdtclient.md
     - RealDebrid/qbitorrent.md
+    - RealDebrid/qdebrid.md
   - Plex:
     - Plex/Tips/Plex-media-server.md
   - Radarr:
