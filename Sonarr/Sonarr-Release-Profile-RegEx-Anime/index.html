@@ -1,0 +1,4237 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Simple Seedbox Docker">
+      
+      
+        <meta name="author" content="ProjetSSD">
+      
+      
+        <link rel="canonical" href="https://laster13.github.io/ssdv2_docs/Sonarr/Sonarr-Release-Profile-RegEx-Anime/">
+      
+      
+        <link rel="prev" href="../Sonarr-remote-path-mapping/">
+      
+      
+        <link rel="next" href="../Sonarr-Release-Profile-RegEx/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11">
+    
+    
+      
+        <title>Profil de version RegEx (Anime) - SSDv2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#profil-de-version-regex-anime" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="SSDv2" class="md-header__button md-logo" aria-label="SSDv2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SSDv2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Profil de version RegEx (Anime)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7 1.62-4.33L19.12 17h-3.24Z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/Sonarr/Sonarr-Release-Profile-RegEx-Anime/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Partager" aria-label="Partager" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/projetssd/ssdv2" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    projetssd/ssdv2
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Accueil
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Applications/multimedia-et-gestion-de-contenu/" class="md-tabs__link">
+          
+  
+    
+  
+  Applications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Installation/introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Installation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../RealDebrid/configuration-rdtclient/" class="md-tabs__link">
+          
+  
+    
+  
+  RealDebrid
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Plex/Tips/Plex-media-server/" class="md-tabs__link">
+          
+  
+    
+  
+  Plex
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Radarr/radarr-setup-quality-profiles-french-fr/" class="md-tabs__link">
+          
+  
+    
+  
+  Radarr
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../sonarr-setup-quality-profiles-french-en/" class="md-tabs__link">
+          
+  
+    
+  
+  Sonarr
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Prowlarr/prowlarr-setup-flaresolverr/" class="md-tabs__link">
+          
+  
+    
+  
+  Prowlarr
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Autres/Authelia/" class="md-tabs__link">
+          
+  
+    
+  
+  Autres
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Autres/Tutoriel/" class="md-tabs__link">
+          
+  
+    
+  
+  Proposer un Tutoriel
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SSDv2" class="md-nav__button md-logo" aria-label="SSDv2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SSDv2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/projetssd/ssdv2" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    projetssd/ssdv2
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accueil
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/multimedia-et-gestion-de-contenu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multimédia et gestion de contenu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/telechargement-et-partage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Téléchargement et partage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/surveillance-et-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Surveillance et Monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/outils-et-gestion-web/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outils et gestion Web
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/securite-et-authentification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sécurité et authentification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/developpement-et-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Développement et intégration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/productivite-et-organisation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Productivité et organisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/communication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Communication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/acces-a-distance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accès à distance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Applications/loisirs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loisirs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Installation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/prerequis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prérequis pour suivre le guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/configuration-initiale/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration initiale
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/lancement-du-script-et-configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lancement du script et configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/securisation-de-lacces-au-serveur/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sécurisation de l&rsquo;accès au serveur
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/installation-des-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation des applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/configuration-des-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration des applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/conclusion-et-recommandations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conclusion et recommandations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Utilitaires
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            Utilitaires
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/ajouter-supprimer-reinitialiser/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Différences entre ajout, suppression et réinitialiser
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/manipulations-manuelles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manipulations manuelles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Sécurisation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            Sécurisation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/oauth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mise en place Google OAuth2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/optimisation-cloudflare/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Optimisation Cloudflare
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Installation/ufw-Installation-configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UFW installation et configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    RealDebrid
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            RealDebrid
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RealDebrid/configuration-rdtclient/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    configuration rdtclient
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RealDebrid/qbitorrent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration qbittorrent radarr/sonarr
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RealDebrid/qdebrid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration Qdebrid radarr/sonarr
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RealDebrid/seed-avec-rdtclient/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Seed les symlink téléchargé par RDTClient
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Plex
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Plex
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Plex/Tips/Plex-media-server/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paramètres suggérés pour le serveur multimédia Plex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Radarr
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Radarr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/radarr-setup-quality-profiles-french-fr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer ses Profiles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/radarr-setup-quality-profiles-anime/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer les profils de qualité Anime
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/radarr-setup-quality-profiles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer des profils de qualité
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Radarr-remote-path-mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mappages de chemins distants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Radarr-recommended-naming-scheme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schéma de dénomination recommandé
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Radarr-Quality-Settings-File-Size/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paramètres de qualité (taille du fichier)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Radarr-import-custom-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment importer des formats personnalisés
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Radarr-how-to-update-custom-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment mettre à jour les formats personnalisés
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_9" id="__nav_6_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tips
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            Tips
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Tips/Merge-quality/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment fusionner la qualité
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Tips/Sync-2-radarr-sonarr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment synchroniser 2 Radarr ou Sonarr entre eux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Radarr/Tips/How-to-setup-language-custom-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer les formats personnalisés de langue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Sonarr
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Sonarr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarr-setup-quality-profiles-french-en/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer ses Profiles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarr-setup-quality-profiles-anime/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer les profils de qualité Anime
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarr-setup-quality-profiles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer des profils de qualité
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sonarr-remote-path-mapping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mappages de chemins distants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Profil de version RegEx (Anime)
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Profil de version RegEx (Anime)
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#regex-double-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regex double audio
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anime-supprimer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anime Supprimer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-des-medias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gestion des médias
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestion des médias">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-de-denomination-suggere" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schéma de dénomination suggéré
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schéma de dénomination suggéré">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-des-episodes-danime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format des épisodes d'anime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-du-dossier-de-saison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format du dossier de saison
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-multi-episodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Style multi-épisodes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profil-de-qualite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profil de qualité
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexeurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indexeurs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profils-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profils de version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profils de version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profil-de-la-premiere-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profil de la première version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profil de la première version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Double audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#facultatif-non-coupenon-classenon-censure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Facultatif (non coupé|non classé|non censuré)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-de-la-deuxieme-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profil de la deuxième version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profil de la deuxième version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ne-doit-pas-contenir" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ne doit pas contenir
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prefere" class="md-nav__link">
+    <span class="md-ellipsis">
+      Préféré
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complété
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remerciements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remerciements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sonarr-Release-Profile-RegEx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Libérer le profil RegEx (WEB-DL)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sonarr-recommended-naming-scheme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schéma de dénomination recommandé
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sonarr-Quality-Settings-File-Size/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paramètres de qualité (taille du fichier)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarr-import-custom-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment importer des formats personnalisés
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarr-how-to-update-custom-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment mettre à jour les formats personnalisés
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_11" id="__nav_7_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Tips
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_11">
+            <span class="md-nav__icon md-icon"></span>
+            Tips
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips/Merge-quality/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment fusionner la qualité
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips/Sync-2-radarr-sonarr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment synchroniser 2 Radarr ou Sonarr entre eux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips/How-to-setup-language-custom-formats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer les formats personnalisés de langue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Prowlarr
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Prowlarr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prowlarr/prowlarr-setup-flaresolverr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comment configurer FlareSolverr
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Autres
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Autres
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Authelia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authelia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Chevereto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chevereto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Cloudflare/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloudflare
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Cloudplow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloudplow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Filebot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filebot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Filerun/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filerun
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Grocy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grocy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Handbrake/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Handbrake
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Jackett---Flaresolverr.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    None
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Medusa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Medusa
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Minecraft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Minecraft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Nextcloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Nextcloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Ombi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ombi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Organizr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Organizr
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Petio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Petio
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Plex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Plex-Dupefinder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plex-Dupefinder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/PlexTratkSync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PlexTratkSync
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Prestashop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prestashop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Pureftpd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pureftpd
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/QbitorrentVPN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QbitorrentVPN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Qbittorrent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Qbittorrent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Qflood/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Qflood
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Rflood/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rflood :
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Rutorrent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rutorrent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Speedtest/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Speedtest
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Traefik/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Traefik
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Trakt.tv-et-Kitana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trakt.tv-et-Kitana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Traktarr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Traktarr
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Vikunja/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vikunja
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/watchtower/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    watchtower
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Wordpress/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    wordpress
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Yacht/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Yacht
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/yourls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    yourls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Proposer un Tutoriel
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Proposer un Tutoriel
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Autres/Tutoriel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutoriel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#regex-double-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regex double audio
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anime-supprimer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anime Supprimer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-des-medias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gestion des médias
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestion des médias">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-de-denomination-suggere" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schéma de dénomination suggéré
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schéma de dénomination suggéré">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-des-episodes-danime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format des épisodes d'anime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-du-dossier-de-saison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format du dossier de saison
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-multi-episodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Style multi-épisodes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profil-de-qualite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profil de qualité
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexeurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indexeurs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profils-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profils de version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profils de version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profil-de-la-premiere-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profil de la première version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profil de la première version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Double audio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#facultatif-non-coupenon-classenon-censure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Facultatif (non coupé|non classé|non censuré)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-de-la-deuxieme-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profil de la deuxième version
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profil de la deuxième version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ne-doit-pas-contenir" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ne doit pas contenir
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prefere" class="md-nav__link">
+    <span class="md-ellipsis">
+      Préféré
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complété
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remerciements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Remerciements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/projetssd/ssdv2/edit/master/docs/fr/Sonarr/Sonarr-Release-Profile-RegEx-Anime.md" title="Editer cette page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/projetssd/ssdv2/raw/master/docs/fr/Sonarr/Sonarr-Release-Profile-RegEx-Anime.md" title="Consulter la source de cette page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h1 id="profil-de-version-regex-anime">Profil de version RegEx (Anime)<a class="headerlink" href="#profil-de-version-regex-anime" title="Permanent link">&lozf;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ce guide est créé et maintenu par <a href="https://github.com/Visorask">Visorask/Visorak</a></p>
+<p>Il est recommandé d&rsquo;exécuter deux instances Sonarr. Un pour l&rsquo;anime et un pour les émissions de télévision normales, ou vous pouvez utiliser des balises.</p>
+<p>Étant donné que les profils de version sont globaux sans utilisation de balise.</p>
+</div>
+<h2 id="regex-double-audio">Regex double audio<a class="headerlink" href="#regex-double-audio" title="Permanent link">&lozf;</a></h2>
+<p>Après avoir testé la plupart de ces paramètres, ils fonctionnent plutôt bien, mais Anime est une bête inconstante avec laquelle jouer, alors soyez prévenu.</p>
+<hr />
+<h2 id="anime-supprimer">Anime Supprimer<a class="headerlink" href="#anime-supprimer" title="Permanent link">&lozf;</a></h2>
+<details class="astuce">
+<summary>Si vous rencontrez des problèmes avec le téléchargement de fichiers supplémentaires comme NCED ou NCOP</summary>
+<p>Si vous rencontrez des problèmes avec Sonarr pour détecter un certain nombre de :</p>
+<ul>
+<li>NCED<br />
+-NCOP</li>
+<li>Vidéos musicales</li>
+<li>les OP</li>
+</ul>
+<p>Ensuite, ce script (basé sur Linux uniquement) supprimera ces fichiers et s&rsquo;en débarrassera et vous n&rsquo;aurez pas à vous soucier qu&rsquo;ils encombrent votre processus d&rsquo;importation automatique ou manuelle.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="c1"># Définissez l&#39;emplacement suivant sur votre emplacement de téléchargement terminé pour Anime.</span>
+<span class="c1"># Généralement l&#39;un des chemins suivants :</span>
+<span class="c1"># Dockers =&gt; /data/{usenet|torrents}/anime</span>
+<span class="c1"># Cloudbox =&gt; /mnt/local/downloads/nzbs/nzbget/completed/sonarranime</span>
+<span class="nv">location</span><span class="o">=</span><span class="s2">&quot;/votre/téléchargement/chemin/ici&quot;</span>
+
+find<span class="w"> </span><span class="nv">$location</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="se">\(</span><span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*op[0-9]*&quot;</span><span class="w"> </span>-o<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*nced*&quot;</span><span class="w"> </span>-o<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*ncop*&quot;</span><span class="w"> </span>-o<span class="w"> </span>-iname<span class="w"> </span><span class="s2">&quot;*clip vidéo*&quot;</span><span class="w"> </span><span class="se">\)</span><span class="w"> </span>-exec<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="se">\;</span>
+</code></pre></div>
+<p>Ce script sera appelé via une connexion personnalisée dans Sonarr.</p>
+<ol>
+<li>Copiez le contenu du script dans le chemin de fichier auquel Sonarr a accès (<code>/config/app/</code> ou <code>/appdata/sonarr/scripts</code>)</li>
+<li>Modifiez le <code>location="/your/download/path/here"</code> et assurez-vous qu&rsquo;il est entre guillemets.</li>
+<li>Enregistrez-le ensuite et chmod +x le script.</li>
+<li>Dans Sonarr, allez dans <code>Paramètres</code> =&gt; <code>Connect</code> =&gt; Cliquez sur le symbole <code>+</code> =&gt; et sélectionnez <code>Custom Script</code></li>
+<li>Changez le nom comme vous le souhaitez.</li>
+<li>Sélectionnez « Sur saisie » et « Sur importation ».</li>
+<li>Cliquez sur l&rsquo;icône Dossier ou saisissez le chemin d&rsquo;accès au script que vous avez choisi précédemment.</li>
+</ol>
+<p><a class="glightbox" href="../images/rpa-customscript.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-customscript" src="../images/rpa-customscript.png" /></a></p>
+<p>Désormais, lorsque vous téléchargez ou importez des fichiers, le script s&rsquo;exécutera et effacera les fichiers que vous n&rsquo;utiliserez probablement pas et si vous les voulez bien, ce script n&rsquo;est pas pour vous.</p>
+</details>
+<hr />
+<h2 id="gestion-des-medias">Gestion des médias<a class="headerlink" href="#gestion-des-medias" title="Permanent link">&lozf;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il existe quelques paramètres qui facilitent grandement la recherche et la conservation de certaines informations sur votre anime, ainsi que des ajustements pour qu&rsquo;il fonctionne mieux avec <a :=":" href="https://github.com/ZeroQI/Hama.bundle" rel="noopener noreferrer" target="_blank">HamaAgent</a> pour Plex.</p>
+</div>
+<h3 id="schema-de-denomination-suggere">Schéma de dénomination suggéré<a class="headerlink" href="#schema-de-denomination-suggere" title="Permanent link">&lozf;</a></h3>
+<p>Pour cela, j&rsquo;ai utilisé le <a href="/Sonarr/Sonarr-recommended-naming-scheme/#anime-episode-format" rel="noopener noreferrer" target="_blank">Schéma de dénomination recommandé par Sonarr</a> avec seulement un petit changement pour une erreur de formatage à corriger et le <code>Series Folder Format</code> pour une correspondance plus facile.</p>
+<h4 id="format-des-episodes-danime">Format des épisodes d&rsquo;anime<a class="headerlink" href="#format-des-episodes-danime" title="Permanent link">&lozf;</a></h4>
+<p>A toutes les informations nécessaires et un petit plus si vous aviez besoin de reconstruire.</p>
+<div class="highlight"><pre><span></span><code><span class="o">{</span>Series<span class="w"> </span>TitleYear<span class="o">}</span><span class="w"> </span>-<span class="w"> </span>S<span class="o">{</span>season:00<span class="o">}</span>E<span class="o">{</span>episode:00<span class="o">}</span><span class="w"> </span>-<span class="w"> </span><span class="o">{</span>absolute:000<span class="o">}</span><span class="w"> </span>-<span class="w"> </span><span class="o">{</span>Episode<span class="w"> </span>CleanTitle<span class="o">}</span><span class="w"> </span><span class="o">[{</span>Mots<span class="w"> </span>préférés<span class="w"> </span><span class="o">}{</span>Qualité<span class="w"> </span>complète<span class="o">}]{[</span>MediaInfo<span class="w"> </span>VideoDynamicRange<span class="o">]}[{</span>MediaInfo<span class="w"> </span>VideoBitDepth<span class="o">}</span>bit<span class="w"> </span><span class="o">]{[</span>MediaInfo<span class="w"> </span>VideoCodec<span class="o">]}[{</span>Mediainfo<span class="w"> </span>AudioCodec<span class="o">}</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>Mediainfo<span class="w"> </span>AudioChannels<span class="o">}]{</span>MediaInfo<span class="w"> </span>AudioLanguages<span class="o">}{</span>-Release<span class="w"> </span>Group<span class="o">}</span>
+</code></pre></div>
+<p>??? résumé « RÉSULTATS : »</p>
+<div class="highlight"><pre><span></span><code>Épisode unique :
+
+`Le titre de la série ! (2010) - S01E01 - 001 - Titre de l&#39;épisode 1 [AMZN WEBDL-1080p v2][HDR][10bit][x264][DTS 5.1][FLAC][JA]-RlsGrp`
+
+Épisode multiple :
+
+`Le titre de la série ! (2010) - S01E01-E02-E03 - 001-002-003 - Titre de l&#39;épisode [AMZN WEBDL-1080p v2][HDR][10bit][x264][DTS 5.1][FLAC][JA]-RlsGrp`
+</code></pre></div>
+<p>Format de dossier de la série ####</p>
+<p>L&rsquo;ajout de l&rsquo;année avec l&rsquo;identifiant tvdb permet que la correspondance soit correcte. Merci salé.</p>
+<div class="highlight"><pre><span></span><code><span class="o">{</span>Titre<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>sérieAnnée<span class="o">}</span><span class="w"> </span><span class="o">[</span>tvdb-<span class="o">{</span>TvdbId<span class="o">}]</span>
+</code></pre></div>
+<p>RÉSULTAT:</p>
+<p><code>Le titre de la série ! (2010) [tvdb-12345]</code></p>
+<h4 id="format-du-dossier-de-saison">Format du dossier de saison<a class="headerlink" href="#format-du-dossier-de-saison" title="Permanent link">&lozf;</a></h4>
+<p>La seule vraie option à utiliser à mon avis.</p>
+<div class="highlight"><pre><span></span><code>Saison<span class="w"> </span><span class="o">{</span>saison:00<span class="o">}</span>
+</code></pre></div>
+<p>RÉSULTAT:</p>
+<p>&lsquo;Saison 01&rsquo;</p>
+<h4 id="style-multi-episodes">Style multi-épisodes<a class="headerlink" href="#style-multi-episodes" title="Permanent link">&lozf;</a></h4>
+<div class="highlight"><pre><span></span><code>Plage<span class="w"> </span>préfixée
+</code></pre></div>
+<p>RÉSULTATS:</p>
+<p><a class="glightbox" href="../images/results.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="résultats" src="../images/results.png" /></a></p>
+<details class="réussite">
+<summary>Exemple</summary>
+<p><a class="glightbox" href="../images/rpa-mediamanage.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!Exemple d'image ci-dessus" src="../images/rpa-mediamanage.png" /></a></p>
+</details>
+<hr />
+<h2 id="profil-de-qualite">Profil de qualité<a class="headerlink" href="#profil-de-qualite" title="Permanent link">&lozf;</a></h2>
+<p>Nous devons ajouter « HDTV-1080p » et « Bluray-1080p » dans le même groupe que « WEBDL-1080p » et « WEBRip-1080p » afin qu&rsquo;il soit téléchargé correctement et ne soit pas mis à niveau au-delà de HDTV-1080P si les mots préférés ne le permettent pas. il.</p>
+<p><a class="glightbox" href="../images/rpa-quality-profile-group.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-quality-profile-group" src="../images/rpa-quality-profile-group.png" /></a></p>
+<hr />
+<h2 id="indexeurs">Indexeurs<a class="headerlink" href="#indexeurs" title="Permanent link">&lozf;</a></h2>
+<p>Nous devons ajouter les catégories Anime à nos indexeurs, sinon tout cela ne fonctionnera pas très bien.</p>
+<details class="réussite">
+<summary>Exemple</summary>
+<ol>
+<li>Nous devons ouvrir « Paramètres -&gt; Indexeurs »</li>
+<li>Sélectionnez le ou les indexeurs que vous souhaitez utiliser pour « Anime »</li>
+<li>Sélectionnez la liste déroulante « Catégories d&rsquo;anime ».<br />
+<a class="glightbox" href="../images/rpa-indexer-1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-indexer-1" src="../images/rpa-indexer-1.png" /></a></li>
+<li>Sélectionnez la catégorie « Anime ».<br />
+<a class="glightbox" href="../images/rpa-indexer-2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-indexer-2" src="../images/rpa-indexer-2.png" /></a></li>
+<li>Cliquez en dehors du modal contextuel mais à l&rsquo;intérieur du modal « Ajouter un indexeur ».<br />
+<a class="glightbox" href="../images/rpa-indexer-3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-indexer-3" src="../images/rpa-indexer-3.png" /></a></li>
+</ol>
+</details>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cochez « Inclure les préférences lors du renommage » le cas échéant et ajoutez « {Mots préférés} » à votre schéma de renommage, sinon vous pourriez avoir des problèmes de boucle de téléchargement !!!</p>
+</div>
+<h2 id="profils-de-version">Profils de version<a class="headerlink" href="#profils-de-version" title="Permanent link">&lozf;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Nous allons utiliser <strong>2</strong> profils de version distincts.</p>
+</div>
+<h3 id="profil-de-la-premiere-version">Profil de la première version<a class="headerlink" href="#profil-de-la-premiere-version" title="Permanent link">&lozf;</a></h3>
+<!-- [trash_id : 31f4dd7b08bc8a43099eed604fd8acf6] -->
+<div class="admonition conseil">
+<p class="admonition-title">Conseil</p>
+<p><strong>À FAIRE</strong> Cochez « Inclure les préférences lors du changement de nom » sur ce profil de version.<br />
+<a class="glightbox" href="../images/rpa-release-sources-1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-release-sources-1" src="../images/rpa-release-sources-1.png" /></a></p>
+</div>
+<h4 id="multi-audio">Multi-Audio<a class="headerlink" href="#multi-audio" title="Permanent link">&lozf;</a></h4>
+<p>Ajoutez-le à vos favoris avec un score de <strong>[500]</strong></p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>multi<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>?audio<span class="o">)</span>/je
+</code></pre></div>
+<h4 id="double-audio">Double audio<a class="headerlink" href="#double-audio" title="Permanent link">&lozf;</a></h4>
+<p>Ajoutez-le à vos favoris avec un score de <strong>[0]</strong>. Ceci concerne uniquement les renommages et c&rsquo;est pourquoi il est à <strong>0</strong>. Il est également ajouté dans le deuxième profil. Celui-ci vise à garantir que les mots préférés soient ajoutés.</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>double<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>?audio<span class="o">)</span>/i
+</code></pre></div>
+<h4 id="facultatif-non-coupenon-classenon-censure">Facultatif (non coupé|non classé|non censuré)<a class="headerlink" href="#facultatif-non-coupenon-classenon-censure" title="Permanent link">&lozf;</a></h4>
+<p>Ajoutez-le à vos favoris avec un score de <strong>[100]/[-10000]</strong></p>
+<p>Si vous souhaitez que ce soit prioritaire, définissez-le sur <strong>100</strong>. Si vous ne voulez pas de censure, réglez-le sur <strong>-10000</strong>. Si cela ne vous intéresse pas, laissez-le de côté. Le raisonnement derrière seulement <strong>100</strong> est qu&rsquo;il ne l&rsquo;emporte pas sur les autres versions plus haut dans la chaîne, de cette façon, il l&rsquo;emportera peut-être sur quelques versions, mais pas plus. Et <strong>-10000</strong> pour, espérons-le, le mettre au bas de n&rsquo;importe quelle liste de niveaux si vous ne le souhaitez pas.</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>non<span class="w"> </span>coupé<span class="p">|</span>non<span class="w"> </span>classé<span class="p">|</span>non<span class="w"> </span>censuré<span class="p">|</span><span class="se">\b</span><span class="o">(</span>AT<span class="o">[</span>-_.<span class="w"> </span><span class="o">]</span>?X<span class="o">)</span><span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Une fois terminé, cela devrait ressembler à ceci :<br />
+<a class="glightbox" href="../images/rpa-release-profile-1.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-release-profile-1" src="../images/rpa-release-profile-1.png" /></a></p>
+</div>
+<hr />
+<h3 id="profil-de-la-deuxieme-version">Profil de la deuxième version<a class="headerlink" href="#profil-de-la-deuxieme-version" title="Permanent link">&lozf;</a></h3>
+<!-- [trash_id: c3a45e86f61f3a801428d1538918e41f] -->
+<div class="admonition avertissement">
+<p class="admonition-title">Avertissement</p>
+<p><strong>NE PAS</strong> Cocher « Inclure les préférences lors du changement de nom »<br />
+<a class="glightbox" href="../images/rpa-release-sources-2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-release-sources-2" src="../images/rpa-release-sources-2.png" /></a></p>
+</div>
+<h4 id="ne-doit-pas-contenir">Ne doit pas contenir<a class="headerlink" href="#ne-doit-pas-contenir" title="Permanent link">&lozf;</a></h4>
+<p>La raison pour laquelle la plupart d&rsquo;entre eux sont ajoutés est due à leur qualité merdique ou tout simplement, ils ne sont pas aussi bons que les autres produits disponibles. Cela peut être modifié selon les besoins. Faites-moi savoir si vous rencontrez des problèmes ici. Vous devriez pouvoir simplement les copier-coller en une seule fois. S&rsquo;il y a une raison pour laquelle quelque chose ne devrait pas être ici, faites-le-moi savoir ainsi que votre logique et je serai ouvert à l&rsquo;ajustement.</p>
+<div class="admonition conseil">
+<p class="admonition-title">Conseil</p>
+<p>Si vous souhaitez des versions « dub », supprimez les 2 dernières lignes et ne les ajoutez pas.</p>
+</div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>EMBER<span class="se">\]</span><span class="p">|</span>-EMBER<span class="se">\b</span><span class="p">|</span>DaddySubs<span class="o">)</span>/i,
+/<span class="o">(</span>BDMV<span class="p">|</span>M2TS<span class="p">|</span><span class="se">\b</span>SSA<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>VOSTFR<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>AbemaTV<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>CuaP<span class="p">|</span>PnPSubs<span class="p">|</span>ICEBLUE<span class="p">|</span>SLAX<span class="p">|</span>U3-Web<span class="o">)</span>/i,
+/<span class="o">(</span>Raws-Maji<span class="p">|</span><span class="se">\b</span>KRP<span class="se">\b</span><span class="p">|</span>M@nI<span class="p">|</span>Kanjouteki<span class="p">|</span>PuyaSubs<span class="o">)</span>/i,
+/<span class="se">\b</span><span class="o">(</span>Béatrice<span class="p">|</span>ohys<span class="p">|</span>Kawaiika<span class="p">|</span>neko<span class="p">|</span>papa<span class="o">)[</span><span class="w"> </span>._-<span class="o">]</span>?<span class="o">(</span>raws<span class="o">)</span><span class="se">\b</span>/i,
+/<span class="se">\b</span><span class="o">(</span>LowPower<span class="p">|</span>Scryous<span class="o">)[</span><span class="w"> </span>._-<span class="o">]</span>?<span class="o">(</span>bruts<span class="o">)</span><span class="se">\b</span>/i,
+/<span class="se">\b</span><span class="o">(</span>NS<span class="p">|</span>AREY<span class="p">|</span>BDMV<span class="p">|</span>BDVD<span class="p">|</span>BJX<span class="p">|</span>DKB<span class="p">|</span>DP<span class="p">|</span>TnF<span class="o">)</span><span class="se">\b</span>/i,
+/<span class="o">(</span>Amb3r<span class="p">|</span>DsunS<span class="p">|</span>ExREN<span class="p">|</span><span class="se">\$</span>tore-Chill<span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\[</span>Hatsuyuki<span class="se">\]</span><span class="p">|</span>-Hatsuyuki<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>Hitoku<span class="se">\]</span><span class="p">|</span>-Hitoki<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\[</span>Foxtrot<span class="se">\]</span><span class="p">|</span>-Foxtrot<span class="se">\b</span><span class="p">|</span>HollowRoxas<span class="p">|</span><span class="se">\b</span>MGD<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>JacobSwaggedUp<span class="p">|</span>KEKMASTERS<span class="p">|</span><span class="se">\[</span>Acariens<span class="se">\]</span><span class="p">|</span>-Acariens<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>neoHEVC<span class="p">|</span>Pantsu<span class="p">|</span><span class="se">\[</span>Pao<span class="se">\]</span><span class="p">|</span>-Pao<span class="se">\b</span><span class="p">|</span>Plex<span class="w"> </span>Friendly<span class="o">)</span>/i,
+/<span class="o">(</span>Rando235<span class="p">|</span>RandomRemux<span class="p">|</span>Reaktor<span class="p">|</span>RightShiftBy2<span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\b</span>SHFS<span class="se">\b</span><span class="p">|</span>StrayGods<span class="p">|</span><span class="se">\b</span>UQW<span class="se">\b</span><span class="p">|</span>Yabai_Desu_Ne<span class="o">)</span>/i,
+/<span class="o">(</span>YakuboEncodes<span class="p">|</span><span class="se">\b</span><span class="o">(</span>WtF<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>?Anime<span class="o">)</span><span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">((</span>funi<span class="p">|</span>eng<span class="o">(</span>lish<span class="o">)</span>?<span class="o">)</span>_?dub<span class="p">|</span><span class="se">\b</span>dub<span class="o">(</span>bed<span class="o">)</span>?<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>Golumpa<span class="p">|</span>torenter69<span class="p">|</span>KamiFS<span class="p">|</span>KaiDubs<span class="o">)</span>/i
+</code></pre></div>
+<h4 id="prefere">Préféré<a class="headerlink" href="#prefere" title="Permanent link">&lozf;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deux lignes dans un groupe ne sont là que pour des raisons de lisibilité, mais permettent d&rsquo;obtenir le même résultat et le même score.</p>
+</div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[501]</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Celui-ci est défini sur <strong>501</strong> afin qu&rsquo;il puisse sauter d&rsquo;un niveau si nécessaire, mais pas plus.</p>
+</div>
+<div class="highlight"><pre><span></span><code>/dual<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>?audio<span class="p">|</span>EN<span class="se">\+</span>JA<span class="p">|</span>JA<span class="se">\+</span>EN/i
+</code></pre></div>
+<hr />
+<div class="admonition conseil">
+<p class="admonition-title">Conseil</p>
+<p>Ces prochaines versions sont facultatives, mais elles sont là pour déplacer les versions vers les niveaux inférieurs de « 1080/720p » ou « WEB-DL/Blu-Ray ». Ajoutera une autre note comme celle-ci pour terminer la section facultative.</p>
+</div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[100]</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Nous l&rsquo;ajoutons à <strong>100</strong> afin que tout « Blu-Ray » inconnu puisse sauter des niveaux à l&rsquo;intérieur des catégories Subs mais n&rsquo;interfère pas avec les niveaux supérieurs.</p>
+</div>
+<div class="highlight"><pre><span></span><code>/<span class="se">\b</span><span class="o">(</span>?:<span class="o">(</span>Blu-?Ray<span class="p">|</span>BDMux<span class="p">|</span>BD<span class="o">(</span>?!$<span class="o">))</span><span class="p">|</span><span class="o">(</span>B<span class="o">[</span>DR<span class="o">]</span>Rip<span class="o">))(</span>?:<span class="se">\b</span><span class="p">|</span>$<span class="p">|</span><span class="o">[</span><span class="w"> </span>.<span class="o">])</span>/ix
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[15]</strong></p>
+<div class="highlight"><pre><span></span><code>/<span class="se">\b</span><span class="o">(</span>WEB<span class="o">[</span>-_.<span class="w"> </span><span class="o">]</span>?DL<span class="p">|</span>WebHD<span class="p">|</span><span class="o">[</span>.<span class="w"> </span><span class="o">]</span>WEB<span class="o">[</span>.<span class="w"> </span><span class="o">](</span>?:<span class="o">[</span>xh<span class="o">]</span><span class="m">26</span><span class="o">[</span><span class="m">45</span><span class="o">]</span><span class="p">|</span>DDP?5<span class="o">[</span>.<span class="w"> </span><span class="o">]</span><span class="m">1</span><span class="o">)</span><span class="p">|</span><span class="o">[</span>.<span class="w"> </span><span class="o">](</span>?-i:<span class="w"> </span>WEB<span class="o">)</span>$<span class="p">|</span><span class="se">\d</span>+0p<span class="o">(</span>?:WEB-DLMux<span class="p">|</span><span class="se">\b\s\/\s</span>WEB<span class="se">\s\/\s\b</span><span class="o">))</span>/ix
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[10]</strong></p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>Web-?Rip<span class="p">|</span>WEBMux<span class="o">)</span>/ix
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[5]</strong></p>
+<div class="highlight"><pre><span></span><code>/<span class="se">\b</span><span class="o">(</span>?:<span class="o">(</span>1080p<span class="p">|</span>1920x1080<span class="p">|</span>1440p<span class="p">|</span>FHD<span class="p">|</span>1080i<span class="p">|</span>4kto1080p<span class="o">))</span><span class="se">\b</span>/i
+</code></pre></div>
+<div class="admonition conseil">
+<p class="admonition-title">Conseil</p>
+<p>C&rsquo;est la fin de la section facultative.</p>
+</div>
+<p>Ajoutez-le à vos favoris avec un score de <strong>[4 000]</strong>.</p>
+<p>BluRay-Remux / Dual-Audio / 1er niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>deanzel<span class="p">|</span><span class="se">\b</span>ZR<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>CTR<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>SCY<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>MK<span class="se">\b</span><span class="p">|</span>TTGA<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>Shir<span class="se">\b</span><span class="p">|</span>Années<span class="w"> </span>perdues<span class="p">|</span>BluDragon<span class="p">|</span>KAWAiREMUX<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>AC<span class="se">\]</span><span class="p">|</span>-AC$<span class="p">|</span>ShadyCrab<span class="p">|</span>Rasetsu<span class="p">|</span>Raizel<span class="p">|</span>Dragon-Releases<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Spark<span class="se">\]</span><span class="p">|</span>-Spark<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>REVO<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>SRLS<span class="se">\b</span><span class="p">|</span>ANThELIa<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Vanille<span class="se">\]</span><span class="p">|</span>-Vanille<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>AP<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez ceci à vos favoris avec un score de <strong>[3750]</strong></p>
+<p>BluRay / Dual-Audio / Special (les versions dont ils disposent se situent entre les versions ci-dessous et les remux ci-dessus.)</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>E<span class="o">[</span>.-<span class="o">]</span>N<span class="o">[</span>.-<span class="o">]</span>D<span class="o">)</span>/je
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[3 500]</strong>.</p>
+<p>BluRay / Double audio / 1er niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>HAiKU<span class="se">\b</span><span class="p">|</span>Destin-exilé<span class="p">|</span><span class="se">\b</span><span class="o">(</span>ED<span class="o">)</span><span class="se">\b</span><span class="p">|</span>Koten<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>Gars<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>GHOST<span class="se">\]</span><span class="p">|</span>-GHOST<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>NPC<span class="se">\]</span><span class="p">|</span>-NPC<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>CBM<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>KH<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>CBT<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>naiyas<span class="se">\]</span><span class="p">|</span>-naiyas<span class="se">\b</span><span class="p">|</span>ShowY<span class="p">|</span>Kametsu<span class="p">|</span><span class="se">\b</span>Pn8<span class="se">\b</span><span class="p">|</span>Hark0N<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[3 000]</strong>.</p>
+<p>BluRay / Dual-Audio / Scène|Groupes P2P</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>DHD<span class="se">\b</span><span class="p">|</span>RedBlade<span class="p">|</span>TENEIGHTY<span class="p">|</span>WaLMaRT<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>BMF<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>STRiFE<span class="se">\]</span><span class="p">|</span>-STRiFE<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>MKVULTRA<span class="p">|</span>iAHD<span class="p">|</span>ANiHLS<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[2 500]</strong>.</p>
+<p>BluRay / Double audio / 2e niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>YURASUKA<span class="se">\]</span><span class="p">|</span>-YURASUKA<span class="se">\b</span><span class="p">|</span>karios<span class="p">|</span>Arukoru<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>RH<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>Prof<span class="se">\]</span><span class="p">|</span>-Prof<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[2000]</strong></p>
+<p>WebSource / Dual|Multi-Audio</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>DragsterPS<span class="o">)</span>/je
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[1 500]</strong>.</p>
+<p>WebSource / Double Audio</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>xPearse<span class="p">|</span><span class="se">\b</span>MCR<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>KS<span class="se">\b</span><span class="p">|</span>KiyoshiStar<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[1 000]</strong>.</p>
+<p>DVD/double audio</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span><span class="o">(</span>AL<span class="o">)</span><span class="se">\b</span><span class="o">)</span>/je
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[300]</strong></p>
+<p>Sous-marins avec multi comme l&rsquo;allemand, le français, l&rsquo;espagnol, l&rsquo;italien, le russe, l&rsquo;arabe, le portugais et l&rsquo;anglais</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>Erai-raws<span class="p">|</span>KAN3D2M<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[250]</strong></p>
+<p>Sous-marins</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>HorribleSubs<span class="p">|</span>SubsS<span class="err">&#39;</span>il<span class="w"> </span>vous<span class="w"> </span>plaît<span class="p">|</span>SallySubs<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[200]</strong></p>
+<p>Sous-marins 2e niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Mystérie<span class="se">\]</span><span class="p">|</span>-Mystérie<span class="se">\b</span><span class="p">|</span>Asenshi<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>méta<span class="se">\]</span><span class="p">|</span>-méta<span class="se">\b</span><span class="p">|</span>BlueLobster<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[150]</strong></p>
+<p>Sous-marins 3e niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>GJM<span class="se">\b</span><span class="p">|</span>kBaraka<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[100]</strong></p>
+<p>FanSubs 1er niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>CH<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>FFF<span class="se">\b</span><span class="p">|</span>Licca<span class="p">|</span>Soldado<span class="p">|</span>SNSbu<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>Coalgirls<span class="p">|</span>BlurayDesuYo<span class="p">|</span>DameDesuYo<span class="p">|</span><span class="se">\b</span>PAS<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[50]</strong></p>
+<p>FanSubs 2e niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Orphelin<span class="se">\]</span><span class="p">|</span>-Orphelin<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>Yabai<span class="se">\]</span><span class="p">|</span>-Yabai<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>Nii-sama<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Doki<span class="se">\]</span><span class="p">|</span>-Doki<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>Chihiro<span class="se">\]</span><span class="p">|</span>-Chihiro<span class="se">\b</span><span class="p">|</span>Final8<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>tenshi<span class="se">\]</span><span class="p">|</span>-tenshi<span class="se">\b</span><span class="p">|</span>SHiN-gx<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[25]</strong></p>
+<p>FanSubs 3e niveau</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>AkihitoSubs<span class="p">|</span><span class="se">\b</span>ASW<span class="se">\b</span><span class="p">|</span>Commie<span class="o">)</span>/i
+</code></pre></div>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ce sont des paramètres supplémentaires qui peuvent aider et qui ne sont pas nécessaires mais qui sont agréables à avoir. Ils sont réglés à un niveau bas principalement pour se surpasser et ne pas interférer avec les autres versions.</p>
+</div>
+<p>Ajoutez-le à vos favoris avec un score de <strong>[1]</strong></p>
+<p>Ajoute Hi10|Hi10p dans un match. Préfère cela à certaines correspondances erronées.</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="m">10</span>.?bit<span class="p">|</span>hi10p<span class="o">)</span>/je
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[1]</strong></p>
+<p>Ajoute une version en raison des groupes d&rsquo;anime qui résolvent parfois des problèmes avec leurs versions.</p>
+<div class="highlight"><pre><span></span><code>/<span class="se">\b</span><span class="o">(</span>v2<span class="o">)</span><span class="se">\b</span>/je
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[2]</strong></p>
+<div class="highlight"><pre><span></span><code>/<span class="se">\b</span><span class="o">(</span>v3<span class="o">)</span><span class="se">\b</span>/i
+</code></pre></div>
+<hr />
+<p>Ajoutez-le à vos favoris avec un score de <strong>[3]</strong></p>
+<div class="highlight"><pre><span></span><code>/<span class="se">\b</span><span class="o">(</span>v4<span class="o">)</span><span class="se">\b</span>/i
+</code></pre></div>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cette section peut être controversée, mais la plupart de ces versions sont des encodages micro/mini ou une qualité merdique. Personnellement, je les ajoute dans la section Je ne veux pas, mais je les laisserai ici avec des valeurs négatives afin que vous puissiez toujours les récupérer si tout le reste échoue.</p>
+</div>
+<p>Ajoutez ceci à vos favoris avec un score de <strong>[-10000]</strong></p>
+<p>Sub-Par Releases 1st Tier (Ré-encodé en merde ou en très petites tailles de fichiers) (Un peu moins pire que le reste)</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Judas<span class="se">\]</span><span class="p">|</span>-Judas<span class="p">|</span><span class="se">\[</span>Cléo<span class="se">\]</span><span class="p">|</span>-Cléo<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>AnimeRG<span class="p">|</span>bonkai77<span class="p">|</span>URANIME<span class="o">)</span>/je
+</code></pre></div>
+<hr />
+<p>Ajoutez ceci à vos favoris avec un score de <strong>[-15000]</strong></p>
+<p>Sub-Par Releases 2nd Tier (Réencodé en merde ou en très petites tailles de fichiers) (Séparé sur des lignes séparées pour plus de lisibilité)</p>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Pixel<span class="se">\]</span><span class="p">|</span>-Pixel<span class="se">\b\[</span>EDGE<span class="se">\]</span><span class="p">|</span>-EDGE<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>Ranger<span class="se">\]</span><span class="p">|</span>-Ranger<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>SpaceFish<span class="p">|</span>DeadFish<span class="p">|</span><span class="se">\b</span>DB<span class="se">\b</span><span class="p">|</span>Man<span class="se">\.</span>K<span class="p">|</span><span class="se">\b</span>HR<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>BakedFish<span class="p">|</span>N<span class="o">[</span>eo<span class="o">][</span>wo<span class="o">]</span>b<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>?Subs<span class="p">|</span><span class="se">\b</span>Anime<span class="o">[</span><span class="w"> </span>.<span class="o">]</span>Time<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>AnimeKaizoku<span class="p">|</span><span class="se">\[</span>Kaizoku<span class="se">\]</span><span class="p">|</span>-Kaizoku<span class="se">\b</span><span class="p">|</span><span class="se">\b</span>CBB<span class="se">\b</span><span class="p">|</span>phazer11<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>iPUNISHER<span class="p">|</span>MiniTheatre<span class="p">|</span>MiniFreeza<span class="p">|</span>Mr<span class="se">\.</span>Deadpool<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>NemDiggers<span class="p">|</span>Projet-gxs<span class="p">|</span>youshikibi<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\b</span>MD<span class="se">\b</span><span class="p">|</span>Pog42<span class="p">|</span>mdcx<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span>A-Destiny<span class="p">|</span>TOPKEK<span class="p">|</span><span class="se">\b</span>UwU<span class="se">\b</span><span class="p">|</span>DARKFLiX<span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Maximus<span class="se">\]</span><span class="p">|</span>-Maximus<span class="se">\b</span><span class="p">|</span><span class="se">\[</span><span class="m">224</span><span class="se">\]</span><span class="p">|</span>-224<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Harunatsu<span class="se">\]</span><span class="p">|</span>-Harunatsu<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Davinci<span class="se">\]</span><span class="p">|</span>-Davinci<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+<details class="astuce">
+<summary>Si vous souhaitez que ce qui précède soit dans NE VOULEZ PAS dans un format simple, le voici.</summary>
+<div class="highlight"><pre><span></span><code>/<span class="o">(</span><span class="se">\[</span>Pixel<span class="se">\]</span><span class="p">|</span>-Pixel<span class="se">\b\[</span>EDGE<span class="se">\]</span><span class="p">|</span>-EDGE<span class="se">\b</span><span class="p">|</span><span class="se">\[</span>Ranger<span class="se">\]</span><span class="p">|</span>-Ranger<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>SpaceFish<span class="p">|</span>DeadFish<span class="p">|</span><span class="se">\b</span>DB<span class="se">\b</span><span class="p">|</span>Man<span class="se">\.</span>K<span class="p">|</span><span class="se">\b</span>HR<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>BakedFish<span class="p">|</span>N<span class="o">[</span>eo<span class="o">][</span>wo<span class="o">]</span>b<span class="o">[</span><span class="w"> </span>._-<span class="o">]</span>?Subs<span class="p">|</span><span class="se">\b</span>Anime<span class="w"> </span>Time<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span>AnimeKaizoku<span class="p">|</span>Kaizoku<span class="p">|</span><span class="se">\b</span>CBB<span class="se">\b</span><span class="p">|</span>phazer11<span class="o">)</span>/i,
+/<span class="o">(</span>iPUNISHER<span class="p">|</span>MiniTheatre<span class="p">|</span>MiniFreeza<span class="p">|</span>Mr<span class="se">\.</span>Deadpool<span class="o">)</span>/i,
+/<span class="o">(</span>NemDiggers<span class="p">|</span>Projet-gxs<span class="p">|</span>youshikibi<span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\b</span>MD<span class="se">\b</span><span class="p">|</span>Pog42<span class="p">|</span>mdcx<span class="o">)</span>/i,
+/<span class="o">(</span>A-Destiny<span class="p">|</span>TOPKEK<span class="p">|</span><span class="se">\b</span>UwU<span class="se">\b</span><span class="p">|</span>DARKFLiX<span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\[</span>Maximus<span class="se">\]</span><span class="p">|</span>-Maximus<span class="se">\b</span><span class="p">|</span><span class="se">\[</span><span class="m">224</span><span class="se">\]</span><span class="p">|</span>-224<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\[</span>Harunatsu<span class="se">\]</span><span class="p">|</span>-Harunatsu<span class="se">\b</span><span class="o">)</span>/i,
+/<span class="o">(</span><span class="se">\[</span>Davinci<span class="se">\]</span><span class="p">|</span>-Davinci<span class="se">\b</span><span class="o">)</span>/i
+</code></pre></div>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Une fois terminé, cela devrait ressembler à ceci :<br />
+<a class="glightbox" href="../images/rpa-release-profile-2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-release-profile-2" src="../images/rpa-release-profile-2.png" /></a></p>
+</div>
+<hr />
+<h3 id="complete">Complété<a class="headerlink" href="#complete" title="Permanent link">&lozf;</a></h3>
+<p>Une fois terminés, vos profils de version devraient ressembler à ceci :</p>
+<p><a class="glightbox" href="../images/rpa-release-profile-3.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="!rpa-release-profile-3" src="../images/rpa-release-profile-3.png" /></a></p>
+<h3 id="remerciements">Remerciements<a class="headerlink" href="#remerciements" title="Permanent link">&lozf;</a></h3>
+<p>La plupart de mes informations et connaissances proviennent de :</p>
+<ul>
+<li>
+<p>Kaiser (Conseils sur les groupes d&rsquo;anime)</p>
+</li>
+<li>
+<p>rg9400 (Conseils sur les correctifs d&rsquo;expressions régulières, les groupes d&rsquo;anime et le partage de connaissances générales.)</p>
+</li>
+<li>
+<p>Drazzilb (Conseils sur les correctifs d&rsquo;expressions régulières, les groupes d&rsquo;anime et le partage de connaissances générales.)</p>
+</li>
+<li>
+<p><a href="https://trash-guides.info/">TRaSH</a> (Pour m&rsquo;avoir permis d&rsquo;utiliser son site Web pour mon guide et mon partage de connaissances générales.)</p>
+</li>
+</ul>
+<p>Merci beaucoup !!</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Dernière mise à jour">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">25 février 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pied de page" >
+        
+          
+          <a href="../Sonarr-remote-path-mapping/" class="md-footer__link md-footer__link--prev" aria-label="Précédent: Mappages de chemins distants">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Précédent
+              </span>
+              <div class="md-ellipsis">
+                Mappages de chemins distants
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../Sonarr-Release-Profile-RegEx/" class="md-footer__link md-footer__link--next" aria-label="Suivant: Libérer le profil RegEx (WEB-DL)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Suivant
+              </span>
+              <div class="md-ellipsis">
+                Libérer le profil RegEx (WEB-DL)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
