@@ -169,7 +169,9 @@ nav:
     - Applications/productivite-et-organisation.md
     - Applications/communication.md
     - Applications/acces-a-distance.md
-    - Applications/loisirs.md 
+    - Applications/loisirs.md
+  - Sécurité :
+    - crowdsec.md
   - Installation:
     - Installation/introduction.md
     - Installation/prerequis.md
