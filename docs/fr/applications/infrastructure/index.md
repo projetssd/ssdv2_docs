@@ -1,20 +1,22 @@
-# 🎬 Applications Média
+# 📦 Applications Infrastructure
 
-> Cette catégorie regroupe l’ensemble des applications dédiées à la gestion, l’automatisation et la distribution de contenu multimédia.
+> Cette catégorie regroupe l’ensemble des applications “socle” qui construisent ton environnement SSDv2 : services internes, plateformes web, stockage, collaboration, automatisation, outils d’administration et de productivité.
 
 ---
 
 ## 🧠 Objectif
 
-Les applications Média permettent :
+Les applications Infrastructure permettent :
 
-- 📥 La gestion des téléchargements automatisés
-- 🔎 L’indexation intelligente des contenus
-- 🎞 La gestion des films et séries
-- 👥 La gestion des demandes utilisateurs
-- 🔄 L’automatisation complète du flux média
+- 🗄️ L’hébergement de services essentiels (cloud, mails, fichiers, DB, etc.)
+- 👥 La collaboration (wiki, chat, CRM, gestion de projets)
+- 📁 La gestion documentaire & stockage (Nextcloud, Paperless, Seafile…)
+- 🧰 L’administration & l’accès (Portainer, Webtop, Guacamole…)
+- 🔔 Les notifications & automatisations (Gotify, n8n…)
+- 🌐 La publication web (WordPress, PrestaShop…)
+- 🧱 La “colonne vertébrale” sur laquelle s’appuie l’écosystème Média/Téléchargement
 
-Elles fonctionnent généralement ensemble au sein d’un écosystème cohérent.
+Elles forment généralement un ensemble cohérent : **services + données + accès + gouvernance**.
 
 ---
 
@@ -24,36 +26,92 @@ Elles fonctionnent généralement ensemble au sein d’un écosystème cohérent
 flowchart LR
 
     User["👤 Utilisateur"]
-    Seerr["🎬 Seerr"]
-    Radarr["🎥 Radarr"]
-    Sonarr["📺 Sonarr"]
-    Prowlarr["🔎 Prowlarr"]
-    Downloader["⬇️ Client Download"]
+    RP["🌐 Reverse Proxy\n(Traefik)"]
+    Auth["🛡️ Auth/SSO\n(Authelia)"]
 
-    User --> Seerr
-    Seerr --> Radarr
-    Seerr --> Sonarr
-    Radarr --> Prowlarr
-    Sonarr --> Prowlarr
-    Radarr --> Downloader
-    Sonarr --> Downloader
+    Apps["📦 Apps Infrastructure\n(Nextcloud/BookStack/Gitea/...)"]
+    Data["💾 Données\n(volumes, DB, fichiers)"]
+
+    Notify["🔔 Notifications\n(Gotify)"]
+    Automation["🔄 Automatisation\n(n8n)"]
+
+    User --> RP
+    RP --> Auth
+    Auth --> Apps
+    Apps --> Data
+    Apps --> Notify
+    Apps --> Automation
 ```
 
 ---
 
 ## 📦 Applications Disponibles
 
-### 🎥 Radarr
-Gestion automatisée des films.
+### ☁️ Nextcloud
+Cloud personnel : fichiers, calendrier, contacts, partage, extensions.
 
-### 📺 Sonarr
-Gestion automatisée des séries.
+### 📚 BookStack
+Documentation structurée “books-first” (runbooks, procédures, KB).
 
-### 🔎 Prowlarr
-Centralisation des indexeurs.
+### 🧾 Paperless
+Dématérialisation : ingestion, OCR, classement et recherche documentaire.
 
-### 🎬 Seerr
-Gestion des demandes utilisateurs.
+### 🗂 Seafile
+Stockage/synchronisation orienté performance et bibliothèques.
+
+### 🧑‍💻 Gitea / GitLab
+Forge Git : dépôts, issues, CI/CD (selon besoin et ressources).
+
+### 🧰 Portainer / Yacht
+Administration Docker : gestion, stacks, logs, ressources (selon préférence).
+
+### 🧭 Homepage / Heimdall / Homarr / Organizr / Fenrus
+Dashboards & portails pour centraliser l’accès à tes services.
+
+### 🔔 Gotify
+Notifications internes (push) pour alertes, automatisations, monitoring.
+
+### 🔄 n8n
+Automatisation / workflows : webhooks, intégrations, orchestration.
+
+### 🧑‍🤝‍🧑 Mattermost
+Messagerie d’équipe (alternative self-hosted type Slack).
+
+### 🧾 Vikunja
+Gestion de tâches / projets (to-do, kanban) simple et efficace.
+
+### 🧾 NocoDB / Baserow / Grist
+“Bases de données no-code” (tableur + API + vues) pour internal tools.
+
+### 🌍 WordPress / PrestaShop
+Publication web / e-commerce self-hosted.
+
+### 🧩 Baïkal
+CalDAV/CardDAV (agenda/contacts) léger, idéal pour besoins simples.
+
+### 🧰 Filebrowser / CloudCmd / AutoIndex
+Exploration/gestion de fichiers via web (selon usage).
+
+### 🔁 Syncthing
+Synchronisation P2P fiable entre machines (réplication, offsite, etc.).
+
+### 🧊 Webtop
+Bureau Linux dans le navigateur (outil d’accès “couteau suisse”).
+
+### 🔗 Firefox Sync Server
+Synchronisation Firefox (bookmarks, tabs) en self-hosted.
+
+### 🧠 Grocy
+Gestion maison (stocks, courses, recettes, inventaire), très complet.
+
+### 🗃 Duplicati
+Sauvegardes chiffrées vers cibles multiples (S3, WebDAV, etc.).
+
+### 📡 Jitsi
+Visioconférence self-hosted (selon ressources serveur).
+
+### 🧪 Autres (selon ton stack)
+Linkding, Mango, Microbin, Shaarli, Piwigo, TT-RSS, The Lounge, Pure-FTPd, etc.
 
 ---
 
@@ -61,14 +119,23 @@ Gestion des demandes utilisateurs.
 
 Ces applications s’intègrent avec :
 
-- 📥 Téléchargement (qBittorrent, RdtClient)
-- 🔐 Sécurité (Authelia, CrowdSec)
-- 🌐 Reverse Proxy (Traefik)
+- 🌐 Reverse Proxy : Traefik (routage HTTPS, subdomains, middlewares)
+- 🔐 Sécurité : Authelia (SSO), CrowdSec (protection), Vaultwarden (secrets)
+- 📥 Téléchargement : stockage “downloads” + services de gestion
+- 🎬 Média : bibliothèques, metadata, accès utilisateurs
+- 📊 Monitoring : Dozzle/Netdata/Plausible, alerting via Gotify
+- 🔄 Automatisation : n8n (webhooks, intégrations, notifications)
 
 ---
 
 # 🎯 Résumé
 
-La catégorie Média constitue le cœur de l’écosystème SSDv2.
+La catégorie Infrastructure est le **socle** de SSDv2.
 
-Elle permet une automatisation complète, contrôlée et évolutive de la gestion multimédia.
+Elle assure :
+- la disponibilité des services,
+- la persistance des données,
+- la collaboration et la documentation,
+- et l’administration quotidienne.
+
+Bien structurée, elle rend l’écosystème **stable, gouvernable et évolutif**.
