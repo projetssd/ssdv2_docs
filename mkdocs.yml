@@ -361,3 +361,7 @@ nav:
       - Statping: applications/monitoring/statping.md
       - VnStat: applications/monitoring/vnstat.md
       - Watchtower: applications/monitoring/watchtower.md
+
+  - 🧭 WebUi:
+      - WebUi: applications/webui/index.md
+      - Installation: applications/webui/installation.md
