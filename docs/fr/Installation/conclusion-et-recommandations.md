@@ -1,126 +1,383 @@
-# Conclusion et recommandations
+---
+title: Conclusion et recommandations — SSDV2 (ULTRA Premium)
+description: Feuille de route post-install SSDV2 : durcissement SSH, pare-feu, SSO, Cloudflare, monitoring, notifications, et extensions. Avec checklists, tests et rollback.
+tags:
+  - ssdv2
+  - security
+  - hardening
+  - ssh
+  - ufw
+  - cloudflare
+  - monitoring
+  - arr
+---
 
-Il semble que la configuration des applications soit terminée ! Il reste des pistes à explorer, tels que l'envoi de notifications pour différents événements, la personnalisation des formats dans Radarr et Sonarr, l'utilisation de listes pour ajouter automatiquement du contenu, etc. Il peut-être intéressant d'explorer ces options en fonction de vos besoins spécifiques.
+!!! abstract "Abstract"
+    La configuration initiale est terminée. Cette section propose une **feuille de route ULTRA premium** pour renforcer la **sécurité**, augmenter la **fiabilité** et améliorer l’**expérience utilisateur** :  
+    - durcissement SSH (sans lock-out)  
+    - pare-feu (UFW) + bonnes pratiques d’exposition réseau  
+    - authentification/SSO (Authelia/OAuth2)  
+    - optimisation Cloudflare (perf + sécurité)  
+    - notifications & qualité (TRaSH + Notifiarr)  
+    - monitoring (Uptime-Kuma, Grafana/Prometheus)  
+    - extensions (Organizr, Bazarr, Readarr, Nextcloud, Home Assistant…)
 
-En ce qui concerne les recommandations pour la suite, voici ce que vous pouvez envisager :
+---
 
-### Amélioration de la sécurité SSH
+## TL;DR (ce qu’il faut faire ensuite)
 
-Pour améliorer la sécurité, envisagez de configurer SSH pour désactiver la connexion root et changer le port par défaut :
+1) 🔐 **SSH** : root off + clés + tests + reload sécurisé  
+2) 🧱 **UFW** : n’exposer que le nécessaire + valider l’accès SSH  
+3) 🪪 **SSO** : Authelia/OAuth2 pour centraliser et durcir les accès web  
+4) 🔔 **Notifs** : Notifiarr / Discord / alerting services  
+5) 📈 **Monitoring** : Uptime-Kuma + (option) Grafana/Prometheus  
+6) 🧩 **Qualité média** : TRaSH-Guides + sync cohérente
+
+??? tip "Raccourci mental"
+    Sécurité d’abord (**SSH + UFW**) → puis **SSO** → puis **alertes/monitoring** → puis **confort média** (TRaSH/Notifiarr).
+
+---
+
+## Recommandations prioritaires (ordre conseillé)
+
+```mermaid
+flowchart TD
+  A["Fin configuration de base"] --> B["1) Durcissement SSH"]
+  B --> C["2) Pare-feu (UFW) + exposition réseau"]
+  C --> D["3) SSO / Auth (Authelia / OAuth2)"]
+  D --> E["4) Notifications + Qualité (Notifiarr + TRaSH)"]
+  E --> F["5) Monitoring (Uptime-Kuma / Grafana)"]
+  F --> G["6) Extensions (Organizr, Bazarr, Nextcloud, etc.)"]
+```
+
+---
+
+## Pré-checklist (avant de toucher à la sécurité)
+
+- [ ] Vous avez **un accès console** / KVM / panel VPS (au cas où)
+- [ ] Vous avez **au moins une clé SSH** fonctionnelle sur votre utilisateur
+- [ ] Vous gardez **une session SSH ouverte** pendant les changements
+- [ ] Vous notez votre IP / réseau d’administration (si vous restreignez UFW)
+
+!!! danger "Risque principal (lock-out)"
+    Les seules opérations réellement dangereuses ici sont celles qui peuvent vous **verrouiller l’accès** (SSH/UFW).  
+    **Règle d’or : tester avant d’appliquer définitivement.**
+
+---
+
+## Amélioration de la sécurité SSH (durcissement propre)
+
+### Objectifs
+
+- Interdire le login root
+- Privilégier les **clés** (et éventuellement couper le mot de passe)
+- Optionnel : changer le port (utile surtout contre le bruit de scan)
+
+---
+
+### Étape 1 — Modifier `sshd_config`
 
 ```bash
 sudo nano /etc/ssh/sshd_config
 ```
 
-- Changez `PermitRootLogin yes` en `PermitRootLogin no`.
-- Modifiez le port par défaut en choisissant un numéro de port non standard.
+Appliquez ces changements **minimaux** :
 
-N'oubliez pas de redémarrer le service SSH après vos modifications :
+```text
+PermitRootLogin no
+PubkeyAuthentication yes
+PermitEmptyPasswords no
+```
+
+Option **ULTRA** (si votre clé est OK) :
+
+```text
+PasswordAuthentication no
+MaxAuthTries 3
+```
+
+Option port non-standard (ex : 2222) :
+
+```text
+Port 2222
+```
+
+!!! warning "Avant de désactiver le mot de passe"
+    Vérifiez qu’une connexion par clé fonctionne déjà :
+    - ouvrez un **nouveau terminal** et testez une connexion SSH
+    - ne fermez pas votre session actuelle
+
+---
+
+### Étape 2 — Valider la config et recharger (moins risqué qu’un restart)
+
+Test de syntaxe :
+
+```bash
+sudo sshd -t
+```
+
+Rechargez la configuration :
+
+```bash
+sudo systemctl reload sshd
+```
+
+Si `reload` n’est pas disponible :
 
 ```bash
 sudo systemctl restart sshd
 ```
 
-## Sécurisation supplémentaires
+---
 
-1. **Protocole d'identification** : Si ce n'est pas déjà fait, envisagez de mettre en place un protocole d'identification sécurisé, tel que Google OAuth2 ou Authelia, pour renforcer la sécurité de votre système.
-2. **Optimisation de Cloudflare** : Vous pouvez optimiser votre utilisation de Cloudflare en suivant le guide disponible à cette adresse : [Guide d'optimisation Cloudflare](https://projetssd.github.io/ssdv2_docs/InstallationV2/optimisation-cloudflare/). Cela peut contribuer à améliorer les performances et la sécurité de votre système.
-3. **Installation et configuration de UFW** : Vous pouvez installer et configurer Uncomplicated Firewall (UFW) en suivant le guide disponible ici : [Guide d'installation et de configuration de UFW](https://projetssd.github.io/ssdv2_docs/InstallationV2/ufw-Installation-configuration/). Cela vous aidera à gérer les règles de pare-feu pour renforcer la sécurité.
+### Étape 3 — Test de connexion (obligatoire)
 
-## **Outils et guides recommandés**
+- Port standard :
+  ```bash
+  ssh user@host
+  ```
+- Port changé :
+  ```bash
+  ssh -p 2222 user@host
+  ```
 
-**TRaSH-Guides** :
+!!! success "Critère de réussite"
+    Vous devez pouvoir ouvrir **une nouvelle session** SSH après modification.
 
-- Ces guides sont des ressources précieuses pour configurer et optimiser Sonarr, Radarr, et autres applications de gestion de médias. Ils offrent des conseils sur la configuration des qualités, des profils, et des indexeurs pour obtenir les meilleurs résultats possibles.
+??? example "Scénario safe (sans stress)"
+    1) Vous gardez une session ouverte  
+    2) Vous modifiez `sshd_config`  
+    3) `sshd -t` → OK  
+    4) `systemctl reload sshd`  
+    5) Vous testez une **nouvelle** connexion  
+    6) Seulement ensuite : vous désactivez `PasswordAuthentication` (si voulu)
 
-**Notifiarr** :
+---
 
-- Cet outil permet de synchroniser les configurations entre vos applications de gestion de médias et les guides TRaSH, en s'assurant que vos paramètres sont toujours optimisés selon les meilleures pratiques. Notifiarr peut également envoyer des notifications personnalisées pour divers événements sur votre serveur.
+## Pare-feu (UFW) — baseline
 
-**Tautulli** :
+### Principes
 
-- Application de suivi et de surveillance pour Plex Media Server. Elle vous permet de surveiller l'activité de votre serveur Plex, de générer des statistiques détaillées sur l'utilisation de vos médias, de recevoir des notifications sur les nouveaux ajouts et les activités des utilisateurs, et bien plus encore. C'est un outil essentiel pour les administrateurs de serveurs Plex.
+- Autoriser **SSH** (sinon lock-out)
+- N’ouvrir que ce qui doit être exposé (souvent : 80/443 via reverse proxy)
+- Tout le reste doit rester interne (Docker networks, LAN, etc.)
 
-**LunaSea** :
+!!! warning "Ordre critique"
+    Autorisez SSH **avant** d’activer UFW.
 
-- Application mobile conviviale conçue pour gérer des applications telles que Radarr, Sonarr, Lidarr, et d'autres, directement depuis votre appareil. Elle offre une interface propre pour gérer et surveiller vos collections de films, de séries et de musique, ainsi que pour effectuer des recherches et des ajouts.
+---
 
-**nzb360** :
+### Baseline (exemple générique)
 
-- nzb360 est une application mobile qui vous permet de gérer et de contrôler de manière intuitive vos applications de gestion de médias telles que Sonarr, Radarr, Sabnzbd, NZBGet, et plus, directement depuis votre smartphone. C'est un outil puissant pour garder un œil sur votre serveur Plex et les services associés, même lorsque vous êtes en déplacement.
+```bash
+sudo apt update && sudo apt install -y ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+```
 
-## Applications complémentaires selon les besoins
+Autoriser SSH (adapter le port) :
 
-**Organizr** :
+```bash
+# Port standard
+sudo ufw allow 22/tcp
 
-- Portail web personnalisable qui agit comme une interface unifiée pour accéder à vos applications, services et sites web préférés. Vous pouvez regrouper et organiser tous vos liens et applications en un seul endroit, ce qui facilite la navigation et la gestion de vos ressources en ligne.
+# Si SSH sur 2222
+sudo ufw allow 2222/tcp
+```
 
-**Lidarr** :
+Autoriser web (si reverse proxy) :
 
-- Si vous gérez également une collection de musique, Lidarr est à la musique ce que Sonarr est aux séries télé et Radarr aux films. Il peut automatiser le téléchargement de vos pistes musicales préférées.
+```bash
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+```
 
-**Bazarr** :
+Activer et vérifier :
 
-- Pour la gestion des sous-titres, Bazarr est une excellente addition. Il fonctionne bien avec Sonarr et Radarr pour télécharger automatiquement les sous-titres pour vos films et séries.
+```bash
+sudo ufw enable
+sudo ufw status verbose
+```
 
-**Readdarr** :
+!!! success "Critère de réussite"
+    - `ufw status verbose` = **active**
+    - une **nouvelle** connexion SSH fonctionne
 
-- C'est un gestionnaire de livres et de bandes dessinées qui automatise le téléchargement de contenus basés sur des critères que vous définissez. Comme Sonarr et Radarr pour les séries et les films, Readdarr peut gérer vos besoins en matière de littérature et de comics, en gardant votre bibliothèque à jour avec les dernières sorties.
+??? tip "Bon pattern (exposition minimale)"
+    Expose publiquement **80/443** (reverse proxy)  
+    et évite d’exposer directement des ports applicatifs (Portainer, DB, admin panels…).
 
-**Whisparr** :
+---
 
-- Se concentre sur la gestion de collections de films pour adultes, intégrant des fonctionnalités similaires de suivi et d'organisation automatique.
+## Auth / SSO (sécurisation des accès web)
 
-**Jackett** :
+### Pourquoi
 
-- Jackett sert de proxy entre vos applications de téléchargement de torrents et plus de 100 trackers de torrents, ce qui vous permet de chercher dans un large éventail de trackers directement depuis Sonarr, Radarr, etc. Bien que Prowlarr offre des fonctionnalités similaires, Jackett reste une alternative solide ou un complément, surtout si vous avez besoin de prendre en charge des trackers spécifiques non pris en charge par Prowlarr.
+- Centraliser les accès
+- Ajouter 2FA / policies
+- Réduire l’exposition d’interfaces admin
 
-**Jellyfin** :
+Options typiques :
+- **Authelia** (SSO/2FA/policies)
+- **OAuth2** (selon stack)
 
-- Bien que vous utilisiez déjà Plex, Jellyfin peut servir d'alternative open-source ou complémentaire pour la diffusion de médias. C'est une solution de serveur média qui permet de gérer et de diffuser votre collection de médias numériques sans les restrictions liées aux licences.
+!!! tip "Pattern recommandé"
+    Reverse proxy + SSO devant toutes les apps sensibles (Portainer, dashboards, outils admin).
 
-**Mylar** :
+??? example "Ordre efficace"
+    1) Mettre SSO sur Traefik  
+    2) Protéger Portainer / panels  
+    3) Étendre progressivement à toutes les apps exposées
 
-- Pour les amateurs de bandes dessinées, Mylar automatise le téléchargement des comics, similaire à ce que Sonarr fait pour les séries télévisées.
+---
 
-**Calibre-Web** :
+## Cloudflare (optimisation + sécurité)
 
-- Si vous gérez également une collection d'e-books, Calibre-Web peut être une excellente addition. Il permet de gérer et de lire vos livres électroniques dans un navigateur web.
+Objectifs :
+- Performance (cache, routage)
+- Sécurité (règles, protections brute-force, bot fight)
 
-**Requestrr** :
+!!! info "Référence SSDV2"
+    Utilisez la page `Installation/optimisation-cloudflare.md` de votre doc.
 
-- C’est un outil de chatbot qui permet à vos amis et à votre famille de demander des films et des séries TV via Discord ou Telegram directement à votre serveur Sonarr ou Radarr. C'est un excellent moyen de simplifier le processus de demande sans avoir besoin d'accorder un accès direct à vos outils de gestion de médias. Requestrr peut automatiser le processus de demande et d'ajout de contenu à votre serveur Plex, rendant l'expérience plus interactive et conviviale pour les utilisateurs.
+!!! warning "Streaming & cache"
+    Pour Plex/Emby/Jellyfin, appliquez des règles de bypass cache (page rules / règles équivalentes), sinon vous risquez des comportements anormaux et des soucis de conformité.
 
-## Gestion et surveillance du serveur
+---
 
-**Uptime-Kuma** :
+## Notifications & qualité (TRaSH + Notifiarr)
 
-- Outil de surveillance de serveur qui vous permet de surveiller la disponibilité de vos services et sites web en temps réel. Il génère des rapports sur la disponibilité, la latence et les erreurs, vous permettant ainsi de détecter rapidement les problèmes et d'assurer une disponibilité maximale de vos services en ligne.
+### TRaSH-Guides
 
-**Portainer** :
+- Standards de qualité, profils, scores, indexeurs
+- Base incontournable pour Sonarr/Radarr “propres”
 
-- Interface de gestion de conteneurs Docker qui simplifie la gestion et le déploiement de conteneurs Docker sur votre système. Il offre une interface utilisateur intuitive pour gérer vos conteneurs, surveiller leurs performances, effectuer des mises à jour et bien plus encore. C'est un outil puissant pour les utilisateurs de Docker.
+### Notifiarr
 
-**Grafana** ou **Prometheus** :
+- Sync de configurations (alignée TRaSH)
+- Notifications (Discord, événements, santé)
+- Moins d’erreurs silencieuses
 
-- Pour les utilisateurs avancés intéressés par la surveillance et la visualisation des performances de leur serveur. Ces outils peuvent vous aider à surveiller l'utilisation des ressources, les performances du réseau, et plus encore, avec des tableaux de bord personnalisables.
+!!! tip "Valeur ajoutée"
+    La combo TRaSH + Notifiarr = cohérence + moins de drift + meilleur feedback (alertes).
 
-**Glances** :
+---
 
-- Un outil de surveillance de système cross-platform qui peut vous donner un aperçu rapide de l'utilisation des ressources sur votre serveur. Il est moins complexe que Grafana et Prometheus pour une configuration simple et rapide.
+## Monitoring & exploitation
 
-## Exploration de nouvelles fonctionnalités
+### Simple (recommandé)
 
-**Nextcloud** :
+- **Uptime-Kuma** : disponibilité + alertes
+- **Glances** : vue ressources rapide
 
-- Une solution de stockage en cloud personnel qui peut être utilisée pour sauvegarder des configurations, des fichiers médias ou même pour partager des fichiers avec des amis et de la famille de manière sécurisée. Nextcloud peut compléter votre serveur Plex en offrant un stockage et un partage de fichiers flexibles.
+### Avancé
 
-**Home Assistant** :
+- **Prometheus** : collecte de métriques
+- **Grafana** : dashboards, alerting, observabilité
 
-- Pour ceux qui s'intéressent à l'automatisation de la maison, intégrer Home Assistant à votre réseau peut vous permettre de créer des automatisations intéressantes autour de votre expérience de visionnage Plex, comme ajuster l'éclairage ou le thermostat lorsque vous commencez à regarder un film.
+```mermaid
+sequenceDiagram
+  autonumber
+  participant App as Services (Apps)
+  participant Mon as Uptime-Kuma
+  participant Notif as Discord/Email
+  participant Ops as Admin
 
-Et bien d'autres que vous pourrez retrouver ici: https://github.com/Ravencentric/awesome-arr
+  App-->>Mon: Healthcheck OK
+  alt Incident
+    App-->>Mon: Timeout / 5xx
+    Mon-->>Notif: Envoi alerte
+    Notif-->>Ops: Notification
+  else OK
+    Mon-->>Ops: (Optionnel) rapport uptime
+  end
+```
 
-## Félicitations pour avoir parcouru ce guide complet sur la mise en place de votre serveur avec SSDV2 ! **[🎉](https://emojipedia.org/fr/cotillons)**
+!!! success "Critère de réussite"
+    Vous recevez une alerte **utile** (et pas du spam) quand un service tombe, et vous pouvez réagir vite.
 
-Nous espérons que les instructions détaillées, les conseils pratiques, et les recommandations fournies vous ont équipé des connaissances nécessaires pour construire un serveur performant et sécurisé. Vous disposez maintenant d'un environnement robuste pour vos besoins en streaming et en gestion de fichiers multimédias. N'oubliez pas que le voyage ne s'arrête pas ici, continuez d'explorer, d'apprendre et d'adapter votre serveur pour qu'il réponde toujours mieux à vos besoins. Encore une fois, **bravo** et bonne continuation dans vos aventures numériques !
+---
+
+## Applications complémentaires (selon besoins)
+
+- **Organizr** : portail unifié
+- **Bazarr** : sous-titres automatiques
+- **Lidarr** : musique
+- **Readarr** : livres/ebooks *(nom courant : Readarr)*
+- **Mylar** : comics
+- **Calibre-Web** : ebooks via web
+- **Requestrr** : demandes via Discord/Telegram
+- **Jackett** : indexeurs/trackers (alt/complément)
+- **Jellyfin** : alternative open-source à Plex
+- **Whisparr** : gestion adulte *(isolation recommandée)*
+
+!!! info "Ressource"
+    `https://github.com/Ravencentric/awesome-arr`
+
+??? tip "Hygiène d’exploitation"
+    Ajoutez des apps **une par une** :
+    - installe → configure → valide → monitor → seulement ensuite la suivante.
+
+---
+
+## Validation & rollback (ULTRA pro)
+
+### Validation rapide (après changements SSH/UFW)
+
+- [ ] Nouvelle connexion SSH OK
+- [ ] UFW actif + statut cohérent
+- [ ] Reverse proxy accessible (si exposé)
+- [ ] Apps admin non exposées directement (si SSO en place)
+
+!!! success "Definition of Done"
+    Si SSH et UFW sont validés **sans lock-out**, le socle sécurité est en place.
+
+---
+
+### Rollback SSH (si problème)
+
+Si vous avez accès console :
+- Remettre temporairement le port / `PasswordAuthentication`
+- `sudo sshd -t` puis `sudo systemctl restart sshd`
+
+!!! danger "Plan de secours"
+    Sans console/panel VPS, un mauvais réglage SSH peut vous bloquer.  
+    Gardez **toujours** une session ouverte tant que ce n’est pas validé.
+
+---
+
+### Rollback UFW (si lock-out via console)
+
+```bash
+sudo ufw disable
+```
+
+---
+
+## Feuille de route 30 / 60 / 90 jours
+
+=== "J+30 — Sécurité & stabilité"
+    - SSH durci + UFW baseline
+    - Uptime-Kuma + alertes
+    - Sauvegardes (configs + données critiques)
+
+=== "J+60 — Confort & cohérence"
+    - TRaSH appliqué + Notifiarr
+    - Portail (Organizr)
+    - Sous-titres (Bazarr) si besoin
+
+=== "J+90 — Observabilité & évolutions"
+    - Grafana/Prometheus (si utile)
+    - Nextcloud (sauvegarde/partage)
+    - Home Assistant (automatisations)
+
+---
+
+## Félicitations 🎉
+
+Vous avez maintenant un socle solide et extensible.  
+Le “vrai luxe” en self-hosting, c’est : **sécurité maîtrisée**, **monitoring**, **alertes utiles**, et **automatisations fiables**.
+
+!!! success "Prochaine étape"
+    Appliquez d’abord **SSH + UFW**, validez, puis ajoutez **SSO** et enfin **notifications/monitoring**.

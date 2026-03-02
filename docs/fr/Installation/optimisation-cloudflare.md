@@ -1,99 +1,249 @@
-# Optimisation Cloudflare
+---
+title: Optimisation Cloudflare — SSDV2 (Traefik / Docker)
+description: Réglages Cloudflare recommandés (SSL/TLS, certificats de périphérie, firewall, vitesse, cache, page rules) pour un usage seedbox/Traefik, avec précautions (HSTS, TOS, bypass cache streaming).
+tags:
+  - ssdv2
+  - cloudflare
+  - traefik
+  - security
+  - tls
+  - firewall
+  - caching
+  - plex
+---
 
-**1. SSL/TLS Options**  
-<br>
-Activer **Full SSL mode**  
-<br>
-![68747470733a2f2f77696b692e73637269707473656564626f78646f636b65722e636f6d2f75706c6f6164732f696d616765732f67616c6c6572792f323032302d31312f7363616c65642d313638302d2f73736c2d746c732e706e67](https://user-images.githubusercontent.com/64525827/105626452-ebf35a00-5e2f-11eb-991f-a491e98fd1b5.png)
- 
-### Puis dans l'onglet Certificats de périphérie  
+!!! abstract "Abstract"
+    Cette page propose une configuration Cloudflare **recommandée** pour un environnement SSDV2 (Traefik/Docker) :  
+    **SSL/TLS (Full)**, durcissement TLS (1.2+ / TLS 1.3), options de certificats de périphérie, règles firewall (pays/IP), réglages de sécurité (Bot Fight Mode, Browser Integrity Check) et surtout des **règles de contournement du cache** pour les services de streaming (Plex/Emby/Jellyfin).  
+    Objectif : **sécurité + stabilité + conformité** (notamment sur le plan gratuit).
+
+---
+
+## TL;DR
+
+1) 🔐 SSL/TLS = **Full**  
+2) 🔁 Always Use HTTPS = **ON**  
+3) 🧊 Cache = **Standard**, mais **bypass streaming** (Plex/Emby/Jellyfin)  
+4) 🧱 Firewall = règles simples + whitelist IP maison/VPN  
+5) ⚠️ HSTS = **uniquement après validation complète**
+
+??? tip "Principe premium"
+    Cloudflare = **edge security & TLS**.  
+    Traefik = **routage & contrôle d’accès**.  
+    Streaming = **pas de cache** côté Cloudflare.
+
+---
+
+## Objectif
+
+- 🔐 Sécuriser les accès (TLS, HTTPS forcé, protections Cloudflare)
+- 🧱 Réduire le trafic malveillant (firewall rules, bot protections)
+- ⚡ Améliorer la performance quand pertinent (Brotli, optimisations)
+- 🎬 Éviter les problèmes de cache/proxy sur les médias (Plex, etc.)
+- ✅ Rester conforme aux règles Cloudflare (notamment en plan gratuit)
+
+---
+
+## Vue d’ensemble (ordre conseillé)
+
+```mermaid
+flowchart TD
+  A["1) SSL/TLS"] --> B["2) Edge Certificates"]
+  B --> C["3) Firewall (Rules/Tools/Settings)"]
+  C --> D["4) Vitesse (minify/brotli/loader)"]
+  D --> E["5) Caching (niveau/TTL/Always Online)"]
+  E --> F["6) Règles de bypass streaming (Plex/Emby/Jellyfin)"]
+  F --> G["Validation + (option) HSTS"]
+```
+
+---
+
+## 1) SSL/TLS Options
+
+### Mode SSL/TLS
+
+Activez **Full SSL mode**.
+
+![SSL/TLS Full](https://user-images.githubusercontent.com/64525827/105626452-ebf35a00-5e2f-11eb-991f-a491e98fd1b5.png)
+
+!!! tip "Pourquoi Full ?"
+    Le trafic est chiffré :
+    - entre l’utilisateur et Cloudflare,
+    - et entre Cloudflare et votre serveur.
+
+---
+
+## 2) Edge Certificates (Certificats de périphérie)
+
+Dans **Certificats de périphérie**, appliquez :
 
 ![](https://user-images.githubusercontent.com/64525827/105626484-3543a980-5e30-11eb-8d2d-37657b581a0a.png)
- 
-Always Use HTTPS: **ON**  ==> Redirige automatiquement toutes les demandes http vers https.  
 
-HTTP Strict Transport Security (HSTS): **Enable**  
-(Attention). HSTS améliore le niveau de sécurité. Cependant activez cette option avec précaution. Tout problème / changement de certificat (par exemple, la suspension de Cloudflare) peut vous empêcher d'accéder à vos services (vous pouvez toujours y accéder localement avec IP: port). Je recommande donc de ne l'activer qu'après vérification que tout fonctionne parfaitement.   
-<br>
-Minimum TLS Version: **1.2**  
-Seules les connexions avec la version TLS 1.2 ou ultérieure seront autorisées pour une sécurité améliorée.  
-<br>
-Opportunistic Encryption: **ON**  
-Le chiffrement opportuniste permet aux navigateurs de bénéficier des performances améliorées de HTTP / 2 en leur faisant savoir que votre site est disponible via une connexion chiffrée.  
-<br>
-TLS 1.3: **ON**  
-TLS 1.3 est la version la plus récente, la plus rapide et la plus sécurisée du protocole TLS. Activez-le.  
-<br>
-Automatic HTTPS Rewrites: **ON**  
-Cette option corrige l'avertissement de contenu mixte des navigateurs en réécrivant automatiquement les requêtes HTTP en HTTPS.  
-<br>
-Certificate Transparency Monitoring: **ON**  
-Cloudflare envoie un e-mail lorsqu'une autorité de certification émet un certificat pour votre domaine. Ainsi, lorsque votre certificat LetsEncrypt est renouvelé, vous recevrez un email.  
-<br>
-**2. Firewall**  
-<br>
-**Firewall Rules**  
-Sous Règles de pare-feu, le plan gratuit vous permet de créer jusqu'à 5 règles.
+- **Always Use HTTPS** : **ON**
+- **Minimum TLS Version** : **1.2**
+- **TLS 1.3** : **ON**
+- **Automatic HTTPS Rewrites** : **ON**
+- **Certificate Transparency Monitoring** : **ON**
 
-En utilisant cette fonction, vous pouvez bloquer certains types de trafic. Par exemple, je bloque toutes les demandes en provenance de Chine. Vous pouvez également choisir d'autoriser l'accès uniquement à partir des pays dont vous savez que vous accéderez à vos applications et de bloquer le reste.  
-<br>
-![cloudflare-firewall-rules-740x335](https://user-images.githubusercontent.com/64525827/105626846-f5ca8c80-5e32-11eb-94a7-663d277006a4.png)
+### HSTS (avec prudence)
 
+- **HTTP Strict Transport Security (HSTS)** : **Enable** *(seulement quand stable)*
 
-#### Firewall Tools
-Vous pouvez également utiliser la section Outils pour mettre en place certains blocs ou autorisations. Vous pouvez même définir une règle pour le trafic entrant.
+!!! danger "HSTS : risque de lock-out (web)"
+    Activez HSTS **uniquement après** validation complète :
+    - tous les sous-domaines OK,
+    - certificats OK,
+    - aucun besoin “temporaire” de repasser en HTTP,
+    - plan de secours prêt (accès direct `IP:PORT` si nécessaire).
 
-Dans l'exemple ci-dessous, je mets en liste blanche le trafic provenant de l'adresse IP WAN de mon domicile afin que toutes les demandes provenant de mon adresse IP domestique soient autorisées et non bloquées ou contestées.  
+---
 
-![cloudflare_ip_whitelist-740x309](https://user-images.githubusercontent.com/64525827/105626853-febb5e00-5e32-11eb-8322-8bb965180b13.png)
+## 3) Firewall
 
+### Firewall Rules (plan gratuit : 5 règles)
 
-#### Firewall Settings
+Sous **Règles de pare-feu**, le plan gratuit permet jusqu’à 5 règles.
 
-#### Security Level: **High**  
-Blocage de tous les visiteurs qui ont montré un comportement menaçant au cours des 14 derniers jours.  
+Cas d’usage typiques :
+- bloquer des pays à fort bruit (si cohérent avec votre usage)
+- autoriser uniquement les pays où vous vous connectez
+- bloquer le reste
 
-* Bot Fight Mode: **ON**  
-Gestion des demandes correspondantes aux modèles de bots connus avant qu'ils ne puissent accéder à votre site.  
+![Firewall Rules](https://user-images.githubusercontent.com/64525827/105626846-f5ca8c80-5e32-11eb-94a7-663d277006a4.png)
 
-* Challenge Passage: **30 Minutes**  
-Spécifiez la durée pendant laquelle un visiteur, qui a réussi un Captcha ou JavaScript, peut accéder à votre site Web.  
+!!! tip "Stratégie premium"
+    **Whitelist** (IP maison/VPN) + **restrictions pays** (si applicable) = grosse réduction du bruit et des scans.
 
-* Browser Integrity Check: **ON**  
-Évaluez les en-têtes HTTP du navigateur de votre visiteur pour les menaces. Si une menace est détectée, une page de blocage sera envoyée.  
+---
 
-* 3. Vitesse 
-Ceci concerne les serveur à fort traffic notamment pour un site web, peu d impact sur nos sedbox  
+### Firewall Tools (whitelist IP)
 
-* Auto Minify: **OFF**  
-Réduisez la taille du fichier du code source sur votre site Web. Mais si cela n'est pas fait correctement, cela peut avoir un  impact sur Javascript et CSS, et provoquer un comportement inattendu.  
+Dans **Outils**, vous pouvez whitelist une IP (ex : IP WAN de votre domicile).
 
-* Brotli: **ON**  
-Accélère les temps de chargement des pages pour le trafic HTTPS en appliquant la compression Brotli  
+![IP whitelist](https://user-images.githubusercontent.com/64525827/105626853-febb5e00-5e32-11eb-8322-8bb965180b13.png)
 
-* Rocket Loader: **OFF**  
+!!! warning "IP dynamique"
+    Si votre IP WAN change souvent, privilégiez :
+    - un VPN à IP fixe,
+    - ou une plage IP (si dispo),
+    - ou adaptez la whitelist quand nécessaire.
 
+---
+
+### Firewall Settings (réglages recommandés)
+
+- **Security Level** : **High**
+- **Bot Fight Mode** : **ON**
+- **Challenge Passage** : **30 Minutes**
+- **Browser Integrity Check** : **ON**
+
+!!! warning "Compatibilité clients"
+    Un niveau de challenge trop agressif peut perturber certains clients/applications.  
+    En cas de souci : baissez le niveau ou whitelist votre IP.
+
+---
+
+## 4) Vitesse
+
+Impact généralement modéré pour une seedbox/Traefik.
+
+Réglages recommandés :
+
+- **Auto Minify** : **OFF**
+- **Brotli** : **ON**
+- **Rocket Loader** : **OFF**
 
 ![](https://user-images.githubusercontent.com/64525827/105626862-14c91e80-5e33-11eb-866e-87f642d14ef1.png)
 
-* 4. Caching
+!!! info "Pourquoi Minify OFF ?"
+    Sur des apps web “complexes”, minifier côté Cloudflare peut parfois casser JS/CSS.
 
-Caching Level: **Standard**  
-Déterminez la quantité de contenu statique de votre site Web que Cloudflare doit mettre en cache.  
+---
 
-Browser Cache TTL: **1 hour**  
-Pendant cette période, le navigateur charge les fichiers à partir de son cache local, accélérant ainsi le chargement des pages. Mettre une durée trop importante peut vous forcer à vider le cache de votre navigateur pour voir les changements.  
+## 5) Caching
 
-Always Online: **OFF**  
-Si votre serveur tombe en panne, Cloudflare servira les pages "statiques" de votre application Web à partir du cache  
+- **Caching Level** : **Standard**
+- **Browser Cache TTL** : **1 hour**
+- **Always Online** : **OFF**
 
-**5. Page Rules**  
-Ensuite, nous passons à l'un des paramètres Cloudflare les plus importants pour Docker et Traefik. Ceci est essentiel, en particulier, si vous exécutez des serveurs de médias (par exemple Plex, Emby, Jellyfin, etc.).
+!!! tip "Pattern recommandé"
+    Cache standard global + exceptions via règles/bypass pour les apps sensibles (notamment streaming).
 
-Les règles de page offrent un contrôle plus fin et basé sur les URL des paramètres de Cloudflare. Certaines pages de notre configuration doivent contourner les ressources de Cloudflare. Dans mon cas, je voulais éviter les applications suivantes d'utiliser le cache Cloudflare: plex, Emby, Jellyfin  
+---
 
-![](https://camo.githubusercontent.com/cda7414ca78e8e8d5ea5754390e57c0681fce71b/68747470733a2f2f692e696d6775722e636f6d2f513433304c6b7a2e706e67)  
+## 6) Règles de bypass streaming (indispensable)
 
-![](https://camo.githubusercontent.com/c2cb6903c9a1279b99daeddf09430589bfe29913/68747470733a2f2f692e696d6775722e636f6d2f706c57456c6b662e706e67)  
+Pour Docker + Traefik, surtout en serveur média (Plex / Emby / Jellyfin), c’est un réglage majeur.
 
-C'est important pour se conformer aux conditions générales de Cloudflare pour le plan gratuit. Sinon vous pourriez être banni par Cloudflare pour avoir enfreint leur TOS.
+Objectif :
+- éviter cache/proxy “inadaptés” sur le streaming
+- éviter bugs de lecture et comportements inattendus
+- préserver la conformité Cloudflare (plan gratuit)
+
+Illustrations :
+
+![](https://camo.githubusercontent.com/cda7414ca78e8e8d5ea5754390e57c0681fce71b/68747470733a2f2f692e696d6775722e636f6d2f513433304c6b7a2e706e67)
+
+![](https://camo.githubusercontent.com/c2cb6903c9a1279b99daeddf09430589bfe29913/68747470733a2f2f692e696d6775722e636f6d2f706c57456c6b662e706e67)
+
+### Recommandation (à appliquer)
+
+Créez des règles (Page Rules ou équivalents selon l’UI Cloudflare) pour **désactiver cache / optimiser** sur :
+
+- `plex.votre_domaine.fr/*`
+- `emby.votre_domaine.fr/*`
+- `jellyfin.votre_domaine.fr/*`
+
+!!! danger "Conformité Cloudflare (plan gratuit)"
+    Utiliser Cloudflare comme proxy/caching pour du streaming média sans exceptions adaptées peut être incompatible avec les conditions Cloudflare et vous exposer à un **ban**.  
+    La règle pratique : **bypass cache** sur les services de streaming.
+
+---
+
+## Checklist (validation)
+
+- [ ] SSL/TLS mode = **Full**
+- [ ] Always Use HTTPS = **ON**
+- [ ] Minimum TLS = **1.2**
+- [ ] TLS 1.3 = **ON**
+- [ ] Automatic HTTPS Rewrites = **ON**
+- [ ] CT Monitoring = **ON**
+- [ ] Firewall Security Level = **High**
+- [ ] Bot Fight Mode = **ON**
+- [ ] Browser Integrity Check = **ON**
+- [ ] Brotli = **ON**
+- [ ] Auto Minify = **OFF**
+- [ ] Rocket Loader = **OFF**
+- [ ] Cache Level = **Standard**
+- [ ] Browser Cache TTL = **1 hour**
+- [ ] Bypass streaming actif (Plex/Emby/Jellyfin)
+- [ ] HSTS activé **uniquement** après validation complète
+
+!!! success "Résultat attendu"
+    - Navigation HTTPS stable (apps/panels)  
+    - Moins de bruit/attaques  
+    - Aucun effet de bord sur le streaming  
+    - Posture “clean” côté Cloudflare
+
+---
+
+## Diagramme de séquence (requête via Cloudflare)
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor U as Utilisateur
+  participant CF as Cloudflare
+  participant T as Traefik
+  participant S as Service (Plex/Apps)
+
+  U->>CF: Requête HTTPS (domaine)
+  alt Règle bypass streaming
+    CF-->>T: Proxy direct (pas de cache media)
+  else Trafic standard
+    CF->>CF: Cache/optimisations selon règles
+    CF-->>T: Forward vers Traefik
+  end
+  T-->>S: Routage vers service interne
+  S-->>U: Réponse (panel/stream)
+```

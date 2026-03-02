@@ -1,53 +1,147 @@
-# Lancement du script et configuration 
+---
+title: Lancement du script et configuration — SSDV2
+description: Guide premium pour exécuter seedbox.sh, choisir la langue, définir les répertoires, gérer le groupe docker, configurer auth + Cloudflare, installer zurg/rclone/RDTClient et créer les dossiers médias.
+tags:
+  - ssdv2
+  - installation
+  - seedbox
+  - docker
+  - cloudflare
+  - traefik
+  - zurg
+  - rclone
+  - rdtclient
+---
 
-### Soyez attentif aux instructions !
+!!! abstract "Abstract"
+    Cette section couvre le **premier lancement** du script SSDV2 (`seedbox.sh`) et les choix de configuration initiaux :  
+    langue, chemins de stockage, ajout de l’utilisateur au groupe Docker (avec reconnexion obligatoire), configuration de l’authentification (basique/OAuth/Authelia), intégration Cloudflare, installation des composants (Traefik, zurg, rclone, RDTClient) et création des dossiers médias (incl. setup 4K).
 
-Le script vous guidera à travers plusieurs étapes de configuration, y compris le choix de la langue, la configuration des dossiers, et la gestion des permissions.
+---
 
-Des messages d'alerte peuvent apparaître pour vous informer sur des spécificités de l'installation, comme les restrictions liées à la restauration des données et l'ajout de votre utilisateur au groupe docker. Il est important de lire attentivement ces messages et de procéder selon les instructions.
+## TL;DR
 
-Par exemple, lorsque votre utilisateur sera ajouté au groupe Docker, vous serez invité à vous déconnecter / reconnecter pour que les changements soient effectués.
+1) Lancez `./seedbox.sh` → choisissez la langue  
+2) Définissez le répertoire seedbox (`/home/VOTRE_USER/seedbox`)  
+3) Si ajout au groupe `docker` → **reconnexion obligatoire** → relancez `./seedbox.sh`  
+4) Renseignez auth (mdp/mail/domaine)  
+5) Cloudflare (recommandé) : `y` + email + API key  
+6) Traefik : sous-domaine `n`, auth `1` (basique)  
+7) Mode : `1) zurg - rclone - RDTClient` + token RD  
+8) RDTClient : sous-domaine `n`, auth `1`  
+9) Créez les dossiers `Medias` → reconnexion finale → OK ✅
 
-### Lancement du script
+??? tip "Principe premium"
+    Dès qu’on touche à **permissions/groupe Docker**, on applique :  
+    **changer → reconnecter → relancer**.  
+    Ça évite 80% des “ça marche pas” liés au groupe `docker`.
 
-Pour démarrer l'installation, naviguez vers le répertoire du script et exécutez-le :
+---
+
+## Soyez attentif aux instructions (très important)
+
+Le script vous guide à travers plusieurs étapes, notamment :
+- choix de la langue,
+- configuration des dossiers,
+- gestion des permissions,
+- installation des composants.
+
+Des messages d’alerte peuvent apparaître (restauration, permissions, groupe Docker).  
+**Lisez-les attentivement** et appliquez les actions demandées.
+
+!!! warning "Point critique : groupe Docker"
+    Quand votre utilisateur est ajouté au groupe `docker`, une **déconnexion / reconnexion** est nécessaire.  
+    Si vous continuez sans reconnecter, vous risquez des erreurs (Docker inaccessible) ou un comportement incohérent.
+
+---
+
+## Vue d’ensemble (workflow)
+
+```mermaid
+flowchart TD
+  A["Lancer ./seedbox.sh"] --> B["Choisir la langue"]
+  B --> C["Message restauration (info)"]
+  C --> D["Configurer répertoire seedbox (/home/VOTRE_USER/seedbox)"]
+  D --> E{"Utilisateur dans groupe docker ?"}
+  E -->|Non| F["Ajout au groupe docker\n+ obligation reconnexion"]
+  F --> G["Déconnexion / reconnexion SSH"]
+  G --> H["Relancer ./seedbox.sh"]
+  E -->|Oui| H
+  H --> I["Configurer auth basique (mdp/mail/domaine)"]
+  I --> J{"DNS Cloudflare ?"}
+  J -->|Oui| K["Entrer mail + API Cloudflare\nRépondre y"]
+  J -->|Non| L["Gestion DNS manuelle"]
+  K --> M["Installation composants (Ansible tasks)"]
+  L --> M
+  M --> N["Traefik : sous-domaine ? (n)"]
+  N --> O["Traefik auth : 1 (basique)"]
+  O --> P["Choisir mode : 1 (zurg-rclone-RDTClient)"]
+  P --> Q["Entrer token Zurg (Real-Debrid)"]
+  Q --> R["rdtclient sous-domaine ? (n)"]
+  R --> S["rdtclient auth : 1 (basique)"]
+  S --> T["Créer dossiers Medias (.../stop)"]
+  T --> U["Message final : reconnexion requise"]
+  U --> V["Déconnexion / reconnexion SSH"]
+  V --> W["Accueil script OK ✅"]
+```
+
+---
+
+## Lancement du script
+
+Naviguez dans le répertoire du script et exécutez-le :
 
 ```bash
 cd /home/${USER}/seedbox-compose && ./seedbox.sh
 ```
 
-### Choix de la langue
+---
 
-Vous serez invité à choisir la langue pour l'interface :
+## Choix de la langue
+
+Vous serez invité à choisir la langue pour l’interface :
 
 ```bash
 1. Anglais/English
 2. Français/French
 ```
 
-### Message relatif à une éventuelle restauration d’installation
+Choisissez `2` pour Français.
 
-Vous aurez ce message :
+---
+
+## Message relatif à une éventuelle restauration
+
+Vous verrez ce message :
 
 ```bash
 Actuellement, la restauration ne fonctionne que si le script a été installé depuis le même répertoire que celui qui a servi à faire la sauvegarde, et a été installé sur la même destination.
 ```
 
-Vous pouvez appuyer sur ENTRÉE pour passer à la suite.
+Appuyez sur **Entrée** pour continuer.
 
-### Configuration des répertoires
+!!! info "Pourquoi ce message ?"
+    La restauration dépend du **chemin d’installation** et de la **destination** de sauvegarde : même répertoire, même cible.
 
-Le script demandera le répertoire de stockage pour les réglages des containers. Utilisez le chemin par défaut ou spécifiez un nouveau chemin.
+---
+
+## Configuration des répertoires
+
+Le script demande le répertoire de stockage pour les réglages des containers.  
+Utilisez le chemin par défaut (ou adaptez selon vos besoins) :
 
 ```bash
 /home/VOTRE_USER/seedbox
 ```
 
-Pensez à remplacer VOTRE_USER par le vôtre créé au préalable.
+!!! tip "Rappel"
+    Remplacez `VOTRE_USER` par votre utilisateur Linux créé au préalable.
 
-### Ajout de votre utilisateur au groupe Docker
+---
 
-Vous aurez ce message :
+## Ajout de votre utilisateur au groupe Docker
+
+Vous pouvez voir ce message :
 
 ```bash
 IMPORTANT !
@@ -56,80 +150,104 @@ Votre utilisateur n'était pas dans le groupe docker
 Il a été ajouté, mais vous devez vous déconnecter/reconnecter pour que la suite du process puisse fonctionner
 ```
 
-Le script a automatiquement ajouté le nouvel utilisateur que vous avez créé et sur lequel vous devez être actuellement connecté au groupe Docker.
-Pour que la modification prenne effet il est impératif de se déconnecter / reconnecter, en cas d’oubli voici comment faire: 
+Le script a ajouté votre utilisateur au groupe `docker`.  
+Pour que la modification prenne effet : **déconnexion / reconnexion obligatoire**.
 
-- Fermez la fenêtre Putty pour terminer la session en cours.
-- Ouvrez Putty à nouveau.
-- Lors de la connexion, pensez à utiliser les informations de connexion de votre utilisateur non-root.
+!!! danger "Risque (Docker KO)"
+    Si vous ne reconnectez pas, votre session ne prendra pas le nouveau groupe en compte → Docker peut refuser certaines actions.
 
-### Relancer le script
+### Comment faire (PuTTY)
 
-Relancer la commande permettant de lancer le script :
+- Fermez la fenêtre PuTTY
+- Ouvrez PuTTY à nouveau
+- Reconnectez-vous avec votre utilisateur **non-root**
+
+---
+
+## Relancer le script (après reconnexion)
+
+Relancez :
 
 ```bash
 cd /home/${USER}/seedbox-compose && ./seedbox.sh
 ```
 
-Vous aurez ce message :
+Vous verrez :
 
 ```bash
 Certains composants doivent encore être installés/réglés
 Cette opération va prendre plusieurs minutes selon votre système
 ```
 
-Vous pouvez appuyer sur ENTRÉE pour passer à la suite.
+Appuyez sur **Entrée**.
 
-### Configuration de l'authentification basique
+---
 
-Pour chaque message suivez l'indication :
+## Configuration de l’authentification basique
+
+Suivez les prompts :
 
 ```bash
 ↘️ Mot de passe | Appuyer sur [Enter] :
 ```
 
-Entrer un mot de passe, puis confirmer avec entrée
+Entrez un mot de passe puis **Entrée**.
 
 ```bash
 ↘️ Mail | Appuyer sur [Enter] :
 ```
 
-Entrer votre adresse mail, puis confirmer avec entrée
+Entrez votre email puis **Entrée**.
 
 ```bash
 ↘️ Domaine | Appuyer sur [Enter] :
 ```
 
-Entrer votre nom de domaine (sans le https://, exemple: domaine.fr), puis confirmer avec entrée
+Entrez votre domaine **sans** `https://` (ex : `domaine.fr`) puis **Entrée**.
 
-### Gestion des DNS avec Cloudflare
+---
 
-Si vous souhaitez utiliser Cloudflare pour la gestion des DNS, le script vous demandera votre adresse mail Cloudflare ainsi que votre clé API.
+## Gestion des DNS avec Cloudflare (recommandé)
 
-Vous aurez ce message:
+Le script demande :
 
 ```bash
 Souhaitez vous utiliser les DNS Cloudflare ? (y/n)
 ```
 
-Nous vous recommandons de les utiliser afin que le script s’occupe de leur gestion automatiquement.
+Répondez :
 
-Répondez “y”.
+- `y`
 
-### Installation des composants
+Puis fournissez :
+- votre email Cloudflare
+- votre API key Cloudflare
 
-Dans cette section, vous serez guidé à travers l'installation des divers composants nécessaires pour votre serveur.
+!!! tip "Pourquoi Cloudflare ?"
+    Le script peut automatiser la gestion DNS, ce qui réduit fortement les erreurs et accélère l’installation.
 
-Lorsque vous exécutez le script, il peut prendre un certain temps et rester en pause sur les tâches suivantes :
+---
+
+## Installation des composants (phase longue)
+
+Pendant l’exécution, le script peut sembler “bloqué” sur :
 
 ```
 TASK [Add Debian repositories] ***************************************************************
 TASK [Install common packages] ***************************************************************
 ```
 
-Ne vous inquiétez pas, laissez-le s'exécuter, car la durée dépend de la puissance de votre serveur. Vous verrez le script redémarrer après un certain temps.
+C’est normal : laissez-le s’exécuter.
 
-Ensuite, vous passerez par les étapes suivantes :
+!!! info "Comportement attendu"
+    La durée dépend de la puissance du serveur.  
+    Une phase silencieuse peut être normale : ne stoppez pas le script.
+
+---
+
+## Traefik — sous-domaine et authentification
+
+Sous-domaine :
 
 ```bash
 Adresse par défault: https://traefik.cinecast.tv
@@ -137,17 +255,27 @@ Adresse par défault: https://traefik.cinecast.tv
 Souhaitez-vous personnaliser le sous-domaine ? (y/n)
 ```
 
-Répondez "n". Vous pourrez les personnaliser plus tard, pour un suivi plus simple du guide il n’est pas recommandé de le faire pour l’instant.
+Répondez :
 
----
+- `n`
+
+Authentification Traefik :
 
 ```bash
 Choix de l'authentification pour Traefik [ Entrée ] : 1 => basique | 2 => oauth | 3 => authelia
 ```
 
-Pour le moment, choisissez "basique" en tapant "1". Vous pourrez installer Oauth Google ou Authelia plus tard.
+Choisissez :
+
+- `1` (basique)
+
+??? tip "Recommandation"
+    Gardez “basique” au début pour suivre le guide sans divergence.  
+    Vous pourrez migrer vers OAuth Google ou Authelia ensuite.
 
 ---
+
+## Choix du type d’installation
 
 ```bash
 Les composants sont maintenants tous installés/réglés, poursuite de l'installation
@@ -159,47 +287,79 @@ Les composants sont maintenants tous installés/réglés, poursuite de l'install
 Votre choix :
 ```
 
-Tapez "1" et confirmez pour sélectionner "1) Installation zurg - rclone - RDTclient".
+Choisissez :
+
+- `1`
 
 ---
+
+## Zurg — token Real-Debrid
 
 ```bash
 Token API pour Zurg (https://real-debrid.com/apitoken) | Appuyez sur [Entrée]:
 ```
 
-Fournissez votre clé API, disponible sur http://real-debrid.com/apitoken.
+Collez votre token (ex. `http://real-debrid.com/apitoken`) puis **Entrée**.
+
+!!! warning "Copier/coller"
+    Un token incomplet (espace, retour ligne) = erreurs plus tard.  
+    Copiez-collez proprement, puis validez.
 
 ---
+
+## RDTClient — sous-domaine et authentification
+
+Sous-domaine :
 
 ```bash
 Personnaliser le sous-domaine pour rdtclient : (y/n) ?
 ```
 
-Répondez "n".
+Répondez :
 
----
+- `n`
+
+Authentification :
 
 ```bash
 Authentification rdtclient [ Entrée ] : 1 => basique (par défaut) | 2 => oauth | 3 => authelia | 4 => aucune
 ```
 
-Répondez "1", pour l’instant comme vu plus haut.
+Choisissez :
+
+- `1`
 
 ---
+
+## Création des dossiers médias
+
+Le script demande :
 
 ```bash
 Noms de dossiers à créer dans Medias (ex : Films, Series, Films d'animation, etc.) | Appuyez sur [Entrée] | Tapez "stop" une fois terminé.
 ```
 
-La configuration classique : Films, Series, stop.
-Pour un setup avec 4K : Films, Series, Films4K, Series4K, stop.
-Vous devez entrer le nom, puis appuyer sur Entrée, et ainsi de suite, jusqu'à "stop". Pour ce guide, nous suivrons l'exemple avec 4K.
+=== "Configuration classique"
+    - `Films`
+    - `Series`
+    - `stop`
+
+=== "Configuration 4K (si bibliothèques séparées)"
+    - `Films`
+    - `Series`
+    - `Films4K`
+    - `Series4K`
+    - `stop`
+
+> Entrez un nom, **Entrée**, puis le suivant… jusqu’à `stop`.
 
 ![creation_dossier_media.png](https://i.imgur.com/CNsarEa.png)
 
 ---
 
-Après avoir terminé ces étapes, vous verrez le message suivant :
+## Fin de l’installation : reconnexion obligatoire
+
+Vous verrez un message similaire :
 
 ```
 Pour bénéficier des changements, vous devez vous déconnecter/reconnecter.
@@ -209,10 +369,35 @@ cd /home/ubuntu/seedbox-compose
 ./seedbox.sh
 ```
 
-Déconnectez-vous et reconnectez-vous pour appliquer les changements.
+Appliquez la reconnexion :
 
-- Fermez la fenêtre Putty pour terminer la session en cours.
-- Ouvrez Putty à nouveau.
-- Lors de la connexion, pensez à utiliser les informations de connexion de votre utilisateur non-root.
+- Fermez PuTTY
+- Reconnectez-vous avec votre utilisateur **non-root**
 
-### Vous avez réussi à accéder à l'accueil du script. Bravo. **[👍](https://emojipedia.org/thumbs-up)**
+!!! success "Résultat attendu"
+    Après reconnexion, vous accédez à l’accueil du script sans erreur et Docker fonctionne correctement.
+
+---
+
+## Checklist finale ✅
+
+- [ ] Script lancé (`./seedbox.sh`)
+- [ ] Langue choisie
+- [ ] Répertoire seedbox défini (`/home/VOTRE_USER/seedbox`)
+- [ ] Utilisateur ajouté au groupe docker + reconnexion effectuée
+- [ ] Auth basique saisie (mdp/mail/domaine)
+- [ ] Cloudflare DNS activé (`y`) (si applicable)
+- [ ] Traefik : sous-domaine non personnalisé (`n`)
+- [ ] Traefik : auth basique (`1`)
+- [ ] Mode install : `1) zurg - rclone - RDTClient`
+- [ ] Token Zurg saisi
+- [ ] rdtclient : sous-domaine non personnalisé (`n`)
+- [ ] rdtclient : auth basique (`1`)
+- [ ] Dossiers médias créés (incl. 4K si besoin)
+- [ ] Reconnexion finale effectuée
+
+---
+
+## Bravo 👍
+
+Vous avez accès à l’accueil du script : vous êtes prêt pour l’installation des applications et la configuration (Plex/Arr/Prowlarr/Overseerr).

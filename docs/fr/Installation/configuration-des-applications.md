@@ -1,70 +1,183 @@
-# Configuration des applications
+---
+title: Configuration des applications — Ordre recommandé (SSDV2)
+description: Procédure premium, étape par étape, pour configurer Plex, RDTClient, Radarr, Sonarr, Prowlarr et Overseerr (incl. setups 4K). Inclut checklists et diagrammes Mermaid.
+tags:
+  - ssdv2
+  - plex
+  - rdtclient
+  - radarr
+  - sonarr
+  - prowlarr
+  - overseerr
+  - 4k
+---
 
-Pour configurer les applications sur votre serveur, suivez l'ordre recommandé pour optimiser l'intégration et la gestion de vos médias.
-Pensez à remplacer "VOTRE_USER" par votre nom d'utilisateur créé au préalable !
+!!! abstract "Abstract"
+    Cette page décrit l’ordre **recommandé** et les étapes **exactes** pour configurer les applications principales d’un serveur SSDV2 :  
+    **Plex → RDTClient → Radarr/Sonarr (et 4K) → Prowlarr → Overseerr**.  
+    Vous y trouverez : prérequis, checklists, chemins standardisés, paramètres clés, et diagrammes Mermaid (flow + séquence) afin d’assurer une intégration fiable et une gestion média sans friction.
+
+---
+
+## TL;DR
+
+1) ✅ **DNS/Reverse proxy** OK (tous les sous-domaines accessibles)  
+2) ✅ **Plex** : bibliothèques + accès distant validé  
+3) ✅ **RDTClient** : API RD + paths corrects  
+4) ✅ **Radarr/Sonarr** : root folders + download client (catégories)  
+5) ✅ **(Option) 4K** : instances + staging `local/<category>`  
+6) ✅ **Prowlarr** : FlareSolverr + indexers + sync apps  
+7) ✅ **Overseerr** : Plex + bibliothèques + Arr (+ 4K) + tests API
+
+??? tip "Principe premium"
+    Si une étape échoue, **ne saute pas la suivante** : corrige et re-teste immédiatement.  
+    90% des problèmes viennent de : **DNS**, **API keys**, **paths**, **categories**.
+
+---
+
+## Pré-requis (avant de commencer)
+
+- Remplacez systématiquement `VOTRE_USER` par votre utilisateur Linux.
+- Vérifiez que vos DNS / reverse-proxy sont opérationnels pour :
+  - `plex.votre_domaine.fr`
+  - `rdtclient.votre_domaine.fr`
+  - `radarr.votre_domaine.fr`
+  - `sonarr.votre_domaine.fr`
+  - `prowlarr.votre_domaine.fr`
+  - `overseerr.votre_domaine.fr`
+
+Chemins utilisés dans ce guide (référence) :
+
+- Médias :
+  - `/home/VOTRE_USER/Medias/Films/`
+  - `/home/VOTRE_USER/Medias/Series/`
+  - `/home/VOTRE_USER/Medias/Films4K/`
+  - `/home/VOTRE_USER/Medias/Series4K/`
+- RDTClient (symlinks & mount) :
+  - `Mapped path` : `/home/VOTRE_USER/local`
+  - `Rclone mount path` : `/home/VOTRE_USER/seedbox/zurg/torrents`
+
+!!! tip "Convention recommandée (zéro friction)"
+    - **Root Folders** = dossiers finaux (Films/Series/4K)
+    - **Download staging** = `/home/VOTRE_USER/local/<category>`
+    - **Mount** = `/home/VOTRE_USER/seedbox/zurg/torrents`
+
+??? example "Exemple de mapping mental"
+    - Radarr télécharge en catégorie `radarr` → staging : `/home/VOTRE_USER/local/radarr`  
+    - Sonarr télécharge en catégorie `sonarr` → staging : `/home/VOTRE_USER/local/sonarr`
+
+---
+
+## Ordre recommandé (très important)
+
+```mermaid
+flowchart TD
+  A["DNS/Reverse Proxy OK"] --> B["1) Plex"]
+  B --> C["2) RDTClient (Real-Debrid)"]
+  C --> D["3) Radarr + Sonarr"]
+  D --> E["4) Instances 4K (Radarr4K / Sonarr4K) (si besoin)"]
+  E --> F["5) Prowlarr (indexers + FlareSolverr)"]
+  F --> G["6) Overseerr (liaison Plex + Arr)"]
+```
+
+---
+
+## Checklist de validation (à cocher au fur et à mesure)
+
+- [ ] Plex accessible et bibliothèques créées
+- [ ] Accès distant Plex validé
+- [ ] RDTClient configuré + API Real-Debrid OK
+- [ ] Radarr root folder + download client OK
+- [ ] Sonarr root folder + download client OK
+- [ ] (Option) Radarr4K/Sonarr4K OK + dossiers `local` créés
+- [ ] Prowlarr : FlareSolverr + indexers + sync apps OK
+- [ ] Overseerr : Plex + bibliothèques + Radarr/Sonarr (et 4K) OK
+
+---
 
 ## Plex
 
-Accédez à Plex via `plex.votre_domaine.fr`, nommez votre serveur et assurer vous que la case “M'autoriser à accéder à mes médias en dehors de ma maison” est bien cochée.
+Accédez à Plex via `plex.votre_domaine.fr`, nommez votre serveur et assurez-vous que la case :
 
-- **Médiathèque** : Ajoutez vos dossiers de médias (Films, Séries, Films4K, Séries4K). Pour chaque type de média, sélectionnez le dossier approprié sous `/home/VOTRE_USER/Medias/`. Penser à désactivez la création de miniatures vidéo pour économiser de l'espace, cela se trouve dans les options avancés lorsque vous ajouter un dossier.
+- **“M'autoriser à accéder à mes médias en dehors de ma maison”** est **cochée**.
 
-Etape par étape :
-1. Dans l'interface utilisateur de Plex, cliquez sur `Ajouter une bibliothèque` pour commencer.
-2. Sélectionnez `Films` ou `Séries TV` selon le type de dossier que vous souhaitez ajouter.
-3. Vous pouvez renommer votre bibliothèque si nécessaire (par exemple, pour les dossiers "Films 4K" et "Séries 4K").
-4. Cliquez sur `Ajouter des dossiers`.
-5. Sélectionnez `Parcourir` et choisissez un dossier multimédia à ajouter. Les dossiers à ajouter se trouvent dans `/home/ubuntu/Medias`.
-6. Cliquez sur le dossier désiré pour l'ouvrir (par exemple, "Films").
-7. Confirmez en cliquant sur le bouton `Ajouter`.
-8. Cliquez sur `Avancé` pour accéder aux paramètres supplémentaires.
-9. Décochez l'option `Activer les miniatures des vidéos` pour économiser de l'espace et des ressources.
-10. Puis vous pouvez ajuster les paramètres selon vos préférences.
+### Ajouter les bibliothèques (Films / Séries / 4K)
 
-En suivant ces étapes, vous aurez ajouté avec succès une nouvelle bibliothèque à votre serveur Plex et organisé selon vos préférences.
+**Médiathèque** : ajoutez vos dossiers de médias sous `/home/VOTRE_USER/Medias/`.
 
-Vous pouvez cliquer sur suivant puis terminé.
+!!! tip "Optimisation stockage/CPU"
+    Désactivez la **création de miniatures vidéo** (très coûteux) dans les options avancées de la bibliothèque.
 
-Une fois arrivé sur l'accueil, entrer dans les paramètres du serveur puis dans le menu latéral de gauche rendez-vous dans :
+#### Étape par étape
 
-- **Accès à distance** : Cocher “Spécifier un port public manuellement” (32400 par défaut) puis cliquer sur “Réessayer” pour permettre l'accès externe.
-- **Bibliothèque** :
-    - Analyser ma bibliothèque automatiquement : coché
-        - Garder cette option cochée permet à Plex de détecter et d'intégrer automatiquement les nouveaux médias ajoutés à vos dossiers de bibliothèque, simplifiant la gestion de votre collection.
-    - Lancer un scan partiel quand un changement est détecté : coché
-        - Cette option optimise les ressources en ne scannant que les dossiers affectés par des modifications, au lieu de toute la bibliothèque, à chaque ajout de nouveau contenu.
-    - Vider la corbeille automatiquement après chaque scan : décoché
-        - La désactivation de cette option laissera le temps à Zurg de retrouver les contenus devenu manquant, cas de suppression de fichiers médias par Real-Debrid.
-    - Autoriser la suppression de media : coché
-        - En cochant cette option, vous permettez la gestion des fichiers médias directement depuis l'interface Plex, offrant une facilité de maintenance de votre bibliothèque.
-    - Générer les aperçus vidéo miniatures : jamais
-        - Régler cette option sur "jamais" réduit la charge sur le serveur et l'espace de stockage requis, car la génération de ces miniatures peut être très gourmande en ressources.
-    - Générer les miniatures pour les chapitres : jamais
-        - Tout comme les aperçus vidéo, ne pas générer de miniatures pour les chapitres économise les ressources du serveur et de l'espace de stockage sans impacter significativement l'expérience utilisateur.
+1. Dans Plex : `Ajouter une bibliothèque`
+2. Choisissez `Films` ou `Séries TV`
+3. Renommez si besoin (ex. “Films 4K”, “Séries 4K”)
+4. `Ajouter des dossiers`
+5. `Parcourir` → sélectionnez le dossier média  
+   Exemple : `/home/VOTRE_USER/Medias/Films`
+6. Confirmez avec `Ajouter`
+7. `Avancé`
+8. Décochez `Activer les miniatures des vidéos`
+9. Ajustez selon préférences
+10. `Suivant` → `Terminé`
+
+### Paramètres serveur Plex recommandés
+
+Une fois sur l’accueil Plex : **Paramètres serveur** → menu latéral gauche :
+
+- **Accès à distance**
+  - Cochez **“Spécifier un port public manuellement”** (32400 par défaut)
+  - Cliquez sur **“Réessayer”**
+
+- **Bibliothèque**
+  - ✅ *Analyser ma bibliothèque automatiquement* : **coché**
+  - ✅ *Lancer un scan partiel quand un changement est détecté* : **coché**
+  - ⛔ *Vider la corbeille automatiquement après chaque scan* : **décoché**  
+    (laisse du temps à Zurg de retrouver des contenus manquants en cas de suppressions RD)
+  - ✅ *Autoriser la suppression de media* : **coché**
+  - *Générer les aperçus vidéo miniatures* : **jamais**
+  - *Générer les miniatures pour les chapitres* : **jamais**
+
+!!! success "Validation Plex"
+    - Bibliothèques visibles et indexées
+    - Accès distant : **OK** (ou statut cohérent si réseau spécifique)
 
 ---
 
 ## RDTClient
 
-Rendez-vous sur `rdtclient.votre_domaine.fr`, créez votre compte et saisissez votre clé API Real-Debrid disponible sur `http://real-debrid/api`.
+Rendez-vous sur `rdtclient.votre_domaine.fr`, créez votre compte et saisissez votre **clé API Real-Debrid** disponible sur `http://real-debrid/api`.
 
-Une fois sur la page d’accueil, cliquer sur Settings, puis :
+Une fois sur la page d’accueil : **Settings**.
 
-- **Dans General** :
-    - **Maximum pallel downloads** : Mettez `100`.
-    - **Maximum unpack processes** : Réglez aussi sur `100`.
-    - Sauvegardez vos modifications en utilisant le bouton situé en bas.
-- **Dans Download Client** :
-    - **Download client** : Sélectionnez `Symlink Downloader`.
-    - **Mapped path** : Indiquez `/home/VOTRE_USER/local`. (Remplacer VOTRE_USER par le vôtre)
-    - **Rclone mount path** : Précisez `/home/VOTRE_USER/seedbox/zurg/torrents`. (Remplacer VOTRE_USER par le vôtre)
-    - Sauvegardez vos modifications en utilisant le bouton situé en bas.
-- **Dans qBittorrent / *darr :**
-    - **Post Torrent Download Action** : Choisissez `Download all files to host`.
-    - **Post Download Action** : Sélectionnez `Remove Torrent From Client`.
-    - Décochez **Only download available files on debrid provider**.
-    - **Minimum file size to download** : Entrez `10`.
-    - Sauvegardez vos modifications en utilisant le bouton situé en bas.
+### General
+
+- **Maximum parallel downloads** : `100`
+- **Maximum unpack processes** : `100`
+- Sauvegardez (bouton en bas)
+
+### Download Client
+
+- **Download client** : `Symlink Downloader`
+- **Mapped path** : `/home/VOTRE_USER/local`
+- **Rclone mount path** : `/home/VOTRE_USER/seedbox/zurg/torrents`
+- Sauvegardez
+
+### qBittorrent / *darr
+
+- **Post Torrent Download Action** : `Download all files to host`
+- **Post Download Action** : `Remove Torrent From Client`
+- Décochez **Only download available files on debrid provider**
+- **Minimum file size to download** : `10`
+- Sauvegardez
+
+!!! warning "Point critique (paths)"
+    Les chemins `Mapped path` et `Rclone mount path` doivent correspondre **exactement** à votre installation (et à `VOTRE_USER`).  
+    Sinon Radarr/Sonarr verront des chemins invalides → imports cassés.
+
+??? tip "Test rapide"
+    Si un import échoue : re-vérifiez d’abord **VOTRE_USER** et les paths RDTClient, avant de toucher à Radarr/Sonarr.
 
 ---
 
@@ -72,16 +185,26 @@ Une fois sur la page d’accueil, cliquer sur Settings, puis :
 
 Allez sur `radarr.votre_domaine.fr` et définissez une authentification.
 
-- **Gestion des médias** :
-    - Dans `Settings` puis `Media Management`, cliquez sur `Add Root Folder` et ajoutez `/home/VOTRE_USER/Medias/Films/`.
-- **Clients de téléchargement** :
-    - Dans `Settings` puis `Download Clients`, ajoutez qBittorrent avec les paramètres suivants :
-        - **Name**: `RDTClient`
-        - **Host**: `rdtclient`
-        - **Port**: `6500`
-        - **Username**: Votre identifiant sur `rdtclient.votre_domaine.fr`
-        - **Password**: Votre mot de passe sur `rdtclient.votre_domaine.fr`
-        - **Category**: `radarr`
+### Gestion des médias
+
+`Settings` → `Media Management` → `Add Root Folder` :
+
+- `/home/VOTRE_USER/Medias/Films/`
+
+### Client de téléchargement (RDTClient)
+
+`Settings` → `Download Clients` → ajouter qBittorrent avec :
+
+- **Name**: `RDTClient`
+- **Host**: `rdtclient`
+- **Port**: `6500`
+- **Username**: identifiant `rdtclient.votre_domaine.fr`
+- **Password**: mot de passe `rdtclient.votre_domaine.fr`
+- **Category**: `radarr`
+
+!!! success "Validation Radarr"
+    - Root folder ajouté
+    - Download client “Test” OK
 
 ---
 
@@ -89,29 +212,48 @@ Allez sur `radarr.votre_domaine.fr` et définissez une authentification.
 
 Rendez-vous sur `sonarr.votre_domaine.fr` et configurez une authentification.
 
-- **Gestion des médias** :
-    - Dans `Settings` puis `Media Management`, cliquez sur `Add Root Folder` et insérez `/home/VOTRE_USER/Medias/Series/`.
-- **Clients de téléchargement** :
-    - Ajoutez qBittorrent comme pour Radarr mais avec la **Category** sur `sonarr`.
+### Gestion des médias
+
+`Settings` → `Media Management` → `Add Root Folder` :
+
+- `/home/VOTRE_USER/Medias/Series/`
+
+### Client de téléchargement (RDTClient)
+
+Ajoutez qBittorrent comme pour Radarr mais avec :
+
+- **Category**: `sonarr`
+
+!!! success "Validation Sonarr"
+    - Root folder ajouté
+    - Download client “Test” OK
 
 ---
 
-## Pour les setups 4K (Radarr4K / Sonarr4K)
+## Setups 4K (Radarr4K / Sonarr4K)
 
-Répétez les étapes ci-dessus pour vos instances 4K, en ajustant simplement :
+Répétez les étapes Radarr/Sonarr en ajustant :
 
-- le **Root Folder** dans `Settings` puis `Media Management` par le dossier correspondant (Films4K / Series4K)
-- la **Category** dans `Download Clients` sur `radarr4k` pour Radarr et `sonarr4k` pour Sonarr.
+- **Root Folder** :
+  - Radarr4K → `/home/VOTRE_USER/Medias/Films4K/`
+  - Sonarr4K → `/home/VOTRE_USER/Medias/Series4K/`
+- **Category** :
+  - Radarr4K → `radarr4k`
+  - Sonarr4K → `sonarr4k`
 
-Puis utilisez les commandes SSH suivantes pour créer les répertoires nécessaires à RDTClient pour y placer les téléchargements:
+### Créer les répertoires de staging RDTClient (obligatoire)
 
 ```bash
-mkdir /home/VOTRE_USER/local/radarr4k
+mkdir -p /home/VOTRE_USER/local/radarr4k
+mkdir -p /home/VOTRE_USER/local/sonarr4k
 ```
 
-```bash
-mkdir /home/VOTRE_USER/local/sonarr4k
-```
+!!! tip "Bon pattern"
+    Un dossier `local/<category>` par instance évite les collisions et simplifie le troubleshooting.
+
+!!! success "Validation 4K"
+    - Root folders 4K configurés
+    - Dossiers `local/radarr4k` et `local/sonarr4k` créés
 
 ---
 
@@ -119,35 +261,59 @@ mkdir /home/VOTRE_USER/local/sonarr4k
 
 Rendez-vous sur `prowlarr.votre_domaine.fr` et définissez une authentification.
 
-1. **Configuration de FlareSolverr** :
-    - Allez dans `Settings`, puis dans `Indexers`.
-    - Ajoutez FlareSolverr avec les paramètres suivants :
-        - **Tags**: flaresolverr (appuyer sur entrée pour confirmer la création du tag dans la zone de texte, il doit apparaitre sous forme d’étiquette)
-        - **Host**: http://flaresolverr:8191/
-2. **Configuration des indexers** :
-    
-    Une fois FlareSolverr ajouté, retournez à la page d'accueil de Prowlarr pour ajouter vos indexers.
-    
-    Si vous rencontrez ce message lors de l’ajout d’un indexer, c’est qu’il est nécessaire d’utiliser Flaresolverr pour qu’il fonctionne.
-    
-    ![Untitled](https://i.imgur.com/WBJcOsw.png)
-    
-    Il vous suffit de rajouter le tag que vous avez créé au préalable dans la zone correspondante.
-    
-    ![Untitled](https://i.imgur.com/OwZBRIN.png)
+### 1) Configurer FlareSolverr
 
-3. **Configuration des applications** :
-    - Allez dans `Settings` puis `Apps`.
-    - Ajoutez vos instances Radarr (et Radarr4K) et Sonarr (et Sonarr4K) comme suit :
-        - Exemple pour Radarr :
-            - **Prowlarr Server**: http://prowlarr:9696/
-            - **Radarr Server**: http://radarr:7878
-            - **API Key**: Récupérable ici https://radarr.votre_domaine.fr/settings/general
-        - Exemple pour Radarr4K :
-            - **Prowlarr Server**: http://prowlarr:9696
-            - **Radarr Server**: http://radarr4k:7878
-            - **API Key**: Récupérable ici https://radarr4k.votre_domaine.fr/settings/general
-    - Cliquez ensuite sur `Sync App Indexers` pour synchroniser les indexeurs que vous avez ajouté à l’étape 2 sur toutes vos instances.
+`Settings` → `Indexers` → Ajouter FlareSolverr :
+
+- **Tags**: `flaresolverr`  
+  *(appuyer sur Entrée pour valider la création du tag, il doit apparaître comme une étiquette)*
+- **Host**: `http://flaresolverr:8191/`
+
+### 2) Configurer les indexers
+
+Retournez à la page d’accueil Prowlarr et ajoutez vos indexers.
+
+Si vous voyez un message indiquant que FlareSolverr est requis, ajoutez le **tag** créé :
+
+- Exemple de message :
+  ![Indexers require FlareSolverr](https://i.imgur.com/WBJcOsw.png)
+
+- Ajout du tag :
+  ![Add flaresolverr tag](https://i.imgur.com/OwZBRIN.png)
+
+!!! warning "Symptôme"
+    Un indexer qui échoue systématiquement “JS challenge / Cloudflare / captcha” nécessite souvent FlareSolverr.
+
+### 3) Lier les applications (Radarr/Sonarr + 4K)
+
+`Settings` → `Apps` → Ajoutez vos instances :
+
+=== "Radarr"
+    - **Prowlarr Server**: `http://prowlarr:9696/`
+    - **Radarr Server**: `http://radarr:7878`
+    - **API Key**: `Radarr` → `Settings` → `General`
+
+=== "Radarr4K"
+    - **Prowlarr Server**: `http://prowlarr:9696`
+    - **Radarr Server**: `http://radarr4k:7878`
+    - **API Key**: `Radarr4K` → `Settings` → `General`
+
+=== "Sonarr"
+    - **Prowlarr Server**: `http://prowlarr:9696`
+    - **Sonarr Server**: `http://sonarr:8989`
+    - **API Key**: `Sonarr` → `Settings` → `General`
+
+=== "Sonarr4K"
+    - **Prowlarr Server**: `http://prowlarr:9696`
+    - **Sonarr Server**: `http://sonarr4k:8989`
+    - **API Key**: `Sonarr4K` → `Settings` → `General`
+
+Ensuite cliquez sur :
+
+- `Sync App Indexers`
+
+!!! success "Objectif"
+    Un seul endroit (Prowlarr) pour gérer les indexers, synchronisé automatiquement vers toutes vos instances.
 
 ---
 
@@ -155,84 +321,173 @@ Rendez-vous sur `prowlarr.votre_domaine.fr` et définissez une authentification.
 
 Rendez-vous sur `overseerr.votre_domaine.fr` et connectez-vous avec votre compte Plex.
 
-- **Configuration du serveur Plex** :
-    - Entrez les informations suivantes :
-        - **Hostname or IP Address**: plex
-        - **Port**: 32400
-    - Cliquez sur "Save Changes".
-- **Sélection des bibliothèques** :
-    - Cochez toutes vos bibliothèques Plex.
-    - Cliquez sur "Continue".
-- **Ajout des instances Radarr(4K) / Sonarr(4K)** :
-    - Pour Radarr :
-        - Cochez "Default Server".
-        - Laissez "4K Server" décoché.
-        - Remplissez les détails suivants :
-            - **Server Name**: Radarr
-            - **Hostname or IP Address**: radarr
-            - **Port**: 7878
-            - **Use SSL**: décoché
-            - **API Key**: Récupérable ici https://radarr.votre_domaine.fr/settings/general
-                - Une fois renseigné cliquer sur le bouton “Test” pour débloquer la suite.
-            - **URL Base**: vide
-            - **Quality Profile**: selon votre préférence
-            - **Root Folder**: le choix proposé
-            - **Minimum Availability**: selon votre préférence
-            - **Tags**: vide
-            - **Enable Scan**: coché
-            - **Enable Automatic Search**: coché
-            - **Tag Requests**: décoché
-    - Pour Sonarr :
-        - Cochez "Default Server".
-        - Laissez "4K Server" décoché.
-        - Remplissez les détails suivants :
-            - **Server Name**: Sonarr
-            - **Hostname or IP Address**: sonarr
-            - **Port**: 8989
-            - **Use SSL**: décoché
-            - **API Key**: Récupérable ici https://sonarr.votre_domaine.fr/settings/general
-                - Une fois renseigné cliquer sur le bouton “Test” pour débloquer la suite.
-            - **URL Base**: vide
-            - **Quality Profile**: selon votre préférence
-            - **Root Folder**: le choix proposé
-            - **Language Profile**: Deprecated
-            - **Tags**: vide
-            - **Anime Quality Profile**: selon votre préférence
-            - **Anime Root Folder**: le choix proposé
-            - **Season Folders**: coché
-            - **Enable Scan**: coché
-            - **Enable Automatic Search**: coché
-            - **Tag Requests**: décoché
+### Configuration du serveur Plex
 
-### Configuration des instances Radarr(4K) / Sonarr(4K)
+Renseignez :
 
-- **Ajout d'instances Radarr(4K) / Sonarr(4K)**
-    
-    Si vous avez configuré des instances Radarr(4K) / Sonarr(4K) dans votre système, voici comment les intégrer à Overseerr :
-    
-    - **Default Server** : Cochez la case "Default Server" pour chaque instance Radarr(4K) / Sonarr(4K) pour indiquer qu'il s'agit de votre serveur principal.
-    - **4K Server** : Cochez également la case "4K Server" pour spécifier que ces instances sont dédiées aux contenus en 4K.
-    - **Server Name** : Pour chaque instance, indiquez le nom du serveur comme suit :
-        - Pour Radarr4K : "Radarr 4K"
-        - Pour Sonarr4K : "Sonarr 4K"
-    - **Hostname or IP Address** : Utilisez les adresses suivantes en fonction de l'instance que vous configurez :
-        - Pour Radarr4K : "radarr4k"
-        - Pour Sonarr4K : "sonarr4k"
-    - **API Key** : Récupérez la clé API respective à partir des liens suivants :
-        - Pour Radarr4K : https://radarr4k.votre_domaine.fr/settings/general
-        - Pour Sonarr4K : https://sonarr4k.votre_domaine.fr/settings/general
+- **Hostname or IP Address**: `plex`
+- **Port**: `32400`
+- `Save Changes`
 
-En suivant ces étapes, vous configurerez avec succès vos nouvelles instances Radarr4K / Sonarr4K dans Overseerr, en veillant à ce que les paramètres soient adaptés à chaque instance, y compris la clé API spécifique. Cela vous permettra de gérer les contenus en 4K de manière distincte.
+### Sélection des bibliothèques
 
-### Configuration des paramètres généraux d'Overseerr
+- Cochez **toutes** vos bibliothèques Plex
+- `Continue`
 
-- **Configuration des paramètres généraux** :
-    - Allez dans `Paramètres`.
-    - Sous "Display Language", sélectionnez "Français".
-    - Sous "Discover Region", choisissez "France".
-    - Sous "Discover Language", sélectionnez "all languages".
-    - Cliquez sur "Sauvegarder les changements".
-- **Validation automatique des demandes** (Optionnel) :
-    - Si vous souhaitez que les demandes de vos utilisateurs soient automatiquement validées, allez dans `Utilisateurs` et cochez "Valider automatiquement".
-    - Vous pouvez également cocher "Signaler des problèmes" pour activer la fonctionnalité de signalement.
-    - Cliquez sur "Sauvegarder".
+### Ajouter Radarr / Sonarr (instances par défaut)
+
+#### Radarr (Default)
+
+- ✅ **Default Server** : coché
+- ⛔ **4K Server** : décoché
+
+Paramètres :
+
+- **Server Name**: `Radarr`
+- **Hostname or IP Address**: `radarr`
+- **Port**: `7878`
+- **Use SSL**: décoché
+- **API Key**: `radarr.votre_domaine.fr/settings/general`
+  - Cliquez **Test** (obligatoire pour débloquer la suite)
+- **URL Base**: vide
+- **Quality Profile**: selon préférence
+- **Root Folder**: choix proposé
+- **Minimum Availability**: selon préférence
+- **Tags**: vide
+- ✅ **Enable Scan**
+- ✅ **Enable Automatic Search**
+- ⛔ **Tag Requests** : décoché
+
+#### Sonarr (Default)
+
+- ✅ **Default Server** : coché
+- ⛔ **4K Server** : décoché
+
+Paramètres :
+
+- **Server Name**: `Sonarr`
+- **Hostname or IP Address**: `sonarr`
+- **Port**: `8989`
+- **Use SSL**: décoché
+- **API Key**: `sonarr.votre_domaine.fr/settings/general`
+  - Cliquez **Test**
+- **URL Base**: vide
+- **Quality Profile**: selon préférence
+- **Root Folder**: choix proposé
+- **Language Profile**: Deprecated
+- **Tags**: vide
+- **Anime Quality Profile**: selon préférence
+- **Anime Root Folder**: choix proposé
+- ✅ **Season Folders**
+- ✅ **Enable Scan**
+- ✅ **Enable Automatic Search**
+- ⛔ **Tag Requests** : décoché
+
+!!! warning "Point critique (Overseerr)"
+    Si **Test** échoue :
+    - vérifiez `Hostname` interne (`radarr`, `sonarr`, etc.)
+    - vérifiez le port
+    - vérifiez l’API key (copie exacte)
+    - assurez-vous que le service est **UP**
+
+---
+
+## Overseerr — Ajouter les instances 4K (si présentes)
+
+Si vous utilisez des instances 4K :
+
+- ✅ **Default Server** : coché
+- ✅ **4K Server** : coché
+
+Recommandations de nommage :
+
+- Radarr4K → **Server Name** : `Radarr 4K`
+- Sonarr4K → **Server Name** : `Sonarr 4K`
+
+Connexions :
+
+- Radarr4K :
+  - **Hostname or IP Address** : `radarr4k`
+  - **Port** : `7878`
+  - **API Key** : `radarr4k.votre_domaine.fr/settings/general`
+- Sonarr4K :
+  - **Hostname or IP Address** : `sonarr4k`
+  - **Port** : `8989`
+  - **API Key** : `sonarr4k.votre_domaine.fr/settings/general`
+
+!!! tip "Validation"
+    Après chaque ajout d’application dans Overseerr, utilisez **Test** avant de continuer.
+
+---
+
+## Overseerr — Paramètres généraux
+
+`Paramètres` :
+
+- **Display Language** : `Français`
+- **Discover Region** : `France`
+- **Discover Language** : `all languages`
+- `Sauvegarder les changements`
+
+### Validation automatique des demandes (optionnel)
+
+`Utilisateurs` :
+
+- ✅ *Valider automatiquement*
+- (Optionnel) ✅ *Signaler des problèmes*
+- `Sauvegarder`
+
+---
+
+## Diagramme de séquence (intégration globale)
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor U as Admin
+  participant PX as Plex
+  participant RDC as RDTClient
+  participant RA as Radarr/Sonarr
+  participant PR as Prowlarr
+  participant OV as Overseerr
+
+  U->>PX: Configure bibliothèques + accès distant
+  U->>RDC: Configure API RD + Symlink Downloader + paths
+  U->>RA: Configure root folders + download client (category)
+  U->>PR: Ajoute FlareSolverr + indexers
+  PR-->>RA: Sync indexers vers Radarr/Sonarr (+ 4K)
+  U->>OV: Login Plex + sélection bibliothèques
+  U->>OV: Ajoute Radarr/Sonarr (+ 4K) + Test API
+  OV-->>RA: Envoie les demandes (requests) & déclenche recherches
+```
+
+---
+
+## Dépannage rapide (symptômes → cause probable)
+
+!!! warning "RDTClient / Arr ne voit pas les fichiers"
+    Cause fréquente : `Mapped path` / `Rclone mount path` incorrects (ou `VOTRE_USER` oublié).
+
+!!! warning "Overseerr n’arrive pas à tester Radarr/Sonarr"
+    Vérifiez :
+    - host interne (`radarr`, `sonarr`) et port
+    - API key correcte
+    - reverse-proxy OK côté domaine (pour récupérer la clé)
+    - service UP
+
+!!! warning "Prowlarr : indexer bloqué sans FlareSolverr"
+    Ajoutez le tag **flaresolverr** sur l’indexer concerné.
+
+---
+
+## Fin — état attendu
+
+- Plex : bibliothèques OK + accès distant OK
+- RDTClient : chemins OK + actions post-download OK
+- Radarr/Sonarr : root folders + categories OK (+ 4K si besoin)
+- Prowlarr : indexers gérés centralement + sync OK
+- Overseerr : demandes unifiées (users) + routage vers Arr OK
+
+!!! success "Done ✅"
+    Si tout est validé ici, vous avez une chaîne complète :
+    **Plex ↔ Overseerr ↔ Radarr/Sonarr ↔ Prowlarr ↔ RDTClient**, stable et maintenable.

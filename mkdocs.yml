@@ -1,19 +1,27 @@
 site_name: SSDv2
 site_url: https://laster13.github.io/ssdv2_docs/
 site_author: ProjetSSD
-site_description: >-
-  Simple Seedbox Docker
+site_description: Simple Seedbox Docker moderne, sécurisé et optimisé.
 
-# Repository
 repo_name: projetssd/ssdv2
 repo_url: https://github.com/projetssd/ssdv2
+edit_uri: edit/main/docs/
 
-docs_dir: docs/
+docs_dir: docs
 exclude_docs: overrides/
 
-# Configuration
+copyright: >
+  Copyright &copy; 2024 - ProjetSSD
+
 theme:
   name: material
+
+  language: fr
+
+  font:
+    text: Roboto
+    code: Roboto Mono
+
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -29,55 +37,55 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
+
   features:
-    - announce.dismiss
+    # UX moderne
+    #- navigation.instant
+    #- navigation.instant.progress
+    #- navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - navigation.sections
+    - navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+
+    # Contenu
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
     - content.action.edit
     - content.action.view
-    - content.code.annotate
-    - content.code.copy
-    # - content.code.select
-    # - content.tabs.link
-    - content.tooltips
-    # - header.autohide
-    # - navigation.expand
-    - navigation.footer
-    - navigation.indexes
-    # - navigation.instant
-    # - navigation.instant.prefetch
-    # - navigation.instant.progress
-    # - navigation.prune
-    - navigation.sections
-    - navigation.tabs
-    # - navigation.tabs.sticky
-    - navigation.top
-    - navigation.tracking
+
+    # TOC
+    - toc.follow
+    #- toc.integrate
+    - toc_depth: 3
+
+    # Recherche avancée
     - search.highlight
     - search.share
     - search.suggest
-    - toc.follow
-    # - toc.integrate
-  font:
-    text: Roboto
-    code: Roboto Mono
 
 plugins:
   - search
+
   - include-markdown:
       opening_tag: "{!"
       closing_tag: "!}"
+
   - glightbox:
       touchNavigation: true
       loop: false
       effect: zoom
-      width: 100%
-      height: auto
       zoomable: true
       draggable: true
-      auto_caption: false
-      caption_position: bottom
-  - roamlinks
-  - mermaid2
+
   - callouts
+
   - i18n:
       docs_structure: folder
       fallback_to_default: true
@@ -88,177 +96,268 @@ plugins:
           default: true
           name: Français
           build: true
-        - locale: en
-          name: English
-          build: true
-          theme:
-            palette:
-              # Palette toggle for light mode
-              - media: "(prefers-color-scheme: light)"
-                primary: red
-                scheme: default
-              # Palette toggle for dark mode
-              - media: "(prefers-color-scheme: dark)"
-                primary: pink
-                scheme: slate
-          nav_translations:
-            Accueil: Home
-            Installation: Install
-            Proposer un Tutoriel: Suggest a Tutorial
+
   - git-revision-date-localized:
+      enable_creation_date: true
+      type: datetime
+      timezone: Europe/Paris
+      locale: fr
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/projetssd/ssdv2
 
-# Extensions
-### Configuration des extensions MarkDown :   
-markdown_extensions: # https://squidfunk.github.io/mkdocs-material/reference/abbreviations/
-  # extensions de la bibliothèque markdown standard
-  - meta                          # Métadonnées
-  - def_list                      # Listes de définition.
-  - attr_list                     # Sélecteurs CSS et attributs HTML personnalisés
-  - footnotes                     # Notes[^1] de bas de page.  [^1]: ma note.
-  - admonition                    # Pour permettre les admonitions de MkDocs # Boite d'avertissements  !!! info "ma remarque"
-  - toc:                          # Configuration de la table des matières générée automatiquement à partir des titres du niveau 2
-        permalink: "&lozf;"          # Ajoute un symbole lien hypertexte vers l'ancre du titre #le-titre 
-        toc_depth: 4                # Limite de la profondeur d'inclusion des titres dans la table des matières
-  - nl2br                         # Ajoute un retour à la ligne <br> après un saut de ligne simple # A activer pour admonition et si l'option "Sauts de ligne stricts" n'est pas activée dans les réglages de l'éditeur d'Obsidian
-  - mdx_breakless_lists           # Permet de commencer une liste sans faire de saut de ligne en amont en ajoutant systématiquement un saut de ligne
-  - sane_lists                    # Produit le même affichage de liste qu'Obsidian démarage au nombre indiqué au début d'une liste ordonné : https://python-markdown.github.io/extensions/sane_lists/ 
-  - smarty                        # The SmartyPants extension converts ASCII dashes, quotes and ellipses to their HTML entity equivalents https://python-markdown.github.io/extensions/smarty/
-  - tables                        # Pour les tableaux https://squidfunk.github.io/mkdocs-material/reference/data-tables/
-  # extensions de python-markdown https://facelessuser.github.io/pymdown-extensions/
-  - pymdownx.details              # plier/déplier les avertissements - admonition collapsable
-  - pymdownx.extra
-  - pymdownx.snippets
-  - pymdownx.tabbed
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.caret                # texte ^^souligné^^ ou en ^exposant^.
-  - pymdownx.mark                 # texte ==surligné==.
-  - pymdownx.tilde                # texte ~~barré~~ ou en ~indice~.
-  - pymdownx.critic               # Pour du marquage et commentaires de révision de texte
-  - pymdownx.magiclink            # Reconnait automatiquement un lien, une adresse à partir de son URL et bien plus : https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/
-  - pymdownx.highlight            # Coloration syntaxique du code
-  - pymdownx.inlinehilite         # pour  `#!python  <python en ligne>`
-  - pymdownx.tasklist:            # Cases à cocher  - [ ]  et - [x]
-        custom_checkbox:    true    #   avec cases d'origine
-        # clickable_checkbox: true    #   et cliquables.
-  - pymdownx.superfences:    # Imbrication de blocs. # pour admonitions MkDocs
+  generator: false
+
+  announcement: |
+    🚀 SSDv2 v2 — Documentation modernisée et section Sécurité renforcée.
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - javascripts/mermaid-init.js
+
+markdown_extensions:
+
+  # Core
+  - meta
+  - def_list
+  - attr_list
+  - footnotes
+  - tables
+  - smarty
+
+  - toc:
+      permalink: true
+      toc_depth: 4
+
+  # Material
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:mermaid2.fence_mermaid
-  - pymdownx.keys:                # Touches du clavier.  ++ctrl+d++
-        separator: "\uff0b"
-  - pymdownx.emoji:               # Émojis  :boom:
-        emoji_index: !!python/name:materialx.emoji.twemoji
-        emoji_generator: !!python/name:materialx.emoji.to_svg
-  - pymdownx.arithmatex:          # Formules en LaTeX 
-        generic: true
-        smart_dollar: false 
 
-# Page tree
+  - pymdownx.tabbed:
+      alternate_style: true
+
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.magiclink
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.keys
+
+  - pymdownx.arithmatex:
+      generic: true
+      smart_dollar: false
+
 nav:
-  - Accueil: index.md
-  - Applications:
-    - Applications/multimedia-et-gestion-de-contenu.md
-    - Applications/telechargement-et-partage.md
-    - Applications/surveillance-et-monitoring.md
-    - Applications/outils-et-gestion-web.md
-    - Applications/securite-et-authentification.md
-    - Applications/developpement-et-integration.md
-    - Applications/productivite-et-organisation.md
-    - Applications/communication.md
-    - Applications/acces-a-distance.md
-    - Applications/loisirs.md
-  - Sécurité :
-    - crowdsec.md
-  - Installation:
-    - Installation/introduction.md
-    - Installation/prerequis.md
-    - Installation/configuration-initiale.md
-    - Installation/lancement-du-script-et-configuration.md
-    - Installation/securisation-de-lacces-au-serveur.md
-    - Installation/installation-des-applications.md
-    - Installation/configuration-des-applications.md
-    - Installation/conclusion-et-recommandations.md    
-    - Utilitaires:
-      - Installation/ajouter-supprimer-reinitialiser.md
-      - Installation/manipulations-manuelles.md
-    - Sécurisation:
-      - Installation/oauth.md
-      - Installation/optimisation-cloudflare.md
-      - Installation/ufw-Installation-configuration.md    
-  - RealDebrid:
-    - RealDebrid/configuration-rdtclient.md
-    - RealDebrid/qbitorrent.md
-    - RealDebrid/qdebrid.md
-    - RealDebrid/seed-avec-rdtclient.md
-  - Plex:
-    - Plex/Tips/Plex-media-server.md
-  - Radarr:
-    - Radarr/radarr-setup-quality-profiles-french-fr.md
-    - Radarr/radarr-setup-quality-profiles-anime.md
-    - Radarr/radarr-setup-quality-profiles.md
-    - Radarr/Radarr-remote-path-mapping.md
-    - Radarr/Radarr-recommended-naming-scheme.md
-    - Radarr/Radarr-Quality-Settings-File-Size.md
-    - Radarr/Radarr-import-custom-formats.md
-    - Radarr/Radarr-how-to-update-custom-formats.md
-    - Tips:
-      - Radarr/Tips/Merge-quality.md
-      - Radarr/Tips/Sync-2-radarr-sonarr.md
-      - Radarr/Tips/How-to-setup-language-custom-formats.md
-  - Sonarr:
-    - Sonarr/sonarr-setup-quality-profiles-french-en.md
-    - Sonarr/sonarr-setup-quality-profiles-anime.md
-    - Sonarr/sonarr-setup-quality-profiles.md
-    - Sonarr/Sonarr-remote-path-mapping.md
-    - Sonarr/Sonarr-Release-Profile-RegEx-Anime.md
-    - Sonarr/Sonarr-Release-Profile-RegEx.md
-    - Sonarr/Sonarr-recommended-naming-scheme.md
-    - Sonarr/Sonarr-Quality-Settings-File-Size.md
-    - Sonarr/sonarr-import-custom-formats.md
-    - Sonarr/sonarr-how-to-update-custom-formats.md
-    - Tips:
-      - Sonarr/Tips/Merge-quality.md
-      - Sonarr/Tips/Sync-2-radarr-sonarr.md
-      - Sonarr/Tips/How-to-setup-language-custom-formats.md
-  - Prowlarr:
-    - Prowlarr/prowlarr-setup-flaresolverr.md
-  - Autres:
-    - Autres/Authelia.md
-    - Autres/Chevereto.md
-    - Autres/Cloudflare.md
-    - Autres/Cloudplow.md
-    - Autres/Filebot.md
-    - Autres/Filerun.md
-    - Autres/Grocy.md
-    - Autres/Handbrake.md
-    - Autres/Jackett---Flaresolverr.md
-    - Autres/Medusa.md
-    - Autres/Minecraft.md
-    - Autres/Nextcloud.md
-    - Autres/Ombi.md
-    - Autres/Organizr.md
-    - Autres/Petio.md
-    - Autres/Plex.md
-    - Autres/Plex-Dupefinder.md
-    - Autres/PlexTratkSync.md
-    - Autres/Prestashop.md
-    - Autres/Pureftpd.md
-    - Autres/QbitorrentVPN.md
-    - Autres/Qbittorrent.md
-    - Autres/Qflood.md
-    - Autres/Rflood.md
-    - Autres/Rutorrent.md
-    - Autres/Speedtest.md
-    - Autres/Traefik.md
-    - Autres/Trakt.tv-et-Kitana.md
-    - Autres/Traktarr.md
-    - Autres/Vikunja.md
-    - Autres/watchtower.md
-    - Autres/Wordpress.md
-    - Autres/Yacht.md
-    - Autres/yourls.md
-  - Proposer un Tutoriel:
-    -  Autres/Tutoriel.md
+
+  - 🏠 Home: index.md
+
+  - 🛠️ Installation:
+      - Installation/introduction.md
+      - Installation/prerequis.md
+      - Installation/configuration-initiale.md
+      - Installation/lancement-du-script-et-configuration.md
+      - Installation/securisation-de-lacces-au-serveur.md
+      - Installation/installation-des-applications.md
+      - Installation/configuration-des-applications.md
+      - Installation/conclusion-et-recommandations.md
+      - 🧰 Utilitaires:
+          - Installation/ajouter-supprimer-reinitialiser.md
+          - Installation/manipulations-manuelles.md
+      - 🛡️ Sécurisation:
+          - Installation/oauth.md
+          - Installation/optimisation-cloudflare.md
+          - Installation/ufw-Installation-configuration.md
+
+  - 🎬 Média:
+      - Vue d’ensemble: applications/media/index.md
+      - Radarr: applications/media/radarr.md
+      - Sonarr: applications/media/sonarr.md
+      - Prowlarr: applications/media/prowlarr.md
+      - Seerr: applications/media/seerr.md
+      - Bazarr: applications/media/bazarr.md
+      - Boxarr: applications/media/boxarr.md
+      - Digikam: applications/media/digikam.md
+      - Emby: applications/media/emby.md
+      - Filebot: applications/media/filebot.md
+      - Firefox: applications/media/firefox.md
+      - Flixor: applications/media/flixor.md
+      - Calibre: applications/media/calibre.md
+      - Handbrake: applications/media/handbrake.md
+      - Imagmaid: applications/media/imagmaid.md
+      - Immich: applications/media/immich.md
+      - Jellyfin: applications/media/jellyfin.md
+      - Kavita: applications/media/kavita.md
+      - Kitana: applications/media/kitana.md
+      - Komga: applications/media/komga.md
+      - Lidarr: applications/media/lidarr.md
+      # Ajouts depuis le dossier (ls -la)
+      - MKVToolNix: applications/media/mkvtoolnix.md
+      - Navidrome: applications/media/navidrome.md
+      - Neko: applications/media/neko.md
+      - NowShowing: applications/media/nowshowing.md
+      - Plex: applications/media/plex.md
+      - Plex Auto Languages: applications/media/plexautolanguages.md
+      - Readarr: applications/media/readarr.md
+      - StreamFusion: applications/media/streamfusion.md
+      - StremThru: applications/media/stremthru.md
+      - Subsonic: applications/media/subsonic.md
+      - SyncLounge: applications/media/synclounge.md
+      - Tautulli: applications/media/tautulli.md
+      - Ubooquity: applications/media/ubooquity.md
+      - Whisparr: applications/media/whisparr.md
+      - Wizarr: applications/media/wizarr.md
+      - Zilean: applications/media/zilean.md
+
+  - 📥 Téléchargement:
+      - Vue d’ensemble: applications/telechargement/index.md
+      - QBittorrent: applications/telechargement/qbittorrent.md
+      - RdtClient: applications/telechargement/rdtclient.md
+      - Decypharr: applications/telechargement/decypharr.md
+      - Deluge: applications/telechargement/deluge.md
+      - Tecypharrseed: applications/telechargement/decypharrseed.md
+      - Deemixrr: applications/telechargement/deemixrr.md
+      - Huntarr: applications/telechargement/huntarr.md
+      - Airdcpp: applications/telechargement/airdcpp.md
+      - Jackett: applications/telechargement/jackett.md
+      - Jdownloader: applications/telechargement/jdownloader.md
+      # Ajouts depuis le dossier (ls -la)
+      - MeTube: applications/telechargement/metube.md
+      - NZBHydra: applications/telechargement/nzbhydra.md
+      - NZBDAV: applications/telechargement/nzbdav.md
+      - PyLoad: applications/telechargement/pyload.md
+      - QFlood: applications/telechargement/qflood.md
+      - RFlood: applications/telechargement/rflood.md
+      - RuTorrent: applications/telechargement/rutorrent.md
+      - SABnzbd: applications/telechargement/sabnzbd.md
+      - Transmission: applications/telechargement/transmission.md
+
+  - 🔐 Sécurité:
+      - Vue d’ensemble: applications/securite/index.md
+      - CrowdSec: applications/securite/crowdsec.md
+      - Authelia: applications/securite/authelia.md
+      - Bitwarden: applications/securite/bitwarden.md
+      - Gluetun: applications/securite/gluetun.md
+      - Guacamole: applications/securite/guacamole.md
+      - Kasm: applications/securite/kasm.md
+      - Ssh: applications/securite/ssh.md
+      # Ajouts depuis le dossier (ls -la)
+      - Vaultwarden: applications/securite/vaultwarden.md
+      - WireGuard: applications/securite/wireguard.md
+      - Warp: applications/securite/warp.md
+
+  - 📦 Infrastructure:
+      - Vue d’ensemble: applications/infrastructure/index.md
+      - Pterodactyl: applications/infrastructure/pterodactyl.md
+      - Nextcloud: applications/infrastructure/nextcloud.md
+      - Baikal: applications/infrastructure/baikal.md
+      - Autoindex: applications/infrastructure/autoindex.md
+      - Baserow: applications/infrastructure/baserow.md
+      - Chevereto: applications/infrastructure/chevereto.md
+      - Bookstack: applications/infrastructure/bookstack.md
+      - Cloudcmd: applications/infrastructure/cloudcmd.md
+      - Coolify: applications/infrastructure/coolify.md
+      - Cypht: applications/infrastructure/cypht.md
+      - Davos: applications/infrastructure/davos.md
+      - Actualbudget: applications/infrastructure/actualbudget.md
+      - Dockhand: applications/infrastructure/dockhand.md
+      - Duplicati: applications/infrastructure/duplicati.md
+      - Espocrm: applications/infrastructure/espocrm.md
+      - Fenrus: applications/infrastructure/fenrus.md
+      - Filebrowser: applications/infrastructure/filebrowser.md
+      - Firefoxsyncserver: applications/infrastructure/firefoxsyncserver.md
+      - Freshrss: applications/infrastructure/freshrss.md
+      - Gethomepage: applications/infrastructure/gethomepage.md
+      - Gotify: applications/infrastructure/gotify.md
+      - Gitea: applications/infrastructure/gitea.md
+      - Grist: applications/infrastructure/grist.md
+      - Grocy: applications/infrastructure/grocy.md
+      - Gitlab: applications/infrastructure/gitlab.md
+      - Heimdall: applications/infrastructure/heimdall.md
+      - Homarr: applications/infrastructure/homarr.md
+      - Jitsi: applications/infrastructure/jitsi.md
+      - Kresus: applications/infrastructure/kresus.md
+      - Mediawiki: applications/infrastructure/mediawiki.md
+      # Ajouts depuis le dossier (ls -la)
+      - Linkding: applications/infrastructure/linkding.md
+      - Mango: applications/infrastructure/mango.md
+      - Mattermost: applications/infrastructure/mattermost.md
+      - Mealie: applications/infrastructure/mealie.md
+      - Microbin: applications/infrastructure/microbin.md
+      - Minecraft: applications/infrastructure/minecraft.md
+      - Monicahq: applications/infrastructure/monicahq.md
+      - N8nio: applications/infrastructure/n8nio.md
+      - NocoDB: applications/infrastructure/nocodb.md
+      - Ombi: applications/infrastructure/ombi.md
+      - Organizr: applications/infrastructure/organizr.md
+      - Paperless: applications/infrastructure/paperless.md
+      - Pastebin: applications/infrastructure/pastebin.md
+      - Pingvin: applications/infrastructure/pingvin.md
+      - Piwigo: applications/infrastructure/piwigo.md
+      - Portainer: applications/infrastructure/portainer.md
+      - PrestaShop: applications/infrastructure/prestashop.md
+      - Pure-FTPd: applications/infrastructure/pureftpd.md
+      - Seafile: applications/infrastructure/seafile.md
+      - Shaarli: applications/infrastructure/shaarli.md
+      - SickChill: applications/infrastructure/sickchill.md
+      - SickGear: applications/infrastructure/sickgear.md
+      - Sismics Reader: applications/infrastructure/sismicsreader.md
+      - Stirling PDF: applications/infrastructure/stirlingpdf.md
+      - Syncthing: applications/infrastructure/syncthing.md
+      - The Lounge: applications/infrastructure/thelounge.md
+      - TT-RSS: applications/infrastructure/ttrss.md
+      - Vikunja: applications/infrastructure/vikunja.md
+      - Wallos: applications/infrastructure/wallos.md
+      - Webtop: applications/infrastructure/webtop.md
+      - WeddingShare: applications/infrastructure/weddingshare.md
+      - WG Easy: applications/infrastructure/wgeasy.md
+      - Wiki.js: applications/infrastructure/wikijs.md
+      - WordPress: applications/infrastructure/wordpress.md
+      - Yacht: applications/infrastructure/yacht.md
+      - Ygege: applications/infrastructure/ygege.md
+      - YOURLS: applications/infrastructure/yourls.md
+
+  - 📊 Monitoring:
+      - Vue d’ensemble: applications/monitoring/index.md
+      - Doozle: applications/monitoring/doozle.md
+      - Changedetection: applications/monitoring/changedetection.md
+      - Cadvisor: applications/monitoring/cadvisor.md
+      - Dashdot: applications/monitoring/dashdot.md
+      - Foptimum: applications/monitoring/foptimum.md
+      - Goaccess: applications/monitoring/goaccess.md
+      - Jfago: applications/monitoring/jfago.md
+      - Librespeed: applications/monitoring/librespeed.md
+      - Kuma: applications/monitoring/kuma.md
+      # Ajouts depuis le dossier (ls -la)
+      - Logarr: applications/monitoring/logarr.md
+      - MediaFlowProxy: applications/monitoring/mediaflowproxy.md
+      - Medusa: applications/monitoring/medusa.md
+      - Mellow: applications/monitoring/mellow.md
+      - Monitorr: applications/monitoring/monitorr.md
+      - Netdata: applications/monitoring/netdata.md
+      - Ntopng: applications/monitoring/ntopng.md
+      - Plausible: applications/monitoring/plausible.md
+      - Scrutiny: applications/monitoring/scrutiny.md
+      - Speedtest: applications/monitoring/speedtest.md
+      - Speedtest Tracker: applications/monitoring/speedtesttracker.md
+      - Statping: applications/monitoring/statping.md
+      - VnStat: applications/monitoring/vnstat.md
+      - Watchtower: applications/monitoring/watchtower.md
