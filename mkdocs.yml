@@ -113,9 +113,6 @@ extra:
   announcement: |
     🚀 SSDv2 v2 — Documentation modernisée et section Sécurité renforcée.
 
-extra_css:
-  - stylesheets/extra.css
-
 extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
   - javascripts/mermaid-init.js
@@ -200,6 +197,7 @@ nav:
       - Filebot: applications/media/filebot.md
       - Firefox: applications/media/firefox.md
       - Flixor: applications/media/flixor.md
+      - Frenchio: applications/media/frenchio.md 
       - Calibre: applications/media/calibre.md
       - Handbrake: applications/media/handbrake.md
       - Imagmaid: applications/media/imagmaid.md
@@ -216,6 +214,7 @@ nav:
       - NowShowing: applications/media/nowshowing.md
       - Plex: applications/media/plex.md
       - Plex Auto Languages: applications/media/plexautolanguages.md
+      - SeerrCatalog: applications/media/seerrcatalog.md 
       - Readarr: applications/media/readarr.md
       - StreamFusion: applications/media/streamfusion.md
       - StremThru: applications/media/stremthru.md
@@ -233,7 +232,7 @@ nav:
       - RdtClient: applications/telechargement/rdtclient.md
       - Decypharr: applications/telechargement/decypharr.md
       - Deluge: applications/telechargement/deluge.md
-      - Tecypharrseed: applications/telechargement/decypharrseed.md
+      - Decypharrseed: applications/telechargement/decypharrseed.md
       - Deemixrr: applications/telechargement/deemixrr.md
       - Huntarr: applications/telechargement/huntarr.md
       - Airdcpp: applications/telechargement/airdcpp.md
