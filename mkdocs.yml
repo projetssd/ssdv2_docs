@@ -364,3 +364,64 @@ nav:
   - 🧭 WebUi:
       - WebUi: applications/webui/index.md
       - Installation: applications/webui/installation.md
+
+  - 🚀 Stream-Fusion-Reborn:
+      - 🏠 Accueil: stream-fusion-reborn/index.md
+
+      - 📘 Guides:
+          - Premier démarrage: stream-fusion-reborn/guides/premier-demarrage.md
+          - Configuration Stremio: stream-fusion-reborn/guides/configuration-stremio.md
+
+      - 🐳 Installation:
+          - Vue d’ensemble: stream-fusion-reborn/installation/index.md
+          - Docker Compose production: stream-fusion-reborn/installation/docker-compose-prod.md
+          - Docker Compose simple: stream-fusion-reborn/installation/docker-compose-simple.md
+          - Environnement: stream-fusion-reborn/installation/environnement.md
+
+      - ⚙️ Configuration:
+          - Vue d’ensemble: stream-fusion-reborn/configuration/index.md
+          - Variables d’environnement: stream-fusion-reborn/configuration/variables-environnement.md
+          - Services de débridage: stream-fusion-reborn/configuration/services-debrid.md
+          - Indexeurs: stream-fusion-reborn/configuration/indexeurs.md
+          - Proxy: stream-fusion-reborn/configuration/proxy.md
+          - Tâches planifiées: stream-fusion-reborn/configuration/taches-planifiees.md
+          - Dump et restauration: stream-fusion-reborn/configuration/dump-restore.md
+          - StremThru: stream-fusion-reborn/configuration/stremthru.md
+
+      - 🗄️ Cache:
+          - Vue d’ensemble: stream-fusion-reborn/cache/index.md
+          - Détails IMDb: stream-fusion-reborn/cache/details-imdb.md
+          - Population initiale: stream-fusion-reborn/cache/population-initiale.md
+          - Sauvegarde DuckDB: stream-fusion-reborn/cache/sauvegarde-duckdb.md
+
+      - 🔌 API:
+          - Vue d’ensemble: stream-fusion-reborn/api/index.md
+          - Stremio: stream-fusion-reborn/api/stremio.md
+          - Authentification: stream-fusion-reborn/api/auth.md
+          - Peer: stream-fusion-reborn/api/peer.md
+          - Monitoring: stream-fusion-reborn/api/monitoring.md
+
+      - 🌐 Peering:
+          - Vue d’ensemble: stream-fusion-reborn/peering/index.md
+          - Configuration: stream-fusion-reborn/peering/configuration.md
+          - Sécurité: stream-fusion-reborn/peering/securite.md
+          - Intégration externe: stream-fusion-reborn/peering/integration-externe.md
+
+      - 🏗️ Architecture:
+          - Vue d’ensemble: stream-fusion-reborn/architecture/index.md
+          - Pipeline de recherche: stream-fusion-reborn/architecture/pipeline-recherche.md
+          - Tâches distribuées: stream-fusion-reborn/architecture/taches-distribuees.md
+          - Système de configuration: stream-fusion-reborn/architecture/systeme-configuration.md
+          - Conventions de code: stream-fusion-reborn/architecture/conventions-code.md
+          - Parsing RTN: stream-fusion-reborn/architecture/parsing-rtn.md
+          - Matching IMDb / TMDb: stream-fusion-reborn/architecture/matching-imdb-tmdb.md
+
+      - 🗑️ TRaSH Scoring:
+          - Vue d’ensemble: stream-fusion-reborn/trash/index.md
+          - Custom Formats: stream-fusion-reborn/trash/custom-formats.md
+          - Templates: stream-fusion-reborn/trash/templates.md
+          - Administration: stream-fusion-reborn/trash/admin.md
+
+      - 🔐 Sécurité: stream-fusion-reborn/securite.md
+      - 🆘 Support: stream-fusion-reborn/support.md
+
