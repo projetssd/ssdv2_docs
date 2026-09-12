@@ -227,7 +227,7 @@ networks:
 services:
 
   meili-init:
-    image: ghcr.io/laster13/stream-fusion-reborn:latest
+    image: laster13/stream-fusion-reborn:latest
     user: "0:0"
     entrypoint: ["/bin/sh", "-c"]
     command:
@@ -761,7 +761,7 @@ services:
       - proxy_network
 
   taskiq-worker:
-    image: ghcr.io/laster13/stream-fusion-reborn:latest
+    image: laster13/stream-fusion-reborn:latest
     container_name: taskiq-worker
     command: python -m taskiq worker stream_fusion.worker:broker
     # env_file: user.env        # uncomment to enable unique_account mode (debrid/indexers)
@@ -817,7 +817,7 @@ services:
       - proxy_network
 
   taskiq-scheduler:
-    image: ghcr.io/laster13/stream-fusion-reborn:latest
+    image: laster13/stream-fusion-reborn:latest
     container_name: taskiq-scheduler
     command: python -m taskiq scheduler stream_fusion.tkq:scheduler
     environment:
@@ -853,7 +853,7 @@ services:
     # IMPORTANT: replicas must always be 1
 
   stream-fusion:
-    image: ghcr.io/laster13/stream-fusion-reborn:latest
+    image: laster13/stream-fusion-reborn:latest
     container_name: stream-fusion
     # env_file: user.env        # uncomment to enable unique_account mode (debrid/indexers)
     environment:
