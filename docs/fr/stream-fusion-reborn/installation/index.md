@@ -118,7 +118,7 @@ Pas de build local nécessaire — l'image contient tout le nécessaire pour fon
 
     Traefik, PgBouncer, 4 replicas, sécurité Docker
 
--   :material-desktop-mac: **[Instance unique](docker-compose-simple.md)**
+-   :material-monitor: **[Instance unique](docker-compose-simple.md)**
 
     Configuration simple pour débuter
 

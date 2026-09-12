@@ -59,7 +59,7 @@ graph TD
     
     [Paramètres TRaSH →](../configuration/variables-environnement.md#trash-custom-formats)
 
--   :material-sliders: **4. Choisir dans /configure**
+-   :material-tune: **4. Choisir dans /configure**
 
     L'utilisateur final sélectionne son template dans la page de configuration du plugin Stremio. Les résultats sont alors classés par score CF
     

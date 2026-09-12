@@ -18,6 +18,10 @@ theme:
 
   language: fr
 
+  icon:
+    repo: fontawesome/brands/github
+    annotation: material/arrow-right-circle
+
   font:
     text: Roboto
     code: Roboto Mono
@@ -54,9 +58,11 @@ theme:
 
     # Contenu
     - content.code.copy
+    - content.code.select
     - content.code.annotate
     - content.tabs.link
     - content.tooltips
+    - announce.dismiss
     - content.action.edit
     - content.action.view
 
@@ -71,7 +77,8 @@ theme:
     - search.suggest
 
 plugins:
-  - search
+  - search:
+      lang: fr
 
   - include-markdown:
       opening_tag: "{!"
@@ -123,6 +130,7 @@ markdown_extensions:
   - meta
   - def_list
   - attr_list
+  - md_in_html
   - footnotes
   - tables
   - smarty
@@ -143,7 +151,9 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.magiclink
