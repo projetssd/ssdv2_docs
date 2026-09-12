@@ -1,127 +1,123 @@
-# Déploiement production
+# Déploiement production scalable
 
-Cette configuration utilise le même Docker Compose de référence que
-le déploiement mono-instance, avec l'image publique Docker Hub :
+Cette configuration reprend directement le **Docker Compose de la
+configuration simple**, puis adapte uniquement les services qui doivent
+être répliqués en production.
+
+L'image utilisée est :
 
 ```text
 laster13/stream-fusion-reborn:latest
 ```
 
-!!! info "Configuration commune"
-    Les pages **Instance unique** et **Production** utilisent le même
-    Docker Compose afin d'éviter toute divergence entre deux versions
-    de la stack.
+---
 
-    En production, la différence repose principalement sur le reverse
-    proxy, HTTPS/TLS, la supervision, les sauvegardes et les pratiques
-    d'exploitation.
+## Différences avec la configuration simple
+
+| Service | Configuration simple | Production scalable |
+|---|---:|---:|
+| `stream-fusion` | 1 | **4 replicas** |
+| `taskiq-worker` | 1 | **2 replicas** |
+| `taskiq-scheduler` | 1 | **1 replica** |
+| PostgreSQL | 1 | 1 |
+| Redis | 1 | 1 |
+| Meilisearch | 1 | 1 |
+| WARP | 1 | 1 |
+
+!!! warning "Scheduler unique"
+    `taskiq-scheduler` doit impérativement rester à **1 replica**.
+
+---
+
+## Scaling
+
+Les adaptations apportées au Compose simple sont :
+
+```yaml
+taskiq-worker:
+  deploy:
+    mode: replicated
+    replicas: 2
+
+taskiq-scheduler:
+  deploy:
+    mode: replicated
+    replicas: 1
+
+stream-fusion:
+  deploy:
+    mode: replicated
+    replicas: 4
+```
+
+`container_name` est supprimé de `stream-fusion` et
+`taskiq-worker`, car plusieurs conteneurs doivent pouvoir être créés.
+
+Le scheduler reste explicitement limité à une seule instance.
 
 ---
 
 ## Architecture
 
-La stack comprend :
-
 | Service | Fonction |
 |---|---|
-| `stream-fusion` | Application Stream Fusion Reborn |
-| `taskiq-worker` | Exécution des tâches asynchrones |
-| `taskiq-scheduler` | Planification Taskiq |
+| `stream-fusion` | Application — 4 replicas |
+| `taskiq-worker` | Traitement asynchrone — 2 replicas |
+| `taskiq-scheduler` | Scheduler — 1 replica |
 | `stremio-postgres` | PostgreSQL 17 |
+| `postgres-security-init` | Sécurisation des rôles PostgreSQL |
+| `pg-restore-secret-init` | Secret de restauration PostgreSQL |
 | `stremio-redis` | Redis 7 |
 | `meilisearch` | Recherche et indexation |
-| `meili-init` | Préparation de Meilisearch |
-| `postgres-security-init` | Sécurisation des rôles PostgreSQL |
-| `pg-restore-secret-init` | Génération du secret de restauration |
+| `meili-init` | Initialisation/restauration Meilisearch |
 | `warp` | Proxy WARP |
-
-!!! warning "Taskiq Scheduler"
-    `taskiq-scheduler` doit conserver une seule instance.
 
 ---
 
-## Sécurité PostgreSQL
+## PostgreSQL
 
-Le Compose sépare les responsabilités entre quatre rôles :
+La configuration sécurisée du Compose simple est intégralement conservée :
 
-| Rôle | Fonction |
-|---|---|
-| `streamfusion_owner` | Propriétaire des objets |
-| `streamfusion_runtime` | Connexion normale de l'application |
-| `streamfusion_migration` | Exécution des migrations |
-| `streamfusion_restore` | Opérations de restauration |
+- `streamfusion_owner` ;
+- `streamfusion_runtime` ;
+- `streamfusion_migration` ;
+- `streamfusion_restore`.
 
-Le secret du rôle de restauration n'est pas stocké dans `.env`.
+Le secret de restauration PostgreSQL est généré automatiquement dans
+le volume `pg-restore-secret`.
 
-Il est généré automatiquement dans le volume :
-
-```text
-pg-restore-secret
-```
+Aucun `PG_RESTORE_PASS` n'est nécessaire dans `.env`.
 
 ---
 
 ## Réseau et reverse proxy
 
-Le Compose utilise le réseau Docker externe :
+Le réseau Docker externe utilisé est :
 
 ```text
 traefik_proxy
 ```
 
-Vérifiez son existence :
+Vérification :
 
 ```bash
 docker network inspect traefik_proxy
 ```
 
-S'il n'existe pas encore :
+Création si nécessaire :
 
 ```bash
 docker network create traefik_proxy
 ```
 
-!!! warning "Port 8080"
-    `stream-fusion` utilise `expose: 8080`.
-
-    Le port n'est pas publié directement sur l'hôte par le Compose.
-    Le reverse proxy doit être connecté au réseau `traefik_proxy`.
+Le reverse proxy doit être connecté à ce réseau afin de distribuer les
+requêtes entre les quatre replicas `stream-fusion`.
 
 ---
 
-## Préparer le fichier `.env`
+## Fichier `.env`
 
-Créez `.env` dans le même répertoire que le Compose.
-
-Pour générer une valeur secrète de 64 caractères hexadécimaux :
-
-```bash
-openssl rand -hex 32
-```
-
-Pour générer les secrets internes :
-
-```bash
-for name in \
-  SECRET_API_KEY \
-  CONFIG_SECRET_KEY \
-  SESSION_KEY \
-  PEER_MASTER_KEY \
-  MEILI_MASTER_KEY \
-  POSTGRES_PASSWORD \
-  PG_PASS \
-  PG_MIGRATION_PASS
-do
-  printf '%s=' "$name"
-  openssl rand -hex 32
-done
-```
-
-!!! danger "Secrets PostgreSQL distincts"
-    `POSTGRES_PASSWORD`, `PG_PASS` et `PG_MIGRATION_PASS`
-    doivent obligatoirement contenir trois valeurs différentes.
-
-### `.env` complet
+La production utilise les mêmes variables que la configuration simple.
 
 ```dotenv
 # =============================================================================
@@ -168,23 +164,12 @@ USE_HTTPS=true
 PROXY_URL=http://warp:1080
 ```
 
-!!! info "PG_RESTORE_PASS"
-    Ne définissez pas `PG_RESTORE_PASS` dans `.env`.
-
-    Le Compose crée automatiquement le secret de restauration.
-
 ---
 
-## Docker Compose de production
+## Docker Compose scalable
 
-Les services Stream Fusion utilisent l'image Docker Hub :
-
-```text
-laster13/stream-fusion-reborn:latest
-```
-
-Le Compose ci-dessous est identique à celui de la page
-**Instance unique**.
+Le Compose ci-dessous conserve le Compose actuel de la configuration
+simple et ajoute uniquement les adaptations nécessaires au scaling.
 
 ### `docker-compose.yml`
 
@@ -733,7 +718,9 @@ services:
 
   taskiq-worker:
     image: laster13/stream-fusion-reborn:latest
-    container_name: taskiq-worker
+    deploy:
+      mode: replicated
+      replicas: 2
     command: python -m taskiq worker stream_fusion.worker:broker
     # env_file: user.env        # uncomment to enable unique_account mode (debrid/indexers)
     environment:
@@ -789,6 +776,9 @@ services:
 
   taskiq-scheduler:
     image: laster13/stream-fusion-reborn:latest
+    deploy:
+      mode: replicated
+      replicas: 1
     container_name: taskiq-scheduler
     command: python -m taskiq scheduler stream_fusion.tkq:scheduler
     environment:
@@ -825,7 +815,9 @@ services:
 
   stream-fusion:
     image: laster13/stream-fusion-reborn:latest
-    container_name: stream-fusion
+    deploy:
+      mode: replicated
+      replicas: 4
     # env_file: user.env        # uncomment to enable unique_account mode (debrid/indexers)
     environment:
       RUN_MIGRATIONS: "true"
@@ -900,18 +892,10 @@ volumes:
 
 ---
 
-## Validation de la configuration
-
-Avant le démarrage :
+## Validation
 
 ```bash
 docker compose config
-```
-
-Puis vérifiez le réseau :
-
-```bash
-docker network inspect traefik_proxy
 ```
 
 ---
@@ -922,43 +906,48 @@ docker network inspect traefik_proxy
 docker compose up -d
 ```
 
-Vérifiez l'état de la stack :
+Puis :
 
 ```bash
 docker compose ps
 ```
 
-Logs de l'application :
+Configuration attendue :
+
+```text
+stream-fusion     4
+taskiq-worker     2
+taskiq-scheduler  1
+```
+
+---
+
+## Logs
 
 ```bash
 docker compose logs -f stream-fusion
 ```
 
-Logs Taskiq :
+```bash
+docker compose logs -f taskiq-worker
+```
 
 ```bash
-docker compose logs -f taskiq-worker taskiq-scheduler
+docker compose logs -f taskiq-scheduler
 ```
 
 ---
 
 ## Mise à jour
 
-Récupérez les dernières images :
-
 ```bash
 docker compose pull
-```
-
-Puis recréez les conteneurs :
-
-```bash
 docker compose up -d
 ```
 
 ---
 
-## Vérifications après mise à jour
+## Vérifications
 
 ```bash
 docker compose ps
@@ -966,13 +955,3 @@ docker compose logs --tail=100 stream-fusion
 docker compose logs --tail=100 taskiq-worker
 docker compose logs --tail=100 taskiq-scheduler
 ```
-
-Vérifiez que :
-
-- PostgreSQL est healthy ;
-- Redis est healthy ;
-- Meilisearch est healthy ;
-- `postgres-security-init` se termine correctement ;
-- `stream-fusion` démarre sans erreur ;
-- `taskiq-worker` démarre sans erreur ;
-- `taskiq-scheduler` reste à une seule instance.
