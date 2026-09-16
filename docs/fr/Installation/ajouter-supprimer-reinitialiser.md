@@ -146,10 +146,10 @@ Retirer l’application de l’écosystème en supprimant les éléments associ�
 ### Supprime (selon la commande)
 
 - le fichier `.yml` local
-- le container
+- le container et ses **conteneurs compagnons** enregistrés à l’installation
 - les informations d’authentification
 - les sous-domaines dans le fichier account
-- les données sous `opt/seedbox/docker/${USER}` (**uniquement en mode complet**)
+- les données sous `opt/seedbox/docker/${USER}` et les **volumes nommés** (**uniquement en mode complet**)
 
 !!! danger "Destructif"
     Une suppression **complète** peut supprimer aussi les données persistantes (`opt/…`).  
@@ -157,12 +157,36 @@ Retirer l’application de l’écosystème en supprimant les éléments associ�
 
 ### Impact
 
-- **PARTIELLE** : supprime container + yml + account, conserve les données `opt`
-- **COMPLÈTE** : supprime aussi les données `opt`
+- **PARTIELLE** : supprime container(s) + yml + account, conserve les données `opt` et les volumes
+- **COMPLÈTE** : supprime aussi les données `opt` et les volumes nommés
 
 ??? tip "Règle de survie"
     Si tu as un doute : commence par une **suppression partielle**.  
     Tu peux toujours supprimer les données ensuite, mais pas l’inverse.
+
+### Commande interactive (recommandée)
+
+`suppression_appli` (sans second argument) te demande explicitement si tu veux conserver les données, sans avoir à retenir l’option `1` :
+
+```bash
+suppression_appli app
+```
+
+```text
+Conserver les données de app ? (o/n) :
+```
+
+- `o` → **suppression partielle** : container + yml + account, données `opt` conservées
+- `n` → **suppression complète** : données `opt` supprimées en plus
+
+!!! tip "Zéro suppression accidentelle"
+    La question est reposée tant que tu n’as pas répondu `o` ou `n` : aucun choix par défaut, donc pas de purge déclenchée par une simple pression sur Entrée.
+
+!!! info "Mode non interactif (scripts / menu)"
+    Pour un appel scripté, passe explicitement le mode : `suppression_appli app 0` (partiel) ou `suppression_appli app 1` (complet). Le menu et les scripts internes utilisent ce mode.
+
+!!! note "Applications multi-conteneurs"
+    La suppression retire aussi les **conteneurs compagnons** enregistrés à l’installation (ex. `streamfusion` → `warp`, `taskiq-worker`, `taskiq-scheduler`, `meilisearch`, `stremio-redis`, `stremio-postgres`) et, en mode complet, les **volumes nommés** associés.
 
 ---
 
@@ -217,26 +241,35 @@ Redémarrer l’application sans rien supprimer.
 
 ## Commandes rapides (depuis le venv)
 
-=== "Suppression standard"
+=== "Suppression interactive (recommandée)"
     ```bash
     suppression_appli app
     ```
 
+    Demande `Conserver les données de app ? (o/n)`, puis :
+    - `o` → suppression partielle (données conservées)
+    - `n` → suppression complète (données supprimées)
+
+=== "Suppression standard (non interactive)"
+    ```bash
+    suppression_appli app 0
+    ```
+
     Supprime :
-    - le container
+    - le container et ses conteneurs compagnons
     - les informations dans account
     - le fichier `.yml` local
 
-=== "Suppression complète"
+=== "Suppression complète (non interactive)"
     ```bash
     suppression_appli app 1
     ```
 
     Supprime :
-    - le container
+    - le container et ses conteneurs compagnons
     - les informations dans account
     - le fichier `.yml` local
-    - les données sous `opt`
+    - les données sous `opt` et les volumes nommés associés
 
 === "Installation rapide"
     ```bash
