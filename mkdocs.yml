@@ -189,6 +189,7 @@ nav:
       - 🧰 Utilitaires:
           - Installation/ajouter-supprimer-reinitialiser.md
           - Installation/manipulations-manuelles.md
+          - Installation/invites-utilisateur.md
       - 🛡️ Sécurisation:
           - Installation/oauth.md
           - Installation/optimisation-cloudflare.md
