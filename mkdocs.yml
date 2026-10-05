@@ -385,7 +385,6 @@ nav:
 
       - 🐳 Installation:
           - Vue d’ensemble: stream-fusion-reborn/installation/index.md
-          - Docker Compose production: stream-fusion-reborn/installation/docker-compose-prod.md
           - Docker Compose simple: stream-fusion-reborn/installation/docker-compose-simple.md
           - Environnement: stream-fusion-reborn/installation/environnement.md
 
