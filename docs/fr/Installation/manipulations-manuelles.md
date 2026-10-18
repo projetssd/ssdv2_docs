@@ -250,6 +250,9 @@ suppression_appli nomduservice
 update_container nomduservice
 ```
 
+!!! tip "Environnement chargé"
+    Comme toutes les fonctions de cette page, elle s’utilise après `source profile.sh` (section **Charger l’environnement (venv)**), exactement comme `launch_service`.
+
 - tire la dernière image (`docker pull`) ;
 - **recrée le container à l’identique** (config, volumes/binds, réseau, ports… conservés) ;
 - **sans** exécuter le playbook ni les tâches de configuration.
@@ -277,6 +280,9 @@ L’authentification est stockée dans `account.yml` sous `sub.<app>.auth`. La f
 ```bash
 apply_auth_label nomduservice
 ```
+
+!!! tip "Environnement chargé"
+    À utiliser après `source profile.sh` (venv + fonctions), comme `update_container` et `launch_service`.
 
 - lit `sub.<app>.auth` ;
 - modifie **uniquement** le label `traefik.http.routers.<app>-rtr.middlewares` ;

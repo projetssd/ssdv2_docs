@@ -269,8 +269,14 @@ Mettre à jour l’**image** d’une application (nouvelle version de l’image,
 
 === "CLI interne (venv)"
     ```bash
+    # 1) charger l’environnement SSDV2 (venv + fonctions) — comme pour launch_service
+    cd ~/seedbox-compose && source profile.sh
+
+    # 2) mettre à jour l’application (image seule)
     update_container app
     ```
+
+    `update_container` est une fonction Bash chargée par `profile.sh`, exactement comme `launch_service` (le prompt doit afficher `(venv)`).
 
 === "ssdv2ctl"
     ```bash
