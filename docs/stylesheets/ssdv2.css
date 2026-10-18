@@ -222,6 +222,15 @@ body, button, input, select, textarea { font-family: "Inter", system-ui, -apple-
   text-align: center;
   color: #E2E8F0;
 }
+.md-typeset .hero-container::before {
+  content: "";
+  display: block;
+  width: clamp(84px, 10vw, 120px);
+  height: clamp(84px, 10vw, 120px);
+  margin: 0 auto .75rem;
+  background: url("../assets/branding/ssdv2-icon.svg") center / contain no-repeat;
+  filter: drop-shadow(0 6px 18px rgba(6, 182, 212, .18));
+}
 .md-typeset .hero-container::after {
   content: "";
   position: absolute;
