@@ -12,7 +12,7 @@ Automatisation • Sécurité • Reverse Proxy • Real-Debrid • +100 Applica
 </p>
 
 <div class="hero-buttons">
-<a href="Installation/introduction.md" class="btn-primary">🚀 Commencer</a>
+<a href="Installation/introduction/" class="btn-primary">🚀 Commencer</a>
 <a href="https://discordapp.com/invite/ZhWvKVmTuh" class="btn-secondary">💬 Discord</a>
 </div>
 
