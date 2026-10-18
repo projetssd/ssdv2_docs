@@ -1,5 +1,7 @@
 <div class="hero-container">
 
+<img class="ssdv2-hero-symbol" src="assets/branding/ssdv2-icon.svg" alt="SSDv2 — symbole officiel" width="110" height="110">
+
 <h1>🚀 SSDv2</h1>
 
 <p class="hero-subtitle">

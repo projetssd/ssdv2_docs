@@ -1,7 +1,7 @@
 site_name: SSDv2
-site_url: https://laster13.github.io/ssdv2_docs/
+site_url: https://projetssd.github.io/ssdv2_docs/
 site_author: ProjetSSD
-site_description: Simple Seedbox Docker moderne, sécurisé et optimisé.
+site_description: SSDv2 — Déployez. Gérez. Sécurisez. Votre écosystème d'applications Docker.
 
 repo_name: projetssd/ssdv2
 repo_url: https://github.com/projetssd/ssdv2
@@ -15,6 +15,8 @@ copyright: >
 
 theme:
   name: material
+  logo: assets/branding/ssdv2-icon.svg
+  favicon: assets/branding/favicon-32.png
 
   language: fr
 
@@ -23,20 +25,22 @@ theme:
     annotation: material/arrow-right-circle
 
   font:
-    text: Roboto
+    text: Inter
     code: Roboto Mono
 
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
-      primary: indigo
+      primary: custom
+      accent: custom
       scheme: default
       toggle:
         icon: material/weather-sunny 
         name: Switch to dark mode
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
-      primary: blue grey
+      primary: custom
+      accent: custom
       scheme: slate
       toggle:
         icon: material/weather-night
@@ -119,6 +123,9 @@ extra:
 
   announcement: |
     🚀 SSDv2 v2 — Documentation modernisée et section Sécurité renforcée.
+
+extra_css:
+  - stylesheets/ssdv2.css
 
 extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
