@@ -31,4 +31,8 @@ jobs:
       - run: pip install mkdocs-glightbox
       - run: pip install mkdocs-static-i18n
       - run: pip install mkdocs-exclude
+      - name: Build documentation and verify internal links
+        run: |
+          mkdocs build --site-dir site
+          python tools/check_internal_links.py site
       - run: mkdocs gh-deploy --force
