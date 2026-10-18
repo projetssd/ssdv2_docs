@@ -52,7 +52,7 @@ SECRET_API_KEY=générer-avec-openssl-rand-hex-32
 ADMIN_SECRET_KEY=générer-avec-openssl-rand-hex-32
 CONFIG_SECRET_KEY=générer-avec-Fernet-generate_key
 TMDB_API_KEY=votre-cle-api-tmdb
-MEILI_MASTER_KEY=générer-avec-openssl-rand-hex-32
+
 
 # ─── Base de données ─────────────────────────────────────────────────────────
 # Utiliser trois mots de passe PostgreSQL distincts.
@@ -64,6 +64,7 @@ PG_MIGRATION_PASS=générer-avec-openssl-rand-hex-32
 TZ=Europe/Paris
 USE_HTTPS=true
 PROXY_URL=http://warp:1080
+STREMTHRU_URL=
 
 # ─── Production uniquement ───────────────────────────────────────────────────
 # DOMAIN=stream.votredomaine.com
@@ -188,8 +189,6 @@ Créez un fichier `user.env` dans votre répertoire de déploiement et copiez-y 
 # Quand définies, tous les utilisateurs accèdent à ces indexeurs sans credentials.
 
 # C411_API_KEY=votre-cle-c411
-# TORR9_API_KEY=votre-cle-torr9
-# LACALE_API_KEY=votre-cle-lacale
 # GENERATIONFREE_API_KEY=votre-cle-generationfree
 # ABN_API_KEY=votre-cle-abn
 # G3MINI_API_KEY=votre-cle-g3mini
