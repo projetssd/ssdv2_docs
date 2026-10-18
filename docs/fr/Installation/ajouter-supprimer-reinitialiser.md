@@ -1,6 +1,6 @@
 ---
-title: Gestion des Applications Docker — Cycle de vie (Ajout • Suppression • Réinitialisation • Relance)
-description: Guide premium pour maîtriser le cycle de vie d’une application Docker (container, .yml, données persistantes, account/auth) sans surprises.
+title: Gestion des Applications Docker — Cycle de vie (Ajout • Suppression • Réinitialisation • Relance • Mise à jour)
+description: Guide premium pour maîtriser le cycle de vie d’une application Docker (container, .yml, données persistantes, account/auth) : ajout, suppression, réinitialisation, relance et mise à jour « image seule ».
 tags:
   - docker
   - compose
@@ -18,7 +18,8 @@ tags:
 ## TL;DR
 
 - ✅ Une “application” Docker = **4 briques** : **container** + **.yml** + **données** + **account/auth/DNS**
-- ✅ **Relance** = redémarrer le runtime (safe)
+- ✅ **Relance** = redémarrer le runtime (safe, **sans mise à jour d’image**)
+- ✅ **Mise à jour** = tirer la nouvelle image et recréer à l’identique (safe, **sans playbook**)
 - ✅ **Réinitialisation** = revenir aux défauts (safe, données conservées)
 - ✅ **Ajout** = (ré)installer en **recréant** le container (utile après modif `.yml`)
 - ✅ **Suppression** = retirer l’appli (destructif partiel ou total)
@@ -239,6 +240,52 @@ Redémarrer l’application sans rien supprimer.
 
 ---
 
+## 5) ⬆️ Mise à jour d’une application (image seule)
+
+### Objectif
+
+Mettre à jour l’**image** d’une application (nouvelle version de l’image, correctif de sécurité) **sans réinstaller** et **sans appliquer la recette** (`.yml`).
+
+### Action
+
+- tire la dernière image (`docker pull`) ;
+- **recrée le container à l’identique** : variables d’environnement, labels, volumes/binds, **volumes nommés réutilisés**, réseau, ports, politique de redémarrage, devices, healthcheck… ;
+- n’exécute **aucune** tâche de configuration SSDV2 (pas de playbook).
+
+### Données conservées
+
+- données utilisateurs **conservées** (volumes nommés et binds) ;
+- fichier account **non modifié** ;
+- reste de la configuration **conservé**.
+
+!!! info "Cas d’usage"
+    - une nouvelle image est publiée pour l’application ;
+    - appliquer un correctif sans toucher à la configuration ni aux données.
+
+### Comment l’utiliser
+
+=== "Menu SSDV2"
+    Ajout/Suppression/Sauvegarde d’application → **« Mettre à jour Application (image seule) »**
+
+=== "CLI interne (venv)"
+    ```bash
+    update_container app
+    ```
+
+=== "ssdv2ctl"
+    ```bash
+    ssdv2ctl app update app
+    ```
+
+!!! warning "Relance ≠ Mise à jour"
+    La **relance** (`restart`) redémarre le container **existant** sans tirer de nouvelle image.  
+    Pour réellement mettre à jour l’image, utilise la **mise à jour (image seule)** (ou la **réinitialisation**/recréation si tu dois en plus appliquer la recette).
+
+!!! tip "Voir aussi"
+    Détail des commandes : **`Installation/ssdv2ctl.md`**.
+
+---
+
 ## Commandes rapides (depuis le venv)
 
 === "Suppression interactive (recommandée)"
@@ -278,6 +325,18 @@ Redémarrer l’application sans rien supprimer.
 
     Installe l’application demandée.
 
+=== "Mise à jour (image seule)"
+    ```bash
+    update_container app
+    ```
+
+    Tire la dernière image et recrée le container à l’identique (config et données conservées, sans playbook).
+
+    Équivalent `ssdv2ctl` :
+    ```bash
+    ssdv2ctl app update app
+    ```
+
 ---
 
 ## Résumé comparatif
@@ -288,9 +347,11 @@ Redémarrer l’application sans rien supprimer.
 | Suppression | OUI (selon mode) | OUI | OUI | NON |
 | Réinitialisation | NON | Restaure origine | NON | NON |
 | Relance | NON | NON | NON | OUI |
+| Mise à jour (image seule) | NON | NON | NON | OUI |
 
 !!! success "Lecture instantanée"
-    - **Relance** = *safe*  
+    - **Relance** = *safe* (restart, **pas de nouvelle image**)  
+    - **Mise à jour (image seule)** = *safe, nouvelle image + recréation à l’identique*  
     - **Réinitialisation** = *safe + retour défauts*  
     - **Ajout** = *recrée (applique le yml)*  
     - **Suppression** = *destructif (partiel/total)*
@@ -306,6 +367,7 @@ Avant d’agir, pose-toi **UNE** question :
 - Appliquer modif `.yml` → **supprime le container** → relance installation
 - Revenir à l’origine sans perdre données → **réinitialisation**
 - Juste redémarrer → **relance**
+- Récupérer une nouvelle image sans tout réinstaller → **mise à jour (image seule)**
 - Tout effacer → **suppression complète**
 
 ---
@@ -313,6 +375,7 @@ Avant d’agir, pose-toi **UNE** question :
 ## Erreurs fréquentes
 
 - ❌ Modifier le `.yml` et penser qu’un restart suffit
+- ❌ Confondre **relance** (restart, sans nouvelle image) et **mise à jour** (pull + recréation)
 - ❌ Lancer une suppression complète au lieu d’un reset
 - ❌ Confondre “réinitialisation” (safe) et “suppression” (destructif)
 - ❌ Oublier que les données sous `opt` sont la partie critique
@@ -334,15 +397,17 @@ Résultat :
 - 💾 Zéro perte de données surprise
 - ⚡ Maintenance plus rapide
 - 🛡 Exploitation propre et fiable
+- ⬆️ Mises à jour d’images **sans réinstallation** (image seule)
 
 ---
 
-## Diagramme de décision (Ajout vs Relance vs Reset vs Suppression)
+## Diagramme de décision (Ajout vs Relance vs Mise à jour vs Reset vs Suppression)
 
 ```mermaid
 flowchart TD
   A["Besoin d'agir sur l'application"] --> B{"But principal ?"}
   B -->|Juste redémarrer| R["▶️ Relance (restart)\nAucun élément supprimé"]
+  B -->|Récupérer une nouvelle image| U["⬆️ Mise à jour (image seule)\npull + recréation à l'identique\nconfig & données conservées"]
   B -->|Appliquer modif .yml| Y{"Changement structurel ?\nports/volumes/env/labels/network"}
   Y -->|Oui| C["Supprimer le container\n(pas les données)"]
   C --> I["➕ Ajout / réinstallation via outil\n(recréation du container)"]

@@ -189,9 +189,11 @@ nav:
       - 🧰 Utilitaires:
           - Installation/ajouter-supprimer-reinitialiser.md
           - Installation/manipulations-manuelles.md
+          - Installation/ssdv2ctl.md
           - Installation/invites-utilisateur.md
       - 🛡️ Sécurisation:
           - Installation/oauth.md
+          - Installation/gestion-authentification.md
           - Installation/optimisation-cloudflare.md
           - Installation/ufw-Installation-configuration.md
 

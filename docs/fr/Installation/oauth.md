@@ -312,6 +312,27 @@ traefik.http.routers.sonarr-rtr-bypass.rule: 'Headers(`X-Api-Key`, `b12d1732186a
 
 ---
 
+## Changer le type d’authentification d’une application
+
+Le type d’authentification d’une application (`aucune` / `basique` / `oauth` / `authelia` / `oauth2-proxy`) se modifie **sans rejouer le playbook** : SSDV2 ne change que le **label Traefik du router principal**.
+
+- **Menu** : *Gestion de l’authentification des applications* (sélection multi-apps, choix du type, application).
+- **CLI (`ssdv2ctl`)** :
+  ```bash
+  ssdv2ctl auth apply sonarr authelia   # écrit + applique le label
+  # ou :
+  ssdv2ctl auth set sonarr authelia && ssdv2ctl auth apply sonarr
+  ```
+- **Interne (venv)** : `apply_auth_label sonarr`
+
+!!! tip "Détails"
+    Procédure complète et cas particuliers : **`Installation/gestion-authentification.md`**.
+
+!!! note "Bypass API = labels supplémentaires"
+    Ajouter un **router bypass** (comme dans l’exemple ci-dessus) modifie **plusieurs labels** : dans ce cas, **recréez/réinstallez** l’application (menu) pour réappliquer la recette. Le flux « label-only » ne concerne que le **changement de type d’auth** du router principal.
+
+---
+
 ## Checklist (validation)
 
 - [ ] Projet Google Cloud `oauth` créé et sélectionné

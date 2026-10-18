@@ -15,6 +15,8 @@ tags:
     - chargement de l’environnement (`profile.sh`) et vérification du prompt `(venv)`  
     - lecture/écriture/suppression de clés dans `account.yml` via `get_from_account_yml` et `manage_account_yml`  
     - installation/désinstallation directe d’une application via `launch_service` et `suppression_appli`  
+    - **mise à jour d’image seule** via `update_container` (sans playbook)  
+    - **application de l’authentification** via `apply_auth_label` (label Traefik uniquement)  
     - sortie propre de l’environnement avec `deactivate`  
     ⚠️ Toutes les opérations doivent être effectuées **hors root**.
 
@@ -29,7 +31,9 @@ tags:
 5) Supprimer : `manage_account_yml clé " "` (suppression récursive)  
 6) Installer : `launch_service service`  
 7) Désinstaller : `suppression_appli service`  
-8) Quitter : `deactivate`
+8) Mettre à jour (image seule) : `update_container service`  
+9) Appliquer l’auth (label-only) : `apply_auth_label service`  
+10) Quitter : `deactivate`
 
 ??? tip "Principe premium"
     **Toujours auditer avant de modifier** : un `get_from_account_yml` rapide évite d’écraser une valeur sensible.
@@ -240,6 +244,60 @@ suppression_appli nomduservice
 
 ---
 
+## Mettre à jour une application (image seule) sans passer par le menu
+
+```bash
+update_container nomduservice
+```
+
+- tire la dernière image (`docker pull`) ;
+- **recrée le container à l’identique** (config, volumes/binds, réseau, ports… conservés) ;
+- **sans** exécuter le playbook ni les tâches de configuration.
+
+??? example "Exemples"
+    ```bash
+    update_container plex
+    update_container sonarr
+    ```
+
+!!! info "Équivalent ssdv2ctl"
+    ```bash
+    ssdv2ctl app update nomduservice
+    ```
+
+!!! success "Résultat attendu"
+    Le service tourne avec l’image à jour, configuration et données conservées.
+
+---
+
+## Appliquer l’authentification d’une application (label-only)
+
+L’authentification est stockée dans `account.yml` sous `sub.<app>.auth`. La fonction ci-dessous applique le type courant **sans rejouer le playbook** :
+
+```bash
+apply_auth_label nomduservice
+```
+
+- lit `sub.<app>.auth` ;
+- modifie **uniquement** le label `traefik.http.routers.<app>-rtr.middlewares` ;
+- **recrée** le container (les routers secondaires et le reste de la config sont conservés).
+
+!!! tip "Changer la valeur d’abord (si besoin)"
+    ```bash
+    manage_account_yml sub.nomduservice.auth oauth2-proxy
+    apply_auth_label nomduservice
+    ```
+
+!!! info "Équivalent ssdv2ctl"
+    ```bash
+    ssdv2ctl auth apply nomduservice oauth2-proxy
+    ```
+
+!!! warning "Un restart ne suffit pas"
+    Changer l’auth modifie un **label Docker** : il faut **recréer** le container (ce que fait `apply_auth_label`).
+
+---
+
 ## Quitter l’environnement de manipulation
 
 Pour sortir du venv :
@@ -262,10 +320,14 @@ flowchart TD
   C -->|Lire account.yml| D["get_from_account_yml\n(avec ou sans clé)"]
   C -->|Écrire/supprimer clé| E["manage_account_yml\nclé valeur | clé \" \""]
   C -->|Installer/Lancer app| F["launch_service nomduservice"]
+  C -->|Mettre à jour (image seule)| I["update_container nomduservice"]
+  C -->|Appliquer l'auth (label-only)| J["apply_auth_label nomduservice"]
   C -->|Supprimer app| G["suppression_appli nomduservice"]
   D --> H["deactivate"]
   E --> H
   F --> H
+  I --> H
+  J --> H
   G --> H
 ```
 
