@@ -134,7 +134,6 @@ SECRET_API_KEY=RANDOM_64_HEX
 CONFIG_SECRET_KEY=RANDOM_64_HEX
 SESSION_KEY=RANDOM_64_HEX
 PEER_MASTER_KEY=RANDOM_64_HEX
-MEILI_MASTER_KEY=RANDOM_64_HEX
 
 
 # ── PostgreSQL ────────────────────────────────────────────────────────────────
@@ -149,6 +148,7 @@ PG_MIGRATION_PASS=RANDOM_64_HEX
 TZ=Europe/Paris
 USE_HTTPS=true
 PROXY_URL=http://warp:1080
+STREMTHRU_URL=
 ```
 
 !!! info "PG_RESTORE_PASS"
@@ -995,7 +995,7 @@ services:
 
       TZ: ${TZ}
       PROXY_URL: ${PROXY_URL}
-
+      STREMTHRU_URL: ${STREMTHRU_URL:-}
       REDIS_HOST: stremio-redis
       PG_HOST: stremio-postgres
       TASKIQ_REDIS_DB: "6"
@@ -1119,7 +1119,7 @@ services:
       TZ: ${TZ}
       USE_HTTPS: ${USE_HTTPS}
       PROXY_URL: ${PROXY_URL}
-
+      STREMTHRU_URL: ${STREMTHRU_URL:-}
       REDIS_HOST: stremio-redis
       PG_HOST: stremio-postgres
       TASKIQ_REDIS_DB: "6"
