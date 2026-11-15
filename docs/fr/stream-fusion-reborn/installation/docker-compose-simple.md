@@ -660,6 +660,12 @@ services:
             streamfusion_migration,
             streamfusion_restore;
 
+        -- ALKO_TEMPORARY_RUNTIME_V328
+        -- Tables temporaires nécessaires à la restauration ALKO.
+        GRANT TEMPORARY
+          ON DATABASE streamfusion
+          TO streamfusion_runtime;
+
 
         REVOKE CREATE
           ON SCHEMA public
@@ -882,6 +888,13 @@ services:
 
           )
 
+        -- ALKO_TEMPORARY_RUNTIME_V328_CHECK
+        AND has_database_privilege(
+          'streamfusion_runtime',
+          'streamfusion',
+          'TEMPORARY'
+        )
+
         THEN 'OK'
 
         ELSE 'ERROR'
@@ -937,35 +950,6 @@ services:
 
 
   # ===========================================================================
-  # WARP
-  # ===========================================================================
-
-  warp:
-    image: caomingjun/warp:latest
-    container_name: warp
-    restart: always
-
-    expose:
-      - 1080
-
-    environment:
-      - WARP_SLEEP=2
-
-    cap_add:
-      - NET_ADMIN
-
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=0
-      - net.ipv4.conf.all.src_valid_mark=1
-
-    volumes:
-      - warp-data:/var/lib/cloudflare-warp
-
-    networks:
-      - proxy_network
-
-
-  # ===========================================================================
   # TASKIQ WORKER
   # ===========================================================================
 
@@ -980,6 +964,7 @@ services:
     # Décommenter uniquement pour unique_account / debrid / indexers.
 
     environment:
+      AD_BASE_URL: ${AD_BASE_URL:?AD_BASE_URL manquante}
       SECRET_API_KEY: ${SECRET_API_KEY:?Provide SECRET_API_KEY}
       CONFIG_SECRET_KEY: ${CONFIG_SECRET_KEY:?Provide CONFIG_SECRET_KEY}
       PEER_MASTER_KEY: ${PEER_MASTER_KEY:-}
@@ -996,6 +981,7 @@ services:
       TZ: ${TZ}
       PROXY_URL: ${PROXY_URL}
       STREMTHRU_URL: ${STREMTHRU_URL:-}
+
       REDIS_HOST: stremio-redis
       PG_HOST: stremio-postgres
       TASKIQ_REDIS_DB: "6"
@@ -1099,6 +1085,8 @@ services:
     # Décommenter uniquement pour unique_account / debrid / indexers.
 
     environment:
+      SFR_ALKO_ENABLED: "true"
+      AD_BASE_URL: ${AD_BASE_URL:?AD_BASE_URL manquante}
       RUN_MIGRATIONS: "true"
 
       SECRET_API_KEY: ${SECRET_API_KEY:?Provide SECRET_API_KEY}
@@ -1120,6 +1108,7 @@ services:
       USE_HTTPS: ${USE_HTTPS}
       PROXY_URL: ${PROXY_URL}
       STREMTHRU_URL: ${STREMTHRU_URL:-}
+
       REDIS_HOST: stremio-redis
       PG_HOST: stremio-postgres
       TASKIQ_REDIS_DB: "6"
@@ -1138,8 +1127,6 @@ services:
 
     expose:
       - 8080
-    ports:
-      - 8080:8080
 
     volumes:
       - stream-fusion:/app/config
@@ -1169,7 +1156,6 @@ volumes:
   stremio-postgres:
   stremio-redis:
   stream-fusion:
-  warp-data:
   dmm-hashlists:
   sfr-db-backups:
   imdb-db:
