@@ -965,7 +965,7 @@ services:
     # Décommenter uniquement pour unique_account / debrid / indexers.
 
     environment:
-      AD_BASE_URL: ${AD_BASE_URL:?AD_BASE_URL manquante}
+      AD_BASE_URL: ${AD_BASE_URL:-https://api.alldebrid.com}
       SECRET_API_KEY: ${SECRET_API_KEY:?Provide SECRET_API_KEY}
       CONFIG_SECRET_KEY: ${CONFIG_SECRET_KEY:?Provide CONFIG_SECRET_KEY}
       PEER_MASTER_KEY: ${PEER_MASTER_KEY:-}
@@ -1087,7 +1087,7 @@ services:
 
     environment:
       SFR_ALKO_ENABLED: "true"
-      AD_BASE_URL: ${AD_BASE_URL:?AD_BASE_URL manquante}
+      AD_BASE_URL: ${AD_BASE_URL:-https://api.alldebrid.com}
       RUN_MIGRATIONS: "true"
 
       SECRET_API_KEY: ${SECRET_API_KEY:?Provide SECRET_API_KEY}
